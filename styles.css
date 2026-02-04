@@ -1,0 +1,2393 @@
+/* Remove default Obsidian view padding and add margins */
+.workspace-leaf-content[data-type="ollama-chat-view"] .view-content {
+    padding: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.ollama-chat-container {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 17.5px);
+    max-width: calc(100% - 17.5px);
+    height: calc(100% - 24px);
+    margin: 5px 8px 24px 8px;
+    padding: 12px 12px 4px 12px;
+    gap: 0;
+    border-radius: var(--radius-m);
+    overflow: hidden;
+    background: transparent;
+    box-sizing: border-box;
+    font-size: calc(var(--font-text-size) * 0.95);
+}
+
+.ollama-chat-container {
+    overflow: hidden;
+}
+
+/* Keep control UI sizes stable when Obsidian interface font size changes */
+.status-bar-wrapper,
+.mode-switcher,
+.ollama-chat-input-container,
+.message-actions {
+    font-size: 15.2px;
+}
+
+/* Chat block wrapper - combines messages + tabs into single block */
+.chat-block-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+    background: transparent;
+    margin-bottom: 10px !important;
+    min-height: 0;
+    position: relative;
+}
+
+/* Messages wrapper - inside chat-block, with its own border */
+.ollama-chat-messages-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--background-secondary);
+    border: 1px solid var(--text-faint);
+    border-bottom: 1px solid var(--text-faint);
+    border-radius: 8px 8px 8px 8px;
+    margin-bottom: 0;
+    min-height: 0;
+    position: relative;
+}
+
+.ollama-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.chat-message {
+    margin-bottom: 10px;
+    /* animation: fadeIn 0.3s ease-in; */
+}
+
+.assistant-message {
+    margin-top: -2px;
+    margin-bottom: 12px;
+}
+
+/* Reduce gap between assistant reply and edit result card */
+.assistant-message + .result-message {
+    margin-top: -4px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 100%;
+    margin-bottom: 10px;
+}
+
+.user-message-context {
+    font-size: 0.7em;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+    margin-left: 2px;
+}
+
+.user-message-context .context-arrow {
+    font-size: 0.7em;
+    margin-right: 2px;
+}
+
+.user-message-context .context-label {
+    font-weight: bold;
+    margin-left: 2px;
+}
+
+.user-context-info-icon {
+    display: none;
+    font-size: 1.15em;
+    color: var(--text-muted);
+    cursor: help;
+    margin-left: 3px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.user-context-info-icon:hover {
+    color: var(--text-normal);
+}
+
+.user-message .message-content {
+    background: transparent;
+    color: var(--text-normal);
+    padding: 6px 10px;
+    border-radius: 8px;
+    word-wrap: break-word;
+    user-select: text;
+    cursor: text;
+    border: 1px solid var(--text-faint);
+    font-size: var(--font-smaller);
+}
+
+.assistant-message .message-content {
+    background: transparent;
+    color: var(--text-normal);
+    padding: 0;
+    border-radius: 0;
+    font-size: var(--font-smaller);
+    max-width: 100%;
+    word-wrap: break-word;
+    line-height: 1.5;
+    user-select: text;
+    cursor: text;
+}
+
+/* Ensure consistent font size in Web mode */
+.mode-web .assistant-message .message-content {
+    font-size: var(--font-smaller) !important;
+}
+
+/* Welcome message - smaller font size (needs higher specificity for Web mode) */
+.assistant-message .welcome-content,
+.mode-web .assistant-message .welcome-content {
+    font-size: 0.77em !important;
+    user-select: none !important;
+    cursor: default !important;
+}
+
+.assistant-message .welcome-content * {
+    user-select: none !important;
+    cursor: default !important;
+}
+
+.mode-web .system-message .message-content,
+.mode-web .stop-message .message-content,
+.mode-web .error-message .message-content {
+    font-size: 0.9em !important;
+}
+
+.assistant-message .message-content code {
+    background: var(--code-background);
+    color: var(--code-normal);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: var(--font-monospace);
+    font-size: 0.9em;
+}
+
+.result-message .message-content {
+    background: transparent;
+    border: 1px solid var(--interactive-accent);
+    border-radius: 8px;
+    padding: 9px 14px;
+}
+
+.system-message .message-content,
+.stop-message .message-content,
+.error-message .message-content {
+    background: transparent;
+    color: var(--text-muted);
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.9em;
+    text-align: left;
+    font-style: italic;
+    user-select: text;
+    cursor: text;
+}
+
+/* Divider after system messages (web search status) */
+.system-message {
+    border-bottom: 1px solid var(--background-modifier-border);
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+}
+
+/* No divider for stop message and error message */
+.stop-message, .error-message {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 10px !important;
+}
+.system-stop-icon {
+    display: inline-block;
+    width: 0.75em;
+    text-align: center;
+    font-weight: 700;
+}
+
+.loading-message .message-content {
+    background: transparent;
+    padding: 8px;
+}
+
+.message-actions {
+    display: flex;
+    margin-top: 8px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.action-buttons-group {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.message-actions .action-icon-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 33px !important;
+    height: 33px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: 1px solid var(--text-faint) !important;
+    border-radius: var(--radius-m) !important;
+    cursor: pointer !important;
+    color: var(--text-muted) !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
+    overflow: hidden !important;
+    opacity: 0.9 !important;
+}
+
+.message-actions .action-icon-btn:last-child {
+    margin-right: 0 !important;
+}
+
+.message-actions .action-icon-btn:hover {
+    opacity: 1 !important;
+    color: var(--text-normal) !important;
+    border-color: var(--text-muted) !important;
+}
+
+.message-actions .action-icon-btn svg {
+    width: 13px !important;
+    height: 13px !important;
+}
+
+.message-actions .action-text-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 33px !important;
+    padding: 0 12px !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: 1px solid var(--text-faint) !important;
+    border-radius: var(--radius-m) !important;
+    cursor: pointer !important;
+    color: var(--text-muted) !important;
+    transition: all 0.2s ease !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    opacity: 0.9 !important;
+}
+
+.message-actions .action-text-btn:hover {
+    opacity: 1 !important;
+    color: var(--text-normal) !important;
+    border-color: var(--text-muted) !important;
+}
+
+.message-actions .action-text-btn svg {
+    width: 13px !important;
+    height: 13px !important;
+}
+
+.message-actions .action-text-btn .action-btn-icon svg {
+    position: relative !important;
+    top: 1px !important;
+}
+
+.message-actions .edit-context-btn {
+    padding: 0 !important;
+    gap: 0 !important;
+}
+
+.message-actions .edit-context-btn .action-btn-label {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 12px !important;
+    position: relative !important;
+}
+
+.message-actions .edit-context-btn .action-btn-label::after {
+    content: '' !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: -9px !important;
+    bottom: -9px !important;
+    width: 1px !important;
+    background-color: var(--text-faint) !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.message-actions .edit-context-btn:hover .action-btn-label::after {
+    background-color: var(--text-muted) !important;
+}
+
+.message-actions .edit-context-btn .action-btn-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 33px !important;
+    flex-shrink: 0 !important;
+}
+
+.message-actions button {
+    all: unset !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    display: inline-block !important;
+    padding: 6px 12px !important;
+    margin: 0 !important;
+    background: var(--background-secondary) !important;
+    border: 1px solid var(--background-modifier-border) !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: var(--text-normal) !important;
+    cursor: pointer !important;
+    font-size: 0.78em !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    font-family: inherit !important;
+    line-height: normal !important;
+    border-radius: 6px !important;
+    transition: opacity 0.2s ease !important;
+}
+
+.message-actions button:hover {
+    opacity: 0.85 !important;
+}
+
+.message-actions button:active {
+    opacity: 0.7 !important;
+}
+
+/* Apply to note button (mod-cta) */
+.message-actions button.mod-cta {
+    background: var(--interactive-accent) !important;
+    border: 1px solid var(--interactive-accent) !important;
+    color: var(--text-on-accent) !important;
+    font-weight: 600 !important;
+}
+
+/* Apply to note button (mod-cta) */
+.message-actions button.mod-cta {
+    background: var(--interactive-accent) !important;
+    border: 1px solid var(--interactive-accent) !important;
+    color: var(--text-on-accent) !important;
+    font-weight: 600 !important;
+}
+
+/* Model warning */
+.model-warning {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: transparent;
+    border: 1px solid var(--text-error);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.model-warning .warning-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    flex-shrink: 0;
+}
+
+.model-warning .warning-text {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: var(--font-smaller);
+    font-weight: 400;
+}
+
+.loading-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+}
+
+.loading-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--background-modifier-border);
+    border-top-color: var(--interactive-accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Markdown rendering styles */
+.message-content table.markdown-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 0.95em;
+}
+
+.message-content table.markdown-table th,
+.message-content table.markdown-table td {
+    border: 1px solid var(--background-modifier-border);
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.message-content table.markdown-table th {
+    background: var(--background-secondary);
+    font-weight: 600;
+}
+
+.message-content table.markdown-table tr:nth-child(even) {
+    background: var(--background-secondary-alt);
+}
+
+.message-content mark {
+    background: var(--text-highlight-bg);
+    color: var(--text-normal);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.message-content blockquote {
+    border-left: 3px solid var(--interactive-accent);
+    padding-left: 12px;
+    margin: 8px 0;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.message-content pre {
+    background: var(--code-background);
+    padding: 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 4px 0 4px 0 !important;
+}
+
+.message-content code {
+    background: var(--code-background);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: var(--font-monospace);
+    font-size: 0.9em;
+}
+
+.message-content pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.message-content h1, .message-content h2, .message-content h3,
+.message-content h4, .message-content h5, .message-content h6 {
+    display: block;
+    margin: 8px 0 0 0;
+    padding: 0;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.message-content h1:first-child, .message-content h2:first-child,
+.message-content h3:first-child, .message-content h4:first-child,
+.message-content h5:first-child, .message-content h6:first-child {
+    margin-top: 0;
+}
+
+.message-content h1 { font-size: 1.8em; }
+.message-content h2 { font-size: 1.5em; }
+.message-content h3 { font-size: 1.3em; }
+.message-content h4 { font-size: 1.1em; }
+.message-content h5 { font-size: 1em; }
+.message-content h6 { font-size: 0.9em; }
+
+/* Hide <br> tags that appear right after headers, horizontal rules, tables, and code blocks */
+.message-content h1 + br,
+.message-content h2 + br,
+.message-content h3 + br,
+.message-content h4 + br,
+.message-content h5 + br,
+.message-content h6 + br,
+.message-content hr + br,
+.message-content table + br,
+.message-content pre + br,
+.message-content pre + br + br {
+    display: none;
+}
+
+/* Hide <br> tags that appear right before tables and code blocks */
+.message-content br + table,
+.message-content br + pre {
+    margin-top: 0;
+}
+.message-content p + br + table,
+.message-content br + br + table {
+    margin-top: 10px;
+}
+.message-content br:has(+ table),
+.message-content br:has(+ pre) {
+    display: none;
+}
+
+/* Reduce height of empty lines (br tags) - ONLY in Discuss mode */
+.mode-discuss .message-content br {
+    display: block;
+    content: "";
+    margin: 5px 0;
+    line-height: 0;
+}
+
+/* Reduce spacing for empty paragraphs - ONLY in Discuss mode */
+.mode-discuss .message-content p:empty {
+    margin: 5px 0;
+    line-height: 0;
+    min-height: 10px;
+}
+
+/* Welcome messages: compact BR spacing */
+.mode-discuss .welcome-content br,
+.mode-edit .welcome-content br,
+.mode-web .welcome-content br {
+    display: block;
+    content: "";
+    margin: 3.5px 0;
+    line-height: 0;
+}
+
+/* Compact line height for welcome messages */
+.welcome-content,
+.welcome-content p,
+.welcome-content strong,
+.welcome-content em,
+.welcome-content li {
+    line-height: 1.5;
+    white-space: pre-line;
+    color: var(--text-normal) !important;
+}
+
+.welcome-content {
+    opacity: 0.8;
+}
+
+/* Italic for all text except strong (heading) */
+.welcome-content p:not(:first-child),
+.welcome-content p:not(:first-child) *:not(strong),
+.welcome-content li {
+    font-style: italic !important;
+}
+
+/* Remove spacing between list items in welcome messages */
+.welcome-content li {
+    margin: 0 !important;
+    line-height: 1.5;
+}
+
+/* No extra margin on list - BR handles spacing */
+.welcome-content ul {
+    margin: 0 !important;
+}
+
+.message-content hr {
+    border: none;
+    border-top: 1px solid var(--background-modifier-border);
+    margin: 16px 0;
+}
+
+.message-content ul, .message-content ol {
+    margin: 8px 0;
+    padding-left: 24px;
+}
+
+.message-content li {
+    margin: 4px 0;
+}
+
+.message-content li.task-list-item {
+    list-style: none;
+    margin-left: -24px;
+}
+
+.message-content li.task-list-item input[type="checkbox"] {
+    margin-right: 6px;
+    cursor: not-allowed;
+}
+
+.message-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 10px 0;
+}
+
+.message-content a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.message-content a:hover {
+    text-decoration: underline;
+}
+
+.message-content del {
+    opacity: 0.7;
+}
+
+/* Input area - NEW design (border + background like chat) */
+.ollama-chat-input-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 6px 10px 0 10px;
+    background: var(--background-secondary);
+    border: 1px solid var(--text-faint);
+    border-radius: 8px;
+    margin-bottom: 10px !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Drag active state - shown when user starts dragging text anywhere */
+.ollama-chat-input-container.drag-active {
+    animation: pulse-border-color 1s ease-in-out infinite;
+}
+
+@keyframes pulse-border-color {
+    0%, 100% {
+        border-color: var(--text-faint);
+    }
+    50% {
+        border-color: var(--interactive-accent);
+    }
+}
+
+/* Drag over state - shown when dragged text hovers over input */
+.ollama-chat-input-container.drag-over {
+    background: var(--background-modifier-hover);
+    border-color: var(--interactive-accent);
+    animation: none; /* Stop pulsing when hovering */
+}
+
+/* Top section */
+.input-top-section {
+    position: relative;
+    margin-bottom: 0px;
+    font-size: 0.8em;
+    padding-right: 10px; /* avoid overlapping close button */
+    padding-top: 1px;   /* reduced from 2px to fix vertical alignment */
+    padding-bottom: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    min-width: 0; /* Allow flex children to shrink below content size */
+}
+
+.input-top-section.has-preview {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+/* Context line - inline layout */
+.context-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 0px;
+    padding-right: 36px; /* Reserve space for buttons close to pin icon */
+    min-height: 16px;
+    min-width: 0; /* Allow flex children to shrink below content size */
+}
+
+/* Web mode - no buttons, no padding needed */
+.mode-web .context-line {
+    padding-right: 0;
+}
+
+.context-label {
+    font-weight: 700;
+    color: var(--text-normal);
+    line-height: 1;
+    flex-shrink: 0; /* Keep label visible */
+    white-space: nowrap; /* Don't wrap label */
+}
+
+.context-value {
+    font-weight: 400;
+    color: var(--text-normal);
+    line-height: 1;
+    min-width: 0; /* Allow text to be cut off */
+    max-width: 100%; /* Don't exceed container */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 1; /* Can shrink */
+}
+
+/* Info icon */
+.context-info-icon {
+    display: none;
+    font-size: 1.25em;
+    color: var(--text-muted);
+    cursor: help;
+    margin-left: -2px;
+    line-height: 1;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.context-info-icon:hover {
+    color: var(--text-normal);
+}
+
+/* Buffer info icon */
+.buffer-info-icon {
+    font-size: 1em;
+    color: var(--text-muted);
+    cursor: help;
+    margin-left: -2px;
+    line-height: 1;
+    flex-shrink: 0;
+    position: relative;
+    top: 0.5px;
+}
+
+.buffer-info-icon:hover {
+    color: var(--text-normal);
+}
+
+/* +Add button - absolutely positioned to not affect layout */
+.add-context-button {
+    position: absolute !important;
+    top: -2px !important;
+    left: 121px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 21px !important;
+    padding: 0 6px !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: 1px solid var(--text-faint) !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    color: var(--text-muted) !important;
+    gap: 3px !important;
+    flex-shrink: 0 !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    z-index: 10 !important;
+    pointer-events: auto !important;
+    opacity: 0.9 !important;
+    transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
+}
+
+.add-context-button:hover:not(:disabled) {
+    opacity: 1 !important;
+    color: var(--text-normal) !important;
+    border-color: var(--text-muted) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.add-context-icon {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+}
+
+.add-context-text {
+    font-size: 11px !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+    position: relative !important;
+    top: 1px !important;
+}
+
+/* Add context dropdown menu - same style as model-selector-menu */
+.add-context-menu {
+    position: fixed;
+    background: var(--background-secondary);
+    border: 1px solid var(--text-faint);
+    border-radius: 6px;
+    padding: 0;
+    min-width: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transform: translateY(6px);
+}
+
+.add-context-menu .menu-item {
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 0;
+    font-size: 0.9em;
+    color: var(--text-normal);
+}
+
+.add-context-menu .menu-item:hover {
+    background: var(--background-modifier-hover);
+}
+
+.add-context-menu .menu-item:not(:last-child) {
+    border-bottom: 1px solid var(--text-faint);
+    margin: 0;
+}
+
+.add-context-menu .menu-item:first-child {
+    border-radius: 6px 6px 0 0;
+}
+
+.add-context-menu .menu-item:last-child {
+    border-radius: 0 0 6px 6px;
+}
+
+/* Context tooltip */
+.context-tooltip {
+    position: fixed;
+    background: var(--background-primary);
+    border: 1px solid var(--text-faint);
+    border-radius: 6px;
+    padding: 10px 12px;
+    max-width: 360px;
+    max-height: 360px;
+    overflow-y: auto;
+    z-index: 10000;
+    font-size: 0.85em;
+    color: var(--text-normal);
+    line-height: 1.4;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Markdown styles for tooltip - based on .message-content (Edit mode) */
+.context-tooltip p {
+    margin: 0 0 0.9em 0 !important;
+    padding: 0 !important;
+}
+
+.context-tooltip p:last-child {
+    margin-bottom: 0 !important;
+}
+
+.context-tooltip p:empty {
+    min-height: 0.9em;
+}
+
+/* Fix emoji alignment */
+.context-tooltip img.emoji {
+    display: inline !important;
+    vertical-align: baseline !important;
+    margin: 0 !important;
+}
+
+.context-tooltip code {
+    background: var(--code-background);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: var(--font-monospace);
+    font-size: 0.9em;
+}
+
+.context-tooltip pre {
+    background: var(--code-background);
+    padding: 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 4px 0 4px 0 !important;
+}
+
+.context-tooltip pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.context-tooltip blockquote {
+    border-left: 3px solid var(--interactive-accent);
+    padding-left: 12px;
+    margin: 8px 0;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.context-tooltip h1, .context-tooltip h2, .context-tooltip h3,
+.context-tooltip h4, .context-tooltip h5, .context-tooltip h6 {
+    margin: 8px 0 0 0;
+    padding: 0;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.context-tooltip h1:first-child, .context-tooltip h2:first-child,
+.context-tooltip h3:first-child, .context-tooltip h4:first-child,
+.context-tooltip h5:first-child, .context-tooltip h6:first-child {
+    margin-top: 0;
+}
+
+.context-tooltip hr {
+    border: none;
+    border-top: 1px solid var(--background-modifier-border);
+    margin: 16px 0;
+}
+
+.context-tooltip ul, .context-tooltip ol {
+    margin: 8px 0;
+    padding-left: 24px;
+}
+
+.context-tooltip li {
+    margin: 4px 0;
+}
+
+.context-tooltip li.task-list-item {
+    list-style: none;
+    margin-left: -24px;
+}
+
+.context-tooltip li.task-list-item input[type="checkbox"] {
+    margin-right: 6px;
+    cursor: not-allowed;
+}
+
+.context-tooltip img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 10px 0;
+}
+
+.context-tooltip a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.context-tooltip a:hover {
+    text-decoration: underline;
+}
+
+.context-tooltip del {
+    opacity: 0.7;
+}
+
+.context-tooltip mark {
+    background: var(--text-highlight-bg);
+    color: var(--text-normal);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.context-tooltip details {
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    margin: 4px 0;
+    padding: 0;
+}
+.context-tooltip details > summary {
+    cursor: pointer;
+    padding: 4px 8px;
+    font-weight: 500;
+    user-select: none;
+}
+.context-tooltip details > summary:hover {
+    background: var(--background-modifier-hover);
+}
+.context-tooltip details[open] > summary {
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+.context-tooltip details > div {
+    padding: 6px 8px;
+}
+
+/* Table styles for tooltip */
+.context-tooltip table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0.5em 0;
+}
+
+.context-tooltip table th,
+.context-tooltip table td {
+    border: 1px solid var(--text-faint);
+    padding: 6px 8px;
+    text-align: left;
+}
+
+.context-tooltip table th {
+    background: var(--background-modifier-border);
+    font-weight: 600;
+}
+
+.context-tooltip table tr:nth-child(even) {
+    background: var(--background-modifier-border);
+}
+
+/* Close button - in top right corner inside border */
+.context-close {
+    all: unset !important;
+    position: absolute !important;
+    display: none !important;
+    top: 5px !important;
+    right: 5px !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: var(--background-secondary) !important;
+    border: 1px solid var(--text-faint) !important;
+    border-radius: 4px !important;
+    color: var(--text-muted) !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+}
+
+.context-close svg {
+    width: 14px !important;
+    height: 14px !important;
+    stroke-width: 2 !important;
+}
+
+.context-close-visible {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.context-close:hover:not(:disabled) {
+    color: var(--text-error) !important;
+    border-color: var(--text-error) !important;
+}
+
+/* Pin button - left of close button */
+.context-pin {
+    position: absolute !important;
+    top: 5px !important;
+    right: 30px !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 4px !important;
+    color: var(--text-muted) !important;
+    cursor: pointer !important;
+    line-height: 1 !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+.context-pin:hover:not(:disabled) {
+    color: var(--text-muted) !important;
+}
+
+.context-pin.pinned {
+    background: var(--background-secondary) !important;
+    border: 1px solid var(--text-faint) !important;
+    color: var(--text-muted) !important;
+}
+
+.context-pin.pinned:hover:not(:disabled) {
+    color: var(--text-muted) !important;
+}
+
+/* Buffer tooltip */
+.buffer-tooltip {
+    position: fixed;
+    background: var(--background-primary);
+    border: 1px solid var(--text-faint);
+    border-radius: 4px;
+    padding: 2px 6px;
+    z-index: 10000;
+    font-size: 0.75em;
+    color: var(--text-normal);
+    line-height: 1.3;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+}
+
+/* Divider - 1px line full width */
+.input-divider {
+    height: 1px;
+    background: var(--text-faint);
+    margin: 4px -12px 6px -12px;
+}
+
+/* Bottom section */
+.input-bottom-section {
+    margin-bottom: 3px;
+    margin-top: -4px;
+    position: relative;
+    padding-right: 0;
+}
+
+/* Textarea - NO border, NO background, NO focus background, 3 lines with scrollbar */
+.ollama-chat-input {
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    margin-right: -10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    resize: none;
+    font-family: var(--font-interface);
+    color: var(--text-normal);
+    padding-bottom: 0;
+    min-height: 24px;
+    max-height: 72px;
+    margin-bottom: 25px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    margin-top: 2px;
+    line-height: 1.5;
+}
+
+.ollama-chat-input:disabled {
+    color: var(--text-normal) !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: var(--text-normal) !important;
+}
+
+.ollama-chat-input:focus {
+    outline: none !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.ollama-chat-input:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Send button - custom design like tabs, no right and bottom border */
+.send-btn-corner {
+    all: unset !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    padding: 4px 0 !important;
+    width: 66px !important;
+    background: var(--background-secondary) !important;
+    border-left: 1px solid var(--text-faint) !important;
+    border-top: 1px solid var(--text-faint) !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    border-radius: 6px 0 0 0 !important;
+    color: var(--text-muted) !important;
+    cursor: pointer !important;
+    font-size: 0.9em !important;
+    font-family: var(--font-interface) !important;
+    font-weight: 500 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+}
+
+.send-btn-corner:hover:not(:disabled) {
+    color: var(--text-normal) !important;
+}
+
+.send-btn-corner .send-btn-icon,
+.send-btn-corner .send-btn-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Nudge Send content (icon+text) left by 1px */
+.send-btn-corner:not(.stop-mode) {
+    padding-left: 0 !important;
+    padding-right: 2px !important;
+}
+
+.send-btn-icon svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+}
+
+.send-btn-corner.stop-mode {
+    border-left: 1px solid var(--text-faint) !important;
+    border-top: 1px solid var(--text-faint) !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    color: var(--text-muted) !important;
+}
+
+.send-btn-corner.stop-mode .send-btn-icon svg {
+    stroke: currentColor;
+}
+
+/* Model selector button - left corner (with icon) */
+.model-btn-corner {
+    all: unset !important;
+    position: absolute !important;
+    bottom: 4px !important;
+    left: 10px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: var(--text-muted) !important;
+    cursor: pointer !important;
+    font-size: 0.756em !important;
+    font-family: var(--font-interface) !important;
+    font-weight: 400 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    letter-spacing: -0.02em !important;
+}
+
+.model-btn-corner:hover:not(:disabled) {
+    color: var(--text-normal) !important;
+}
+
+.model-btn-corner .btn-icon {
+    width: 11px;
+    height: 11px;
+    stroke: currentColor;
+}
+
+/* Prompts button - next to Send button (text only) */
+.quick-edits-btn-corner {
+    all: unset !important;
+    position: absolute !important;
+    bottom: 4px !important;
+    right: 73px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: var(--text-muted) !important;
+    cursor: pointer !important;
+    font-size: 0.756em !important;
+    font-family: var(--font-interface) !important;
+    font-weight: 400 !important;
+    display: none !important;
+    letter-spacing: -0.02em !important;
+}
+
+/* Show Prompts button only in edit mode */
+.ollama-chat-input-container.mode-edit .quick-edits-btn-corner {
+    display: block !important;
+}
+
+/* Hide Prompts button in discuss and web modes */
+.ollama-chat-input-container.mode-discuss .quick-edits-btn-corner,
+.ollama-chat-input-container.mode-web .quick-edits-btn-corner {
+    display: none !important;
+}
+
+.quick-edits-btn-corner:hover:not(:disabled) {
+    color: var(--text-normal) !important;
+}
+
+/* Popup menus */
+.model-selector-menu,
+.quick-edits-menu,
+.clear-chat-menu {
+    position: fixed;
+    background: var(--background-secondary);
+    border: 1px solid var(--text-faint);
+    border-radius: 6px;
+    padding: 0;
+    z-index: 1000;
+    min-width: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+}
+
+.model-selector-menu {
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+.model-selector-menu .menu-item,
+.quick-edits-menu .menu-item,
+.clear-chat-menu .menu-item {
+    padding: 6px 12px;
+    cursor: pointer;
+    color: var(--text-normal);
+    font-size: 0.9em;
+    border-radius: 0 !important;
+}
+
+.model-selector-menu .menu-item {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    display: block !important;
+}
+
+.model-selector-menu .menu-item:hover,
+.quick-edits-menu .menu-item:hover,
+.clear-chat-menu .menu-item:hover {
+    background: var(--background-modifier-hover);
+}
+
+.model-selector-menu .menu-item.selected {
+    background: var(--background-modifier-active-hover);
+    font-weight: 500;
+}
+
+.model-selector-menu .menu-item:not(:last-child),
+.quick-edits-menu .menu-item:not(:last-child),
+.clear-chat-menu .menu-item:not(:last-child) {
+    border-bottom: 1px solid var(--text-faint);
+    margin: 0;
+}
+
+/* Mode switcher - below chat, tabs flow from window */
+.mode-switcher {
+    display: flex;
+    gap: 3px;
+    padding: 0 !important;
+    background: transparent;
+    margin-top: 0;
+    margin-bottom: 0;
+    container-type: inline-size;
+}
+
+.mode-btn {
+    all: unset !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 7px 18px !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: var(--text-muted) !important;
+    cursor: pointer !important;
+    font-size: 0.9em !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    font-family: inherit !important;
+    line-height: normal !important;
+    border-radius: 0 !important;
+    white-space: nowrap !important;
+    position: relative !important;
+}
+
+
+.mode-btn:hover:not(.mode-btn-active):not(:disabled) {
+    color: var(--text-normal) !important;
+}
+
+/* Disabled buttons - keep same appearance but no pointer cursor */
+button:disabled {
+    cursor: default !important;
+}
+
+.mode-btn-active {
+    background: var(--background-secondary) !important;
+    color: var(--text-normal) !important;
+    font-weight: 600 !important;
+    border-left: 1px solid var(--text-faint) !important;
+    border-right: 1px solid var(--text-faint) !important;
+    border-bottom: 1px solid var(--text-faint) !important;
+    border-top: none !important;
+    border-radius: 0 0 8px 8px !important;
+    position: relative !important;
+    top: -1px !important;
+}
+
+/* Inverse border-radius for active button - left corner (top of button, left side) */
+.mode-btn-active::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    background:
+        radial-gradient(circle at bottom left, transparent 9px, var(--text-faint) 9px, var(--text-faint) 10px, transparent 10px),
+        radial-gradient(circle at bottom left, transparent 10px, var(--background-secondary) 10px);
+    pointer-events: none;
+}
+/* Inverse border-radius for active button - right corner (top of button, right side) */
+.mode-btn-active::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    background:
+        radial-gradient(circle at bottom right, transparent 9px, var(--text-faint) 9px, var(--text-faint) 10px, transparent 10px),
+        radial-gradient(circle at bottom right, transparent 10px, var(--background-secondary) 10px);
+    pointer-events: none;
+}
+
+/* First button (Edit) - hide left pseudo-element */
+#mode-edit-btn.mode-btn-active {
+    padding-left: 18px !important;
+}
+
+#mode-edit-btn.mode-btn-active::before {
+    display: none;
+}
+
+/* Remove left radius from wrapper when Edit button active */
+.chat-block-wrapper:has(#mode-edit-btn.mode-btn-active) .ollama-chat-messages-wrapper {
+    border-bottom-left-radius: 0 !important;
+}
+
+/* COMPACT MODE - applied via JavaScript ResizeObserver */
+.compact-mode .mode-switcher {
+    display: grid !important;
+    grid-template-columns: 0.875fr 1.25fr 0.875fr !important;
+    gap: 0 !important;
+    margin-right: 0 !important;
+}
+
+.compact-mode .mode-btn {
+    padding: 7px 0 !important;
+    min-width: 0 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Override Edit button padding in compact mode to match others */
+.compact-mode #mode-edit-btn.mode-btn-active {
+    padding: 7px 0 !important;
+}
+
+/* Hide only right pseudo-element on Web button in compact mode */
+.compact-mode #mode-web-btn.mode-btn-active::after {
+    display: none !important;
+}
+
+/* Tab indicator dots */
+.tab-indicator-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-muted);
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+
+.tab-indicator-dot.pulsing {
+    animation: pulse 0.6s ease-in-out infinite;
+}
+
+.tab-indicator-dot.static {
+    opacity: 0.3;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+}
+
+/* Queued status */
+.user-message-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.queued-status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-muted);
+    font-size: 0.85em;
+    font-style: italic;
+}
+
+.queued-status .spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--text-faint);
+    border-top-color: var(--text-muted);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    flex-shrink: 0;
+}
+
+.queued-status .queued-text {
+    font-size: 0.9em;
+    line-height: 1;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Remove wrapper bottom-right radius ONLY when Web button is active in compact mode */
+.compact-mode .chat-block-wrapper:has(#mode-web-btn.mode-btn-active) .ollama-chat-messages-wrapper {
+    border-bottom-right-radius: 0 !important;
+}
+
+/* Compact mode: Add top padding to first message */
+.compact-mode .ollama-chat-messages {
+    padding-top: 22px !important;
+}
+
+/* Compact mode: Wrap edit button to new line */
+.compact-mode .message-actions {
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+}
+
+/* Compact mode: Hide banner icon and make text full width */
+.ollama-error-banner.compact-mode .error-banner-icon {
+    display: none;
+}
+
+.ollama-error-banner.compact-mode {
+    padding-left: 12px;
+}
+
+/* Status bar wrapper */
+.status-bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* Top row with LLM Status and Clear Chat buttons */
+.status-bar-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Info toggle button */
+.info-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+    margin-bottom: 0;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.85em;
+    width: fit-content;
+}
+
+
+.info-toggle:hover .info-label {
+    color: var(--text-normal);
+}
+
+.info-toggle:hover .info-arrow {
+    color: var(--text-normal);
+}
+
+.info-label {
+    font-weight: 700;
+    color: var(--text-muted);
+    font-size: 0.85em;
+}
+
+.info-arrow {
+    font-size: 0.7em;
+    color: var(--text-faint);
+    line-height: 1;
+}
+
+/* Clear chat toggle button */
+.clear-chat-toggle {
+    /* Positioned by flex space-between in parent */
+}
+
+.clear-chat-toggle:hover .clear-chat-icon svg {
+    stroke: var(--text-normal);
+}
+
+.clear-chat-icon {
+    display: inline-flex;
+    align-items: center;
+}
+
+.clear-chat-icon svg {
+    stroke: var(--text-muted);
+    transition: stroke 0.1s;
+}
+
+/* Clear chat dropdown menu */
+.clear-chat-menu {
+    position: absolute;
+    top: 25px;
+    right: 9px;
+    transform: translateY(0);
+    font-size: 15.2px;
+    font-family: var(--font-interface);
+}
+
+.clear-chat-menu .menu-item:first-child {
+    border-radius: 6px 6px 0 0;
+}
+
+.clear-chat-menu .menu-item:last-child {
+    border-radius: 0 0 6px 6px;
+}
+
+/* Status bar at the BOTTOM */
+.ollama-status-bar-new {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    padding: 0;
+    margin-bottom: 3px;
+    background: transparent;
+    border-radius: 0;
+    font-size: 0.85em;
+}
+
+.status-panel {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 5px;
+    background: var(--background-secondary);
+    border: 1px solid var(--text-faint);
+    border-radius: 6px;
+    font-size: 0.85em;
+}
+
+.panel-label {
+    font-weight: 700;
+    color: var(--text-normal);
+}
+
+.panel-value {
+    font-weight: 400;
+    color: var(--text-normal);
+}
+
+/* Speed loading spinner */
+.speed-spinner {
+    display: inline-block;
+    margin-left: 1px;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--text-faint);
+    border-top-color: var(--text-muted);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.ollama-status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 !important;
+    background: transparent;
+    border-top: none;
+    font-size: 0.85em;
+    border-radius: 0;
+}
+
+/* Send button - custom style like tabs */
+.send-btn {
+    all: unset !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    display: inline-block !important;
+    padding: 8px 20px !important;
+    margin: 0 !important;
+    background: var(--interactive-accent) !important;
+    border: 1px solid var(--interactive-accent) !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: var(--text-on-accent) !important;
+    cursor: pointer !important;
+    font-size: 0.95em !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    font-family: inherit !important;
+    line-height: normal !important;
+    border-radius: 8px !important;
+    transition: opacity 0.2s ease !important;
+}
+
+.send-btn:hover {
+    opacity: 0.85 !important;
+}
+
+.send-btn:active {
+    opacity: 0.7 !important;
+}
+
+.status-item {
+    display: inline;
+    color: var(--text-muted);
+}
+
+.status-separator {
+    color: var(--text-muted);
+}
+
+.llm-status {
+    font-weight: 500;
+}
+
+.model-info {
+    font-weight: 500;
+    color: var(--text-normal);
+}
+
+.options-btn {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--interactive-accent);
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.options-btn:hover {
+    background: var(--background-modifier-hover);
+    color: var(--interactive-accent-hover);
+}
+
+/* Cursor and animations */
+.cursor-blink {
+    animation: blink 1s infinite;
+    color: var(--interactive-accent);
+}
+
+@keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.stop-generation-btn {
+    display: flex;
+    justify-content: flex-start;
+    padding: 4px 0;
+    margin: 0;
+}
+
+.stop-btn {
+    all: unset !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    display: inline-block !important;
+    padding: 6px 12px !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: 1px solid var(--interactive-accent) !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: var(--text-normal) !important;
+    cursor: pointer !important;
+    font-size: 0.85em !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    font-family: inherit !important;
+    line-height: normal !important;
+    border-radius: 6px !important;
+    transition: opacity 0.2s ease !important;
+}
+
+.stop-btn:hover {
+    opacity: 0.85 !important;
+}
+
+.stop-btn:active {
+    opacity: 0.7 !important;
+}
+
+/* Reasoning/thinking block styles */
+.reasoning-block {
+    margin-bottom: 10px;
+    background: var(--background-secondary);
+    border-radius: 8px;
+    border: 1px dashed var(--text-muted);
+    overflow: hidden;
+    /* animation: fadeIn 0.3s ease-in; */
+    line-height: 1;
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+.reasoning-header {
+    padding: 0px 14px;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1.2;
+    pointer-events: auto;
+    position: relative;
+    z-index: 3;
+}
+
+.reasoning-toggle {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: var(--text-muted);
+    font-size: 0.85em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: inherit;
+    flex-direction: row;
+    text-align: left;
+    width: auto;
+    min-width: 0;
+    pointer-events: auto;
+    position: relative;
+    z-index: 3;
+}
+
+.reasoning-toggle:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.reasoning-toggle:active,
+.reasoning-toggle:focus {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+}
+
+.reasoning-toggle::before {
+    content: '';
+    display: none;
+}
+
+.reasoning-toggle::after {
+    content: '\25B2';
+    display: inline-block;
+    font-size: 0.7em;
+}
+
+.reasoning-block.collapsed .reasoning-toggle::after {
+    content: '\25BC';
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+.reasoning-block.collapsed .reasoning-content {
+    display: none;
+}
+
+.reasoning-content {
+    padding: 7px 12px;
+    background: rgba(128, 128, 128, 0.05);
+    border-top: 1px solid var(--background-modifier-border);
+    color: var(--text-muted);
+    font-size: var(--font-smaller);
+    font-family: var(--font-monospace);
+    font-weight: 400;
+    white-space: pre-wrap;
+    max-height: 300px;
+    overflow-y: auto;
+    line-height: normal;
+    user-select: text !important;
+    cursor: text;
+}
+
+.reasoning-content * {
+    user-select: text !important;
+}
+
+/* Chat stats panel in bottom-right corner */
+.chat-stats-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 5px;
+    background: var(--background-secondary);
+    border: 1px solid var(--text-faint);
+    border-top: none;
+    border-right: none;
+    border-bottom-left-radius: 6px;
+    font-size: 11px;
+    z-index: 10;
+}
+
+.stat-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stat-label {
+    font-weight: 700;
+    color: var(--text-normal);
+}
+
+.stat-value {
+    font-weight: 400;
+    color: var(--text-normal);
+}
+
+/* Animated dots for "Calc..." */
+.stat-value.calculating::after {
+    content: '...';
+    display: inline-block;
+    width: 0.9em;
+    text-align: left;
+    animation: blink-sequence 1.5s infinite;
+}
+
+@keyframes blink-sequence {
+    0%, 24% { content: '. '; }
+    25%, 49% { content: '..'; }
+    50%, 100% { content: '...'; }
+}
+
+.stat-divider {
+    width: 1px;
+    background: var(--text-faint);
+    align-self: stretch;
+    margin: -2px 0;
+}
+
+/* Gradient fade-out for messages under stats panel */
+.ollama-chat-messages-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: linear-gradient(
+        to top,
+        var(--background-secondary) 0%,
+        var(--background-secondary) 33%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Error banner for Ollama connection - positioned as overlay at bottom */
+.ollama-error-banner {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    padding: 12px;
+    padding-left: 0px;
+    padding-right: 16px;
+    background: var(--background-modifier-form-field);
+    border: 1px solid var(--text-faint);
+    border-radius: 8px;
+    font-size: 0.9em;
+    z-index: 10;
+    left: 12px;
+    right: 12px;
+    bottom: 41px;
+}
+
+.error-banner-icon {
+    flex-shrink: 0;
+    width: 75px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transform: translate(-4px, -22px);
+    margin-right: -8px;
+}
+
+.error-banner-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.error-banner-icon svg path,
+.error-banner-icon svg polygon,
+.error-banner-icon svg circle,
+.error-banner-icon svg rect {
+    fill: var(--text-muted) !important;
+}
+
+.error-banner-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.error-banner-title {
+    font-weight: 600;
+    font-size: 0.95em;
+    color: var(--text-normal);
+}
+
+.error-banner-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95em;
+}
+
+.error-banner-subtitle .refresh-link {
+    color: var(--text-muted);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.error-banner-subtitle .refresh-link:hover {
+    color: var(--text-normal);
+}
+
+.error-banner-divider {
+    height: 1px;
+    background: var(--text-faint);
+    margin: 0;
+}
+
+.error-banner-help {
+    color: var(--text-muted);
+    font-size: 0.95em;
+}
+
+.error-banner-help a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.error-banner-help a:hover {
+    color: var(--text-normal);
+    text-decoration: underline;
+}
+
+.error-banner-help .external-link::after {
+    content: none !important;
+    display: none !important;
+}
+
+.error-banner-help .external-link svg {
+    display: none !important;
+}
+
+/* Tooltip for install instructions */
+.ollama-install-tooltip {
+    position: fixed;
+    background: var(--background-modifier-form-field);
+    border: 1px solid var(--text-faint);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.85em;
+    color: var(--text-normal);
+    max-width: 300px;
+    z-index: 10000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+    line-height: 1.4;
+}
+
+.ollama-install-tooltip code {
+    background: var(--background-primary);
+    color: var(--code-normal);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: var(--font-monospace);
+    font-size: 0.9em;
+    display: block;
+    margin-top: 0px;
+    border: 1px solid var(--background-modifier-border);
+}
+
+.ollama-install-tooltip br:first-of-type {
+    display: block;
+    content: "";
+    margin-top: 4px;
+}
+
+/* Advanced settings collapsible section (scoped to settings only) */
+/* Remove default marker (triangle before text) */
+.oa-advanced-section > summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.oa-advanced-section > summary::-webkit-details-marker {
+    display: none;
+}
+
+.oa-advanced-section > summary::marker {
+    display: none;
+}
+
+/* Add custom arrow AFTER text */
+.oa-advanced-section > summary::after {
+    content: "▼";
+    margin-left: 8px;
+    font-size: 0.8em;
+    transition: transform 0.2s ease;
+}
+
+/* Rotate arrow when details is open (closed = down, open = up) */
+.oa-advanced-section[open] > summary::after {
+    transform: rotate(180deg);
+}
+
+/* Hide divider after Advanced settings summary when closed */
+.oa-advanced-section + .setting-item {
+    border-top: none !important;
+}
+
+/* Hide divider after Advanced settings when closed */
+.oa-advanced-section:not([open]) {
+    border-bottom: none !important;
+}
+
+/* Hide divider after first setting inside details */
+.oa-advanced-section > .setting-item:first-of-type {
+    border-top: none !important;
+    padding-top: 18px !important;
+}
+
+/* Hide divider after last item in Advanced settings (Force enable Web mode) */
+.oa-advanced-section > .setting-item:last-of-type {
+    border-bottom: none !important;
+}
+
+/* Spoilers (<details>) in chat messages */
+.message-content details {
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    margin: 4px 0;
+    padding: 0;
+}
+
+.message-content details > summary {
+    cursor: pointer;
+    padding: 4px 8px;
+    font-weight: 500;
+    user-select: none;
+}
+
+.message-content details > summary:hover {
+    background: var(--background-modifier-hover);
+}
+
+.message-content details[open] > summary {
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.message-content details .details-content {
+    padding: 6px 8px;
+}
+
+/* Lottie animation in settings */
+.lottie-animation svg {
+    color: var(--text-normal, #000);
+}
+.lottie-animation svg path,
+.lottie-animation svg polygon,
+.lottie-animation svg circle,
+.lottie-animation svg rect {
+    fill: var(--text-normal, #000) !important;
+}
+
+/* Hide first setting divider + top margin */
+.first-setting {
+    border-top: none !important;
+    margin-top: 28px;
+}
+
+/* ============ Utility classes (inline style replacements) ============ */
+
+/* Universal hidden */
+.oa-hidden { display: none !important; }
+
+/* Settings page */
+.oa-settings-header {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 0;
+    margin-top: -32px;
+    gap: 0;
+    padding-bottom: 0;
+}
+.oa-settings-lottie {
+    width: 105px;
+    height: 105px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-bottom: 0;
+    margin-left: -34px;
+}
+.oa-settings-title {
+    margin: 0 0 0 -19px;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-normal, #000);
+    display: block;
+    line-height: 1.2;
+}
+.oa-style-buttons {
+    display: flex;
+    gap: 4px;
+}
+.oa-advanced-section {
+    margin-top: 20px;
+}
+.oa-advanced-summary {
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.oa-reset-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+.oa-fallback-icon {
+    font-size: 60px;
+    text-align: center;
+}
+
+/* Status dot colors */
+.oa-dot-connected { color: var(--text-success); }
+.oa-dot-disconnected { color: var(--text-error); }
+
+/* Input dimmed state */
+.oa-input-dimmed { opacity: 0.4; }
+
+/* Force text color to normal */
+.oa-text-normal { color: var(--text-normal); }
+
+/* Welcome message paragraphs */
+.oa-welcome-title { margin: 0 0 6px 0; }
+.oa-welcome-body { margin: 0; }
+.oa-welcome-list { padding-left: 18px; }
+
+/* Visibility for normally-hidden info icons */
+.context-info-icon.is-visible { display: inline !important; }
+.user-context-info-icon.is-visible { display: inline !important; }
+
+/* Status panels initial state (hidden, flex-wrap when shown) */
+.oa-status-panels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+
+/* Dynamic positioning via CSS custom properties */
+.context-tooltip {
+    top: var(--oa-top, auto);
+    right: var(--oa-right, auto);
+    bottom: var(--oa-bottom, auto);
+    left: var(--oa-left, auto);
+}
+.buffer-tooltip {
+    top: var(--oa-top, auto);
+    right: var(--oa-right, auto);
+    bottom: var(--oa-bottom, auto);
+    left: var(--oa-left, auto);
+}
+.ollama-install-tooltip {
+    top: var(--oa-top, auto);
+    right: var(--oa-right, auto);
+    bottom: var(--oa-bottom, auto);
+    left: var(--oa-left, auto);
+}
+.add-context-menu {
+    right: var(--oa-right, auto);
+    bottom: var(--oa-bottom, auto);
+    left: var(--oa-left, auto);
+}
+.model-selector-menu {
+    left: var(--oa-left, auto);
+    bottom: var(--oa-bottom, auto);
+}
+.quick-edits-menu {
+    right: var(--oa-right, auto);
+    bottom: var(--oa-bottom, auto);
+}

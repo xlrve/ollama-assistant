@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Validate tag matches manifest version
+        run: |
+          node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('manifest.json','utf8')); const tag=process.env.GITHUB_REF_NAME; const clean=tag.startsWith('v') ? tag.slice(1) : tag; if(clean!==m.version){console.error(`Tag (${tag}) must match manifest version (${m.version})`); process.exit(1)}"
+
+      - name: Validate versions.json contains manifest version
+        run: |
+          node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('manifest.json','utf8')); const v=JSON.parse(fs.readFileSync('versions.json','utf8')); if(!Object.prototype.hasOwnProperty.call(v,m.version)){console.error(`versions.json must contain key ${m.version}`); process.exit(1)}"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build plugin
+        run: npm run build
+
+      - name: Create release archive
+        run: zip -j ollama-assistant-${{ github.ref_name }}.zip main.js manifest.json styles.css
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            main.js
+            manifest.json
+            styles.css
+            ollama-assistant-${{ github.ref_name }}.zip

@@ -1,0 +1,17 @@
+﻿node_modules
+main.js
+main.js.map
+*.js.map
+.DS_Store
+
+# Design source files (not needed in repo)
+assets-src/
+
+# Archive of old planning docs
+old/
+.aider*
+.npm-cache/
+.claude/
+ЗАМЕТКИ.md
+AUTHOR-CHECKLIST.md
+PROJECT-STATUS.md
