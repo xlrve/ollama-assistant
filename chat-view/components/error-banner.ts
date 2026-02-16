@@ -187,7 +187,7 @@ export class ErrorBanner {
         // Subtitle with clickable Refresh
         const subtitle = contentWrapper.createEl('div', { cls: 'error-banner-subtitle' });
         subtitle.appendText('Please start Ollama, then click ');
-        const refreshLink = subtitle.createEl('a', { cls: 'refresh-link', text: 'Refresh', attr: { href: '#' } });
+        const refreshLink = subtitle.createEl('a', { cls: 'refresh-link', text: 'refresh', attr: { href: '#' } });
         refreshLink.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -202,9 +202,9 @@ export class ErrorBanner {
         helpText.appendText("Don't have Ollama yet? ");
         helpText.createEl('a', { text: 'Download', attr: { href: 'https://ollama.com/download', target: '_blank', rel: 'noopener' } });
         helpText.appendText(' and set it up, ');
-        helpText.createEl('a', { text: 'Choose', attr: { href: 'https://ollama.com/library', target: '_blank', rel: 'noopener' } });
+        helpText.createEl('a', { text: 'choose', attr: { href: 'https://ollama.com/library', target: '_blank', rel: 'noopener' } });
         helpText.appendText(' a model, then ');
-        const installLink = helpText.createEl('a', { cls: 'install-link', text: 'Install it', attr: { href: '#' } });
+        const installLink = helpText.createEl('a', { cls: 'install-link', text: 'install it', attr: { href: '#' } });
 
         // Add tooltip for "install it" link
         installLink.addEventListener('click', (e) => {

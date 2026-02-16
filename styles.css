@@ -2133,7 +2133,6 @@ button:disabled {
     color: var(--text-muted);
     text-decoration: underline;
     cursor: pointer;
-    text-transform: lowercase;
 }
 
 .error-banner-subtitle .refresh-link:hover {
@@ -2155,7 +2154,6 @@ button:disabled {
     color: var(--text-muted);
     text-decoration: underline;
     cursor: pointer;
-    text-transform: lowercase;
 }
 
 .error-banner-help a:hover {
