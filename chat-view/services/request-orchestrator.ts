@@ -1,7 +1,6 @@
 ﻿import { MarkdownView, Notice } from 'obsidian';
-import type { OllamaMessage, StreamChunk } from '../../ollama-client';
-import type { QueuedRequest, TabState } from '../types';
-import { MarkdownUtils } from '../markdown-utils';
+import type { OllamaMessage } from '../../ollama-client';
+import type { TabState } from '../types';
 import { PromptBuilder } from './prompt-builder';
 import { StreamingHandler } from './streaming-handler';
 import { WebSearchHandler } from './web-search-handler';
@@ -148,9 +147,6 @@ export class RequestOrchestrator {
         lockedTabState.textareaContent = '';
         Actions.clearTextareaContent(this.ctx.store, lockedMode);
 
-        // Declare message elements before try block so they're accessible in catch
-        const explanationMessageEl: HTMLElement | null = null;
-        const resultMessageEl: HTMLElement | null = null;
         const isEditMode = lockedMode === 'edit';
         const isWebMode = lockedMode === 'web';
 
@@ -327,11 +323,6 @@ export class RequestOrchestrator {
                 contextLabel: lockedTabState.contextLabel
             };
 
-            // Clear reasoning block for new generation
-            // NOTE: Store reasoning block for THIS specific generation (lockedMode)
-            const reasoningBlockEl: HTMLElement | null = null;
-            const fullReasoning = '';
-
             // Create abort controller for stopping generation
             const abortController = new AbortController();
             this.ctx.setCurrentAbortController(abortController);
@@ -473,7 +464,6 @@ export class RequestOrchestrator {
         const isAbortError = errorName === 'AbortError';
         const isSilent = this.ctx.isSilentAbort();
 
-        let lastStreamingMessage: HTMLElement | undefined;
         const reasoningBlock = this.ctx.findReasoningBlockElement(lockedMode, this.currentTurnId);
         const reasoningHtml = reasoningBlock?.innerHTML;
         const reasoningCollapsed = reasoningBlock?.classList.contains('collapsed');
@@ -583,22 +573,6 @@ export class RequestOrchestrator {
             return activeUserMsgId;
         };
 
-        const resolveAfterId = (anchor: HTMLElement | undefined): string | undefined => {
-            if (!anchor) return findLastElementInTurn();
-            const direct = anchor._msgId || anchor.getAttribute('data-msg-id');
-            if (direct && direct.trim().length > 0) return direct;
-
-            // If anchor is a reasoning block (often has no msg-id), fall back to the nearest previous sibling with an id.
-            let current: HTMLElement | null = anchor;
-            for (let i = 0; i < 15; i++) {
-                current = current.previousElementSibling as HTMLElement | null;
-                if (!current) break;
-                const id = current._msgId || current.getAttribute('data-msg-id');
-                if (id && id.trim().length > 0) return id;
-            }
-            return findLastElementInTurn();
-        };
-
         this.ctx.setSilentAbort(false);
 
         if (isAbortError) {
@@ -615,10 +589,6 @@ export class RequestOrchestrator {
             // This ensures we have a valid anchor even after elements are removed
 
             streamingMessages.forEach((msgEl) => {
-                if (msgEl.getAttribute('data-mode') === lockedMode) {
-                    lastStreamingMessage = msgEl;
-                }
-
                 const contentEl = msgEl.querySelector('.message-content');
                 if (contentEl) {
                     const content = contentEl.textContent || '';
@@ -698,15 +668,6 @@ export class RequestOrchestrator {
             this.syncTurnsToStore(lockedMode);
             this.ctx.eventBus.emit('generation:stopped', { tab: lockedMode });
         } else {
-            // FIXED: Anchor the error message BEFORE removing streaming messages
-            // Find last element before clearing to ensure we have a valid anchor
-            const streamingMessages = this.ctx.findChatElements('.streaming-message');
-            streamingMessages.forEach((msgEl) => {
-                if (msgEl.getAttribute('data-mode') === lockedMode) {
-                    lastStreamingMessage = msgEl;
-                }
-            });
-
             if (turnId && reasoningHtml) {
                 const currentTurn = lockedTabState.turns.find(t => t.id === turnId);
                 if (currentTurn && !currentTurn.reasoning) {

@@ -356,7 +356,7 @@ export class BufferIndicator {
                 return { context_window: contextLength };
             }
             return null;
-        } catch (error) {
+        } catch {
             return null;
         }
     }

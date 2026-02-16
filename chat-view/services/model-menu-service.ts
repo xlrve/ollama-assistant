@@ -28,7 +28,7 @@ export class ModelMenuService {
         let models: string[] = [];
         try {
             models = await this.deps.plugin.ollamaClient.listModels();
-        } catch (error) {
+        } catch {
             models = [this.deps.plugin.settings.model];
         }
 

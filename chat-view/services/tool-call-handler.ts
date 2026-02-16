@@ -33,7 +33,7 @@ export class ToolCallHandler {
                 '\n\n[INSTRUCTION: Use fetch_page() function to read ONE relevant site. Do NOT write text - call fetch_page via tool call!]';
 
             return {
-                statusText: `✓ Found ${searchResults.length} sites`,
+                statusText: `Found ${searchResults.length} sites`,
                 toolMessages: [
                     {
                         role: 'assistant',
@@ -81,7 +81,7 @@ ${pageContent.text}
 [INSTRUCTION: Use ONLY information from "Page text" above. Quote facts and numbers verbatim. Don't add anything from yourself.]`;
 
             return {
-                statusText: '✓ Page read',
+                statusText: 'Page read',
                 toolMessages: [
                     {
                         role: 'assistant',
@@ -104,3 +104,4 @@ ${pageContent.text}
         throw new Error(`Unsupported tool call: ${toolCall.name}`);
     }
 }
+

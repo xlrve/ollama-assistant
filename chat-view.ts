@@ -476,7 +476,7 @@ export class OllamaChatView extends ItemView {
     }
 
     getDisplayText(): string {
-        return 'Ollama assistant';
+        return 'Ollama Assistant';
     }
 
     getIcon(): string {
@@ -550,7 +550,7 @@ export class OllamaChatView extends ItemView {
         loadStatEl.createEl('span', { cls: 'stat-value', text: bufferInitialText });
 
         // Info icon for buffer tooltip (hidden by default, shown when there's data)
-        const bufferInfo = loadStatEl.createEl('span', {
+        loadStatEl.createEl('span', {
             cls: 'buffer-info-icon oa-hidden',
             text: 'ⓘ',
             attr: { id: 'buffer-info' }
@@ -796,7 +796,7 @@ export class OllamaChatView extends ItemView {
                         this.plugin.ollamaClient.updateSettings(this.plugin.settings);
                     }
                 }
-            } catch (error) {
+            } catch {
                 // Failed to get models list
                 connected = false;
             }
@@ -1085,8 +1085,7 @@ export class OllamaChatView extends ItemView {
     }
 
     async toggleModelMenu() {
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        const existingMenu = document.querySelector('.model-selector-menu') as HTMLElement | null;
+        const existingMenu = document.querySelector<HTMLElement>('.model-selector-menu');
         await this.modelMenuService.toggleModelMenu(existingMenu);
     }
 
@@ -1212,4 +1211,3 @@ export class OllamaChatView extends ItemView {
 }
 
 // WebSearchModal removed - web search now handled via Ollama Tools
-

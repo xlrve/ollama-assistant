@@ -206,6 +206,25 @@
     cursor: text;
 }
 
+.mode-web .system-message .message-content.oa-web-status-search::before,
+.mode-web .system-message .message-content.oa-web-status-read::before,
+.mode-web .system-message .message-content.oa-web-status-found::before {
+    display: inline-block;
+    width: 1em;
+    margin-right: 0.35em;
+    font-style: normal;
+    text-align: center;
+}
+
+.mode-web .system-message .message-content.oa-web-status-search::before,
+.mode-web .system-message .message-content.oa-web-status-read::before {
+    content: "\2192";
+}
+
+.mode-web .system-message .message-content.oa-web-status-found::before {
+    content: "\2713";
+}
+
 /* Divider after system messages (web search status) */
 .system-message {
     border-bottom: 1px solid var(--background-modifier-border);
@@ -2114,6 +2133,7 @@ button:disabled {
     color: var(--text-muted);
     text-decoration: underline;
     cursor: pointer;
+    text-transform: lowercase;
 }
 
 .error-banner-subtitle .refresh-link:hover {
@@ -2135,6 +2155,7 @@ button:disabled {
     color: var(--text-muted);
     text-decoration: underline;
     cursor: pointer;
+    text-transform: lowercase;
 }
 
 .error-banner-help a:hover {
@@ -2391,3 +2412,4 @@ button:disabled {
     right: var(--oa-right, auto);
     bottom: var(--oa-bottom, auto);
 }
+

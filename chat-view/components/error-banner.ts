@@ -219,8 +219,8 @@ export class ErrorBanner {
             tooltip.createEl('br');
             tooltip.appendText('For example:');
             tooltip.createEl('br');
-            // eslint-disable-next-line obsidianmd/ui/sentence-case -- terminal command example
-            tooltip.createEl('code', { text: 'ollama run qwen2.5' });
+            const commandEl = tooltip.createEl('code');
+            commandEl.textContent = 'ollama run qwen2.5';
 
             const rect = (e.target as HTMLElement).getBoundingClientRect();
             tooltip.setCssProps({ '--oa-right': (window.innerWidth - rect.right) + 'px', '--oa-left': 'auto', '--oa-bottom': (window.innerHeight - rect.top + 5) + 'px', '--oa-top': 'auto' });

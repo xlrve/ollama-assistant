@@ -3,8 +3,6 @@
  * (Moved from chat-view/markdown-utils.ts without changes)
  */
 
-import { MarkdownRenderer as ObsidianMarkdownRenderer } from 'obsidian';
-
 export class MarkdownUtils {
     /**
      * Render markdown to HTML

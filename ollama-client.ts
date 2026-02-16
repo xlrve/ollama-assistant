@@ -264,7 +264,7 @@ export class OllamaClient {
                             errorMessage = errorBody;
                         }
                     }
-                } catch (e) {
+                } catch {
                     // Ignore if can't read error body
                 }
 
@@ -347,7 +347,7 @@ export class OllamaClient {
                                     });
                                 }
                             }
-                        } catch (e) {
+                        } catch {
                             // Skip invalid JSON lines
                         }
                     }
@@ -394,7 +394,7 @@ export class OllamaClient {
                 method: 'GET',
             });
             return response.status === 200;
-        } catch (error) {
+        } catch {
             return false;
         }
     }
@@ -437,7 +437,7 @@ export class OllamaClient {
                             if (ctxParam) contextWindow = parseInt(ctxParam);
                         }
                     }
-                } catch (e) {
+                } catch {
                     // Use default if error
                 }
 

@@ -4,7 +4,6 @@ import { StreamingHandler } from './streaming-handler';
 import { MarkdownUtils } from '../markdown-utils';
 import { Actions } from '../core/actions';
 import type { OllamaMessage } from '../../ollama-client';
-import { addAssistantToTurn, updateAssistantContent, updateAssistantStatus, addReasoningToTurn } from '../utils/turn-builder';
 
 /**
  * EditDiscussHandler - handles generation for Edit and Discuss modes
@@ -91,6 +90,14 @@ export class EditDiscussHandler {
             if (renderTimer !== null) return;
             renderTimer = window.setTimeout(flushRender, 30);
         };
+        const clearPendingRender = (messageId?: string) => {
+            if (messageId && pendingRender?.messageId !== messageId) return;
+            pendingRender = null;
+            if (renderTimer !== null) {
+                window.clearTimeout(renderTimer);
+                renderTimer = null;
+            }
+        };
 
         const cancelPendingRender = () => {
             renderCanceled = true;
@@ -167,6 +174,8 @@ export class EditDiscussHandler {
                             ensureExplanationMessage();
                             const parts = fullResponse.split('<EDIT>');
                             explanationContent = parts[0].trim();
+                            // Prevent delayed explanation updates from re-adding cursor after finalize.
+                            clearPendingRender(explanationMessageId);
 
                             eventBus.emit('render:finalizeExplanationMessage', {
                                 messageId: explanationMessageId,

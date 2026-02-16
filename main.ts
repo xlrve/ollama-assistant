@@ -1,4 +1,4 @@
-import { App, Plugin, PluginSettingTab, Setting, WorkspaceLeaf, Notice, Modal, Menu, Editor, MarkdownView, addIcon } from 'obsidian';
+﻿import { App, Plugin, PluginSettingTab, Setting, WorkspaceLeaf, Notice, Menu, Editor, MarkdownView, addIcon } from 'obsidian';
 import { OllamaClient } from './ollama-client';
 import { OllamaChatView, CHAT_VIEW_TYPE } from './chat-view';
 import { WebSearchClient } from './web-search';
@@ -87,8 +87,7 @@ export default class OllamaAssistantPlugin extends Plugin {
         );
 
         // Add ribbon icon to open chat
-        // eslint-disable-next-line obsidianmd/ui/sentence-case -- "Ollama" is a proper noun
-        this.addRibbonIcon('ollama-assistant', 'Open Ollama assistant', () => {
+        this.addRibbonIcon('ollama-assistant', 'Open Ollama Assistant', () => {
             void this.activateView();
         });
 
@@ -101,7 +100,7 @@ export default class OllamaAssistantPlugin extends Plugin {
             }
         });
 
-        // Command to add selected text to context (user can assign hotkey in Settings → Hotkeys)
+        // Command to add selected text to context (user can assign hotkey in Settings в†’ Hotkeys)
         this.addCommand({
             id: 'add-selection-to-context',
             name: 'Add selected text to context',
@@ -133,7 +132,7 @@ export default class OllamaAssistantPlugin extends Plugin {
 
                     menu.addItem((item) => {
                         item
-                            .setTitle('Ollama assistant: add to tab context')
+                            .setTitle('Add to tab context')
                             .setIcon('ollama-assistant')
                             .onClick(async () => {
                                 await this.activateView();
@@ -186,7 +185,7 @@ export default class OllamaAssistantPlugin extends Plugin {
     }
 
     onunload() {
-        // Leaves are not detached here — Obsidian preserves their position across plugin reloads
+        // Leaves are not detached here вЂ” Obsidian preserves their position across plugin reloads
     }
 
     async loadSettings() {
@@ -275,7 +274,7 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
         void this.loadLottieAnimation(animationContainer);
 
         // Title only (no subtitle here)
-        const titleEl = headerEl.createEl('div', { cls: 'settings-title oa-settings-title', text: 'Ollama assistant' });
+        headerEl.createEl('div', { cls: 'settings-title oa-settings-title', text: 'Ollama Assistant' });
 
         // Settings
         const firstSetting = new Setting(containerEl);
@@ -286,7 +285,7 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
             .setName('Model')
             .setDesc('Select a model for communication');
 
-        const dropdown = modelSetting.addDropdown(async (dropdown) => {
+        modelSetting.addDropdown(async (dropdown) => {
             // Try to load models
             try {
                 const models = await this.plugin.ollamaClient.listModels();
@@ -298,7 +297,7 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
                 } else {
                     dropdown.addOption(this.plugin.settings.model, this.plugin.settings.model);
                 }
-            } catch (error) {
+            } catch {
                 // If can't load models, add current model
                 dropdown.addOption(this.plugin.settings.model, this.plugin.settings.model);
             }
@@ -324,7 +323,7 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
         // Response style buttons (temperature presets)
         const responseStyleSetting = new Setting(containerEl)
             .setName('Response style')
-            .setDesc('Controls model temperature.');
+            .setDesc('Controls model temperature');
 
         const stylePresets = [
             { value: 0.3, label: 'Precise' },
@@ -400,12 +399,11 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
 
         // Advanced settings collapsible section
         const advancedEl = containerEl.createEl('details', { cls: 'oa-advanced-section' });
-        const summaryEl = advancedEl.createEl('summary', { cls: 'oa-advanced-summary', text: 'Advanced settings' });
+        advancedEl.createEl('summary', { cls: 'oa-advanced-summary', text: 'Advanced settings' });
 
-        /* eslint-disable obsidianmd/ui/sentence-case -- proper nouns (Ollama) and acronyms (URL, API) */
         new Setting(advancedEl)
             .setName('Ollama API URL')
-            .setDesc('Base URL for Ollama API')
+            .setDesc('Base address used for assistant requests')
             .addText(text => text
                 .setPlaceholder('http://localhost:11434')
                 .setValue(this.plugin.settings.baseUrl)
@@ -415,24 +413,23 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
                 }))
             .addButton(button => button
                 .setButtonText('Test')
-                .setTooltip('Check if Ollama is accessible')
+                .setTooltip('Check connection')
                 .onClick(async () => {
                     const isConnected = await this.plugin.ollamaClient.checkConnection();
                     if (isConnected) {
-                        new Notice('✓ Connected to Ollama');
+                        new Notice('Connected.');
                         const models = await this.plugin.ollamaClient.listModels();
                         if (models.length > 0) {
                             new Notice(`Found ${models.length} models`);
                         }
                     } else {
-                        new Notice('✗ Failed to connect. Check URL and if Ollama is running.');
+                        new Notice('Failed to connect. Check the endpoint and ensure the service is running.');
                     }
                 }));
-        /* eslint-enable obsidianmd/ui/sentence-case */
 
         new Setting(advancedEl)
             .setName('Force enable web mode')
-            .setDesc('Web search support is automatically detected for each model, but you can manually enable it if needed. Reopen chat or switch model to apply changes.')
+            .setDesc('Web search support is automatically detected for each model, but you can manually enable it if needed. Reopen chat or switch model to apply changes')
             .addToggle(toggle => toggle
                 .setValue(this.plugin.settings.forceEnableWebMode)
                 .onChange(async (value) => {
@@ -506,8 +503,9 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
         } catch (error) {
             console.error('Failed to load Lottie animation:', error);
             // Fallback: just show emoji
-            container.textContent = '🦙';
+            container.textContent = 'рџ¦™';
             container.addClass('oa-fallback-icon');
         }
     }
 }
+

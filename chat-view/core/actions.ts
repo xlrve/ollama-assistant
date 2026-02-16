@@ -4,7 +4,7 @@
  */
 
 import type { Store } from './store';
-import type { TabState, PendingEdit, EditPosition } from '../state/types';
+import type { PendingEdit, EditPosition } from '../state/types';
 import type { Turn } from '../types';
 
 /**

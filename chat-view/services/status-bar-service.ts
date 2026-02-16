@@ -31,8 +31,7 @@ export class StatusBarService {
 
         // Info toggle button (left side)
         const infoToggle = statusBarTopRow.createEl('div', { cls: 'info-toggle' });
-        // eslint-disable-next-line obsidianmd/ui/sentence-case -- "LLM" is an acronym
-        infoToggle.createEl('span', { cls: 'info-label', text: 'LLM status' });
+        infoToggle.createEl('span', { cls: 'info-label', text: 'LLM Status' });
         const arrow = infoToggle.createEl('span', { cls: 'info-arrow', text: '▼' });
 
         // Clear chat button (right side)

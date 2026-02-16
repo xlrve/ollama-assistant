@@ -219,8 +219,9 @@ export class AssistantMessageRenderer {
 
     updateStreamingMessage(messageEl: HTMLElement | null, chunk: string): void {
         if (!messageEl) return;
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        const contentEl = messageEl.querySelector('.message-content') as HTMLElement | null;
+        // Ignore stale updates that arrive after message finalization.
+        if (!messageEl.isConnected || !messageEl.classList.contains('streaming-message')) return;
+        const contentEl = messageEl.querySelector<HTMLElement>('.message-content');
         if (!contentEl) return;
 
         const content = chunk || '';
@@ -305,8 +306,7 @@ export class AssistantMessageRenderer {
             return;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        const contentEl = el.querySelector('.message-content') as HTMLElement | null;
+        const contentEl = el.querySelector<HTMLElement>('.message-content');
         if (contentEl) safeSetHtml(contentEl, this.deps.renderMarkdown(content.trim()));
 
         const msgId = el._msgId || el.getAttribute('data-msg-id') || this.deps.generateMessageId();
@@ -326,8 +326,7 @@ export class AssistantMessageRenderer {
         }
 
         const mode = (el.getAttribute('data-mode') as Mode) || 'edit';
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        const contentEl = el.querySelector('.message-content') as HTMLElement | null;
+        const contentEl = el.querySelector<HTMLElement>('.message-content');
         if (contentEl) {
             const cursor = contentEl.querySelector('.cursor-blink');
             if (cursor) cursor.remove();
@@ -378,8 +377,7 @@ export class AssistantMessageRenderer {
             return;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        const contentEl = el.querySelector('.message-content') as HTMLElement | null;
+        const contentEl = el.querySelector<HTMLElement>('.message-content');
         if (contentEl) {
             const cursor = contentEl.querySelector('.cursor-blink');
             if (cursor) cursor.remove();

@@ -14,6 +14,20 @@ export interface SystemMessageRendererDeps {
 export class SystemMessageRenderer {
     constructor(private deps: SystemMessageRendererDeps) {}
 
+    private inferWebStatusClass(content: string): string | null {
+        const normalized = content
+            .trim()
+            .toLowerCase()
+            .replace(/^[\u2192\u2713]\s*/, '');
+
+        if (normalized.includes('page read')) return 'oa-web-status-found';
+        if (normalized.includes('search')) return 'oa-web-status-search';
+        if (normalized.includes('reading page')) return 'oa-web-status-read';
+        if (normalized.includes('found')) return 'oa-web-status-found';
+
+        return null;
+    }
+
     /**
      * Creates a system message element WITHOUT adding to container.
      * Used by TurnRenderer for history restoration.
@@ -50,6 +64,14 @@ export class SystemMessageRenderer {
         }
 
         contentEl.appendChild(document.createTextNode(content));
+
+        if (mode === 'web' && !isStopMessage && !isError) {
+            const webStatusClass = this.inferWebStatusClass(content);
+            if (webStatusClass) {
+                contentEl.classList.add(webStatusClass);
+            }
+        }
+
         el.appendChild(contentEl);
 
         return el;

@@ -1,7 +1,5 @@
-import type OllamaAssistantPlugin from '../../main';
 import type { OllamaMessage, OllamaTool } from '../../ollama-client';
 import type { TabState } from '../types';
-import { MarkdownUtils } from '../markdown-utils';
 import type { RequestProcessorContext } from './request-context';
 import { StreamingHandler } from './streaming-handler';
 import { ToolCallHandler } from './tool-call-handler';
@@ -33,6 +31,8 @@ export class WebSearchHandler {
         abortController: AbortController
     ): Promise<void> {
         const eventBus = this.ctx.eventBus;
+        const statusIconClasses = ['oa-web-status-search', 'oa-web-status-read', 'oa-web-status-found'];
+        type StatusKind = 'search' | 'read' | 'found';
 
         // IMPORTANT: Lock userMessageEl to prevent it being overwritten by queued requests
         const webUserMessageEl = userMessageEl;
@@ -67,6 +67,31 @@ export class WebSearchHandler {
             if (turn) {
                 updateSystemMessageContent(turn, messageId, content);
             }
+        };
+
+        const inferStatusKind = (text: string): StatusKind | undefined => {
+            const normalized = text.toLowerCase();
+            if (normalized.includes('page read')) return 'found';
+            if (normalized.includes('search')) return 'search';
+            if (normalized.includes('found')) return 'found';
+            if (normalized.includes('reading page')) return 'read';
+            if (normalized.includes('read')) return 'read';
+            return undefined;
+        };
+
+        const setStatusContent = (
+            messageId: string | null,
+            contentEl: HTMLElement | null,
+            text: string,
+            kind?: StatusKind
+        ): void => {
+            if (!contentEl) return;
+            contentEl.classList.remove(...statusIconClasses);
+            if (kind) {
+                contentEl.classList.add(`oa-web-status-${kind}`);
+            }
+            contentEl.textContent = text;
+            updateSystemTurnMessage(messageId, text);
         };
 
 
@@ -309,9 +334,7 @@ export class WebSearchHandler {
                                 // Finalize system message before starting streaming
                                 const contentEl = getMessageContentEl(agentStatusId);
                                 if (contentEl) {
-                                    // eslint-disable-next-line obsidianmd/ui/sentence-case -- symbol prefix
-                                    contentEl.textContent = '✓ Information found';
-                                    updateSystemTurnMessage(agentStatusId, contentEl.textContent);
+                                    setStatusContent(agentStatusId, contentEl, 'Information found', 'found');
                                 }
 
                                 streamingMessageId = this.ctx.generateMessageId();
@@ -369,8 +392,8 @@ export class WebSearchHandler {
                 // Create status message if missing
                 if (!agentStatusId) {
                     const initialText = toolCall.name === 'fetch_page'
-                        ? '→ Reading page...'
-                        : '→ Searching for information...';
+                        ? 'Reading page...'
+                        : 'Searching for information...';
 
                     agentStatusId = this.ctx.generateMessageId();
                     const systemAfterId = getInsertAfterId();
@@ -384,6 +407,12 @@ export class WebSearchHandler {
                         turnId
                     });
                     lastInsertedId = agentStatusId;
+                    setStatusContent(
+                        agentStatusId,
+                        getMessageContentEl(agentStatusId),
+                        initialText,
+                        toolCall.name === 'fetch_page' ? 'read' : 'search'
+                    );
                 }
 
                 // Pre-call status adjustments
@@ -391,13 +420,10 @@ export class WebSearchHandler {
                 if (toolCall.name === 'web_search' && statusContentEl) {
                     const args = toolCall.arguments as Record<string, unknown> | null;
                     const query = args && typeof args.query === 'string' ? args.query : '';
-                    statusContentEl.textContent = `→ Search: "${query}"`;
-                    updateSystemTurnMessage(agentStatusId, statusContentEl.textContent || '');
+                    setStatusContent(agentStatusId, statusContentEl, `Search: "${query}"`, 'search');
                 }
                 if (toolCall.name === 'fetch_page' && statusContentEl) {
-                    // eslint-disable-next-line obsidianmd/ui/sentence-case -- symbol prefix
-                    statusContentEl.textContent = '→ Reading page...';
-                    updateSystemTurnMessage(agentStatusId, statusContentEl.textContent || '');
+                    setStatusContent(agentStatusId, statusContentEl, 'Reading page...', 'read');
                 }
 
                 // Execute tool call via handler
@@ -405,8 +431,7 @@ export class WebSearchHandler {
 
                 // Update status with post-call text
                 if (statusContentEl && result.statusText) {
-                    statusContentEl.textContent = result.statusText;
-                    updateSystemTurnMessage(agentStatusId, statusContentEl.textContent || '');
+                    setStatusContent(agentStatusId, statusContentEl, result.statusText, inferStatusKind(result.statusText));
                 }
                 
                 // Push tool + system messages returned by handler
@@ -427,7 +452,7 @@ export class WebSearchHandler {
                         agentStatusId = this.ctx.generateMessageId();
                         const fallbackAfterId = getInsertAfterId();
                         eventBus.emit('render:addSystemMessage', {
-                            content: '→ Searching for information...',
+                            content: 'Searching for information...',
                             isStopMessage: false,
                             mode: lockedMode,
                             isError: false,
@@ -436,6 +461,7 @@ export class WebSearchHandler {
                             turnId
                         });
                         lastInsertedId = agentStatusId;
+                        setStatusContent(agentStatusId, getMessageContentEl(agentStatusId), 'Searching for information...', 'search');
                     }
 
                     const originalMessage = currentMessages[currentMessages.length - 1]?.content || '';
@@ -446,8 +472,7 @@ export class WebSearchHandler {
 
                     const contentEl = getMessageContentEl(agentStatusId);
                     if (contentEl && result.statusText) {
-                        contentEl.textContent = result.statusText;
-                        updateSystemTurnMessage(agentStatusId, contentEl.textContent || '');
+                        setStatusContent(agentStatusId, contentEl, result.statusText, inferStatusKind(result.statusText));
                     }
 
                     if (result.toolMessages?.length) {
@@ -464,9 +489,7 @@ export class WebSearchHandler {
                     if (!streamingMessageId) {
                         const contentEl = getMessageContentEl(agentStatusId);
                         if (contentEl) {
-                            // eslint-disable-next-line obsidianmd/ui/sentence-case -- symbol prefix
-                            contentEl.textContent = '✓ Information found';
-                            updateSystemTurnMessage(agentStatusId, contentEl.textContent);
+                            setStatusContent(agentStatusId, contentEl, 'Information found', 'found');
                         }
 
                         streamingMessageId = this.ctx.generateMessageId();

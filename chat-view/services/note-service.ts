@@ -796,8 +796,7 @@ export class NoteService {
 
         if (!position) {
             this.setPendingAndMenu(data.content, data.editNumber);
-            // eslint-disable-next-line obsidianmd/ui/sentence-case -- multi-sentence with quoted menu item
-            new Notice('Position lost! Right-click in the note and choose "Insert pending edit here".');
+            new Notice('Position lost. Use the note context menu to insert the pending edit here.');
             return;
         }
 
@@ -933,8 +932,7 @@ export class NoteService {
         // Fallback: Position lost - ask user to select manually
         console.error('[NoteService] FAILED to find position for Edit', data.editNumber);
         this.setPendingAndMenu(contentToApply, data.editNumber);
-        // eslint-disable-next-line obsidianmd/ui/sentence-case -- multi-sentence with quoted menu item
-        new Notice('Position lost! Right-click in the note and choose "Insert pending edit here".');
+        new Notice('Position lost. Use the note context menu to insert the pending edit here.');
         } finally {
             this.applyInProgress = false;
         }
@@ -960,8 +958,7 @@ export class NoteService {
 
         if (!position) {
             this.setPendingAndMenu(data.content, data.editNumber);
-            // eslint-disable-next-line obsidianmd/ui/sentence-case -- multi-sentence with quoted menu item
-            new Notice('Position lost! Right-click in the note and choose "Insert pending edit here".');
+            new Notice('Position lost. Use the note context menu to insert the pending edit here.');
             return;
         }
 
@@ -1104,8 +1101,7 @@ export class NoteService {
         const oldContent = rootOriginal;
         const pendingContent = this.buildContentWithHistory(contentToApply, oldContent);
         this.setPendingAndMenu(pendingContent, data.editNumber);
-        // eslint-disable-next-line obsidianmd/ui/sentence-case -- multi-sentence with quoted menu item
-        new Notice('Position lost! Right-click in the note and choose "Insert pending edit here".');
+        new Notice('Position lost. Use the note context menu to insert the pending edit here.');
         console.warn('[NoteService] Could not find original text for edit', data.editNumber);
         } finally {
             this.applyInProgress = false;
