@@ -132,7 +132,7 @@ export default class OllamaAssistantPlugin extends Plugin {
 
                     menu.addItem((item) => {
                         item
-                            .setTitle('Add to tab context')
+                            .setTitle('Add to Ollama Assistant tab context')
                             .setIcon('ollama-assistant')
                             .onClick(async () => {
                                 await this.activateView();
