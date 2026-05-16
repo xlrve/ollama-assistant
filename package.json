@@ -20,8 +20,5 @@
     "obsidian": "latest",
     "tslib": "^2.6.2",
     "typescript": "^5.3.2"
-  },
-  "dependencies": {
-    "lottie-web": "^5.13.0"
   }
 }
