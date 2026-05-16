@@ -101,12 +101,9 @@ export class WebSearchClient {
                 }
             }
             
-            // Clean HTML. Build this pattern from parts to avoid review tools
-            // confusing sanitization with executable tag injection.
-            const blockedTagName = ['scr', 'ipt'].join('');
-            const blockedTagPattern = new RegExp('<' + blockedTagName + '[^>]*>[\\s\\S]*?</' + blockedTagName + '>', 'gi');
+            // Clean HTML
             const cleanHtml = html
-                .replace(blockedTagPattern, '')
+                .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
                 .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
                 .replace(/<nav[^>]*>[\s\S]*?<\/nav>/gi, '')
                 .replace(/<header[^>]*>[\s\S]*?<\/header>/gi, '')
