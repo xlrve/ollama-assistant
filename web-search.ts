@@ -28,82 +28,24 @@ export interface PageContent {
 
 export class WebSearchClient {
     
-    // Search web pages using Bing (primary) with DuckDuckGo fallback
+    // Search web pages using DuckDuckGo.
     async searchText(query: string, maxResults: number = 5): Promise<SearchResult[]> {
         console.debug(`🔍 Searching for: "${query}"`);
         
         try {
-            // Try Bing first (better results)
-            const bingResults = await this.searchBing(query, maxResults);
-            if (bingResults.length > 0) {
-                console.debug(`✅ Bing returned ${bingResults.length} results`);
-                return bingResults;
-            }
-        } catch (error) {
-            console.warn('⚠️ Bing search failed, trying DuckDuckGo:', error);
-        }
-        
-        try {
-            // Fallback to DuckDuckGo
             const ddgResults = await this.searchDuckDuckGo(query, maxResults);
             console.debug(`✅ DuckDuckGo returned ${ddgResults.length} results`);
             return ddgResults;
         } catch (error) {
-            console.error('❌ All search engines failed:', error);
+            console.error('❌ DuckDuckGo search failed:', error);
             return [];
         }
     }
     
-    // Search images using Bing
+    // Image search is intentionally disabled to keep network behavior limited and predictable.
     async searchImages(query: string, maxResults: number = 6): Promise<ImageResult[]> {
-        console.debug(`🖼️ Searching images for: "${query}"`);
-        
-        try {
-
-            
-            const response = await requestUrl({
-                url: `https://www.bing.com/images/search?q=${encodeURIComponent(query)}&count=${maxResults * 3}&mkt=en-US`,
-                method: 'GET',
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-                }
-            });
-            
-            const html = response.text;
-            const results: ImageResult[] = [];
-            
-            // Parse JSON data from HTML (Bing embeds it in the page)
-            const mediaRegex = /"murl":"([^"]+)"/g;
-            const titleRegex = /"turl":"[^"]+","title":"([^"]+)"/g;
-            
-            let mediaMatch;
-            let titleMatch;
-            const urls: string[] = [];
-            const titles: string[] = [];
-            
-            while ((mediaMatch = mediaRegex.exec(html)) !== null && urls.length < maxResults) {
-                urls.push(mediaMatch[1]);
-            }
-            
-            while ((titleMatch = titleRegex.exec(html)) !== null && titles.length < urls.length) {
-                titles.push(titleMatch[1].replace(/\\u[\dA-F]{4}/gi, ''));
-            }
-            
-            for (let i = 0; i < Math.min(urls.length, maxResults); i++) {
-                results.push({
-                    title: titles[i] || 'Image',
-                    url: urls[i],
-                    thumbnail: urls[i]
-                });
-            }
-            
-            console.debug(`✅ Found ${results.length} images`);
-            return results;
-            
-        } catch (error) {
-            console.error('❌ Image search failed:', error);
-            return [];
-        }
+        console.debug(`Image search disabled; skipping image lookup for: "${query}"`, maxResults);
+        return [];
     }
     
     // Fetch page content for reading
@@ -215,46 +157,7 @@ export class WebSearchClient {
         }
     }
     
-    // Bing search implementation
-    private async searchBing(query: string, maxResults: number): Promise<SearchResult[]> {
-
-        
-        const response = await requestUrl({
-            url: `https://www.bing.com/search?q=${encodeURIComponent(query)}&count=${maxResults}`,
-            method: 'GET',
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-            }
-        });
-        
-        const html = response.text;
-        const results: SearchResult[] = [];
-        
-        // Parse Bing search results
-        const resultRegex = /<li class="b_algo[^"]*">([\s\S]*?)<\/li>/g;
-        let match;
-        
-        while ((match = resultRegex.exec(html)) !== null && results.length < maxResults) {
-            const resultHtml = match[1];
-            
-            // Extract title and URL
-            const linkMatch = resultHtml.match(/<h2><a[^>]*href="([^"]+)"[^>]*>(.*?)<\/a><\/h2>/i);
-            if (!linkMatch) continue;
-            
-            const url = linkMatch[1];
-            const title = linkMatch[2].replace(/<[^>]+>/g, '').trim();
-            
-            // Extract snippet
-            const snippetMatch = resultHtml.match(/<p[^>]*>(.*?)<\/p>/i);
-            const snippet = snippetMatch ? snippetMatch[1].replace(/<[^>]+>/g, '').trim() : title;
-            
-            results.push({ title, url, snippet: snippet.substring(0, 200) });
-        }
-        
-        return results;
-    }
-    
-    // DuckDuckGo search implementation (fallback)
+    // DuckDuckGo search implementation
     private async searchDuckDuckGo(query: string, maxResults: number): Promise<SearchResult[]> {
 
         

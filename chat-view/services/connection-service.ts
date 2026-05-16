@@ -16,19 +16,18 @@ interface ConnectionServiceDeps {
  * ConnectionService - manages periodic connection checks and event publishing.
  */
 export class ConnectionService {
-    private intervalId: number | null = null;
+    private timeoutId: number | null = null;
+    private intervalMs: number = 3000;
+    private running: boolean = false;
 
     constructor(private deps: ConnectionServiceDeps) {}
 
     async start(intervalMs: number = 3000): Promise<void> {
-        // Defensive: avoid duplicate intervals if start() is called repeatedly.
         this.stop();
-        // Execute immediately and wait for result
+        this.intervalMs = intervalMs;
+        this.running = true;
         await this.checkOnce();
-        // Start periodic check
-        this.intervalId = window.setInterval(() => {
-            void this.checkOnce();
-        }, intervalMs);
+        this.scheduleNextCheck();
     }
 
     checkNow(): Promise<void> {
@@ -36,10 +35,27 @@ export class ConnectionService {
     }
 
     stop(): void {
-        if (this.intervalId) {
-            window.clearInterval(this.intervalId);
-            this.intervalId = null;
+        this.running = false;
+        if (this.timeoutId) {
+            window.clearTimeout(this.timeoutId);
+            this.timeoutId = null;
         }
+    }
+
+    private scheduleNextCheck(): void {
+        if (!this.running) return;
+
+        this.timeoutId = window.setTimeout(() => {
+            void (async () => {
+                try {
+                    await this.checkOnce();
+                } catch (error) {
+                    console.warn('Connection check failed:', error);
+                } finally {
+                    this.scheduleNextCheck();
+                }
+            })();
+        }, this.intervalMs);
     }
 
     private async checkOnce(): Promise<void> {
