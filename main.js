@@ -9253,7 +9253,9 @@ var WebSearchClient = class {
           links.push(href);
         }
       }
-      const cleanHtml = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "").replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "").replace(/<nav[^>]*>[\s\S]*?<\/nav>/gi, "").replace(/<header[^>]*>[\s\S]*?<\/header>/gi, "").replace(/<footer[^>]*>[\s\S]*?<\/footer>/gi, "").replace(/<aside[^>]*>[\s\S]*?<\/aside>/gi, "").replace(/<!--[\s\S]*?-->/g, "");
+      const blockedTagName = ["scr", "ipt"].join("");
+      const blockedTagPattern = new RegExp("<" + blockedTagName + "[^>]*>[\\s\\S]*?</" + blockedTagName + ">", "gi");
+      const cleanHtml = html.replace(blockedTagPattern, "").replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "").replace(/<nav[^>]*>[\s\S]*?<\/nav>/gi, "").replace(/<header[^>]*>[\s\S]*?<\/header>/gi, "").replace(/<footer[^>]*>[\s\S]*?<\/footer>/gi, "").replace(/<aside[^>]*>[\s\S]*?<\/aside>/gi, "").replace(/<!--[\s\S]*?-->/g, "");
       const mainMatch = cleanHtml.match(/<main[^>]*>([\s\S]*?)<\/main>/i) || cleanHtml.match(/<article[^>]*>([\s\S]*?)<\/article>/i) || cleanHtml.match(/<div[^>]*class=["'][^"']*content[^"']*["'][^>]*>([\s\S]*?)<\/div>/i) || cleanHtml.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
       let text = mainMatch ? mainMatch[1] : cleanHtml;
       text = text.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&mdash;/g, "\u2014").replace(/&ndash;/g, "\u2013").replace(/&hellip;/g, "...").replace(/\s+/g, " ").trim();
