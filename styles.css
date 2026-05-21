@@ -11,18 +11,14 @@
     width: calc(100% - 17.5px);
     max-width: calc(100% - 17.5px);
     height: calc(100% - 24px);
-    margin: 5px 8px 24px 8px;
-    padding: 12px 12px 4px 12px;
+    margin: 5px 8px 24px;
+    padding: 12px 12px 4px;
     gap: 0;
     border-radius: var(--radius-m);
     overflow: hidden;
     background: transparent;
     box-sizing: border-box;
     font-size: calc(var(--font-text-size) * 0.95);
-}
-
-.ollama-chat-container {
-    overflow: hidden;
 }
 
 /* Keep control UI sizes stable when Obsidian interface font size changes */
@@ -368,7 +364,6 @@
 }
 
 .message-actions button {
-    all: unset !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
@@ -397,14 +392,6 @@
 
 .message-actions button:active {
     opacity: 0.7 !important;
-}
-
-/* Apply to note button (mod-cta) */
-.message-actions button.mod-cta {
-    background: var(--interactive-accent) !important;
-    border: 1px solid var(--interactive-accent) !important;
-    color: var(--text-on-accent) !important;
-    font-weight: 600 !important;
 }
 
 /* Apply to note button (mod-cta) */
@@ -567,11 +554,6 @@
 .message-content br + br + table {
     margin-top: 10px;
 }
-.message-content br:has(+ table),
-.message-content br:has(+ pre) {
-    display: none;
-}
-
 /* Reduce height of empty lines (br tags) - ONLY in Discuss mode */
 .mode-discuss .message-content br {
     display: block;
@@ -605,7 +587,7 @@
 .welcome-content li {
     line-height: 1.5;
     white-space: pre-line;
-    color: var(--text-normal) !important;
+    color: var(--text-normal);
 }
 
 .welcome-content {
@@ -616,18 +598,18 @@
 .welcome-content p:not(:first-child),
 .welcome-content p:not(:first-child) *:not(strong),
 .welcome-content li {
-    font-style: italic !important;
+    font-style: italic;
 }
 
 /* Remove spacing between list items in welcome messages */
 .welcome-content li {
-    margin: 0 !important;
+    margin: 0;
     line-height: 1.5;
 }
 
 /* No extra margin on list - BR handles spacing */
 .welcome-content ul {
-    margin: 0 !important;
+    margin: 0;
 }
 
 .message-content hr {
@@ -851,6 +833,9 @@
 /* Add context dropdown menu - same style as model-selector-menu */
 .add-context-menu {
     position: fixed;
+    right: var(--oa-right, auto);
+    bottom: var(--oa-bottom, auto);
+    left: var(--oa-left, auto);
     background: var(--background-secondary);
     border: 1px solid var(--text-faint);
     border-radius: 6px;
@@ -889,6 +874,10 @@
 /* Context tooltip */
 .context-tooltip {
     position: fixed;
+    top: var(--oa-top, auto);
+    right: var(--oa-right, auto);
+    bottom: var(--oa-bottom, auto);
+    left: var(--oa-left, auto);
     background: var(--background-primary);
     border: 1px solid var(--text-faint);
     border-radius: 6px;
@@ -905,12 +894,12 @@
 
 /* Markdown styles for tooltip - based on .message-content (Edit mode) */
 .context-tooltip p {
-    margin: 0 0 0.9em 0 !important;
-    padding: 0 !important;
+    margin: 0 0 0.9em;
+    padding: 0;
 }
 
 .context-tooltip p:last-child {
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
 }
 
 .context-tooltip p:empty {
@@ -919,9 +908,9 @@
 
 /* Fix emoji alignment */
 .context-tooltip img.emoji {
-    display: inline !important;
-    vertical-align: baseline !important;
-    margin: 0 !important;
+    display: inline;
+    vertical-align: baseline;
+    margin: 0;
 }
 
 .context-tooltip code {
@@ -937,7 +926,7 @@
     padding: 12px;
     border-radius: 6px;
     overflow-x: auto;
-    margin: 4px 0 4px 0 !important;
+    margin: 4px 0;
 }
 
 .context-tooltip pre code {
@@ -1066,7 +1055,6 @@
 
 /* Close button - in top right corner inside border */
 .context-close {
-    all: unset !important;
     position: absolute !important;
     display: none !important;
     top: 5px !important;
@@ -1139,6 +1127,10 @@
 /* Buffer tooltip */
 .buffer-tooltip {
     position: fixed;
+    top: var(--oa-top, auto);
+    right: var(--oa-right, auto);
+    bottom: var(--oa-bottom, auto);
+    left: var(--oa-left, auto);
     background: var(--background-primary);
     border: 1px solid var(--text-faint);
     border-radius: 4px;
@@ -1215,7 +1207,6 @@
 
 /* Send button - custom design like tabs, no right and bottom border */
 .send-btn-corner {
-    all: unset !important;
     position: absolute !important;
     bottom: 0 !important;
     right: 0 !important;
@@ -1276,7 +1267,6 @@
 
 /* Model selector button - left corner (with icon) */
 .model-btn-corner {
-    all: unset !important;
     position: absolute !important;
     bottom: 4px !important;
     left: 10px !important;
@@ -1306,7 +1296,6 @@
 
 /* Prompts button - next to Send button (text only) */
 .quick-edits-btn-corner {
-    all: unset !important;
     position: absolute !important;
     bottom: 4px !important;
     right: 73px !important;
@@ -1353,6 +1342,8 @@
 }
 
 .model-selector-menu {
+    left: var(--oa-left, auto);
+    bottom: var(--oa-bottom, auto);
     width: 180px !important;
     min-width: 180px !important;
     max-width: 180px !important;
@@ -1409,7 +1400,6 @@
 }
 
 .mode-btn {
-    all: unset !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
@@ -1495,7 +1485,7 @@ button:disabled {
 }
 
 /* Remove left radius from wrapper when Edit button active */
-.chat-block-wrapper:has(#mode-edit-btn.mode-btn-active) .ollama-chat-messages-wrapper {
+.chat-block-wrapper.mode-edit .ollama-chat-messages-wrapper {
     border-bottom-left-radius: 0 !important;
 }
 
@@ -1597,7 +1587,7 @@ button:disabled {
 }
 
 /* Remove wrapper bottom-right radius ONLY when Web button is active in compact mode */
-.compact-mode .chat-block-wrapper:has(#mode-web-btn.mode-btn-active) .ollama-chat-messages-wrapper {
+.compact-mode .chat-block-wrapper.mode-web .ollama-chat-messages-wrapper {
     border-bottom-right-radius: 0 !important;
 }
 
@@ -1775,7 +1765,6 @@ button:disabled {
 
 /* Send button - custom style like tabs */
 .send-btn {
-    all: unset !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
@@ -1858,7 +1847,6 @@ button:disabled {
 }
 
 .stop-btn {
-    all: unset !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
@@ -2173,6 +2161,10 @@ button:disabled {
 /* Tooltip for install instructions */
 .ollama-install-tooltip {
     position: fixed;
+    top: var(--oa-top, auto);
+    right: var(--oa-right, auto);
+    bottom: var(--oa-bottom, auto);
+    left: var(--oa-left, auto);
     background: var(--background-modifier-form-field);
     border: 1px solid var(--text-faint);
     border-radius: 4px;
@@ -2235,23 +2227,23 @@ button:disabled {
 
 /* Hide divider after Advanced settings summary when closed */
 .oa-advanced-section + .setting-item {
-    border-top: none !important;
+    border-top: none;
 }
 
 /* Hide divider after Advanced settings when closed */
 .oa-advanced-section:not([open]) {
-    border-bottom: none !important;
+    border-bottom: none;
 }
 
 /* Hide divider after first setting inside details */
 .oa-advanced-section > .setting-item:first-of-type {
-    border-top: none !important;
-    padding-top: 18px !important;
+    border-top: none;
+    padding-top: 18px;
 }
 
 /* Hide divider after last item in Advanced settings (Force enable Web mode) */
 .oa-advanced-section > .setting-item:last-of-type {
-    border-bottom: none !important;
+    border-bottom: none;
 }
 
 /* Spoilers (<details>) in chat messages */
@@ -2283,18 +2275,18 @@ button:disabled {
 
 /* Lottie animation in settings */
 .lottie-animation svg {
-    color: var(--text-normal, #000);
+    color: var(--text-normal, #000000);
 }
 .lottie-animation svg path,
 .lottie-animation svg polygon,
 .lottie-animation svg circle,
 .lottie-animation svg rect {
-    fill: var(--text-normal, #000) !important;
+    fill: var(--text-normal, #000000) !important;
 }
 
 /* Hide first setting divider + top margin */
 .first-setting {
-    border-top: none !important;
+    border-top: none;
     margin-top: 28px;
 }
 
@@ -2326,7 +2318,7 @@ button:disabled {
     margin: 0 0 0 -19px;
     font-size: 28px;
     font-weight: 700;
-    color: var(--text-normal, #000);
+    color: var(--text-normal, #000000);
     display: block;
     line-height: 1.2;
 }
@@ -2378,34 +2370,6 @@ button:disabled {
     gap: 3px;
 }
 
-/* Dynamic positioning via CSS custom properties */
-.context-tooltip {
-    top: var(--oa-top, auto);
-    right: var(--oa-right, auto);
-    bottom: var(--oa-bottom, auto);
-    left: var(--oa-left, auto);
-}
-.buffer-tooltip {
-    top: var(--oa-top, auto);
-    right: var(--oa-right, auto);
-    bottom: var(--oa-bottom, auto);
-    left: var(--oa-left, auto);
-}
-.ollama-install-tooltip {
-    top: var(--oa-top, auto);
-    right: var(--oa-right, auto);
-    bottom: var(--oa-bottom, auto);
-    left: var(--oa-left, auto);
-}
-.add-context-menu {
-    right: var(--oa-right, auto);
-    bottom: var(--oa-bottom, auto);
-    left: var(--oa-left, auto);
-}
-.model-selector-menu {
-    left: var(--oa-left, auto);
-    bottom: var(--oa-bottom, auto);
-}
 .quick-edits-menu {
     right: var(--oa-right, auto);
     bottom: var(--oa-bottom, auto);

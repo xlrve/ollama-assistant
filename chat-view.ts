@@ -517,7 +517,7 @@ export class OllamaChatView extends ItemView {
         }
 
         // Chat block wrapper - combines messages window and tabs
-        const chatBlock = container.createEl('div', { cls: 'chat-block-wrapper' });
+        const chatBlock = container.createEl('div', { cls: 'chat-block-wrapper mode-edit' });
         this.chatBlockWrapperEl = chatBlock;
 
         // Chat messages container wrapper
@@ -680,6 +680,11 @@ export class OllamaChatView extends ItemView {
         if (this.chatMessagesWrapperEl) {
             this.chatMessagesWrapperEl.removeClass('mode-edit', 'mode-discuss', 'mode-web');
             this.chatMessagesWrapperEl.addClass(`mode-${mode}`);
+        }
+
+        if (this.chatBlockWrapperEl) {
+            this.chatBlockWrapperEl.removeClass('mode-edit', 'mode-discuss', 'mode-web');
+            this.chatBlockWrapperEl.addClass(`mode-${mode}`);
         }
 
         // Update input container class for mode-specific styling (e.g., Prompts button)
