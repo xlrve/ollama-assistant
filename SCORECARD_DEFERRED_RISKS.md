@@ -141,6 +141,91 @@ Required manual test:
 - No CDN domain appears in built `main.js`.
 - No visual regressions in light/dark themes.
 
+## `!important` on mode tabs and reasoning toggle
+
+Current selectors:
+
+- `.mode-switcher`
+- `.mode-btn`
+- `.mode-btn-active`
+- compact mode selectors for `.mode-btn`
+- `.reasoning-toggle`
+
+Scorecard warning:
+
+- `Avoid !important`
+
+Why it exists:
+
+- The mode tabs are visually precise and are attached to the message panel border.
+- Active tab borders, inverse corner effects, and compact mode depend on exact spacing.
+- Obsidian button styles can alter padding, display, borders, and focus/active states.
+- The reasoning toggle also behaves like a button and is sensitive to default theme styling.
+
+What happened when removed:
+
+- The three mode tabs (`Edit`, `Discuss`, `Web`) visually broke.
+- The reasoning toggle also broke.
+- The change was reverted and the previously tested state was restored.
+
+Current decision:
+
+- Keep `!important` in these selectors for now.
+- Do not include this block in broad CSS cleanup.
+
+Possible future fix:
+
+- Replace the mode tab buttons with non-button elements only if accessibility and keyboard behavior are preserved.
+- Or build a complete explicit button reset for mode tabs and test it separately.
+- Handle reasoning toggle separately from mode tabs.
+
+Required manual test:
+
+- Switch between Edit, Discuss, and Web.
+- Check active tab borders and bottom-radius joins.
+- Check compact/narrow layout.
+- Check disabled Web tab behavior when model does not support tools.
+- Check reasoning collapse/expand state.
+
+## `!important` on the context Add button
+
+Current selectors:
+
+- `.add-context-button`
+- `.add-context-icon`
+- `.add-context-text`
+
+Scorecard warning:
+
+- `Avoid !important`
+
+Why it exists:
+
+- The context add control is visually tuned as a compact inline button.
+- Obsidian button defaults can affect its size, alignment, icon spacing, border, hover state, and text color.
+
+What happened when removed:
+
+- The `Add` context button visually broke during manual testing.
+- The change was reverted and the previous working state was copied back to the vault.
+
+Current decision:
+
+- Keep `!important` in these selectors for now.
+- Do not include this block in broad CSS cleanup.
+
+Possible future fix:
+
+- Replace it with a full explicit button reset scoped only to this control.
+- Test it separately in light and dark themes before including it in a release.
+
+Required manual test:
+
+- Check the `Add` button in the context area.
+- Hover/focus the button.
+- Open the context menu/dropdown.
+- Verify icon and text alignment in normal and narrow layouts.
+
 ## Malware/network scans unavailable
 
 Scorecard text:
@@ -156,4 +241,3 @@ Why it exists:
 Current decision:
 
 - Nothing to change in code unless Obsidian later reports a concrete issue.
-
