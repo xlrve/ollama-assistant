@@ -267,15 +267,15 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
         containerEl.empty();
 
         // Header with Lottie animation and title
-        const headerEl = containerEl.createEl('div', { cls: 'settings-header oa-settings-header' });
+        const headerEl = containerEl.createDiv({ cls: 'settings-header oa-settings-header' });
 
         // Lottie animation container - slightly reduced, aligned to bottom, pushed left
-        const animationContainer = headerEl.createEl('div', { cls: 'lottie-animation oa-settings-lottie' });
+        const animationContainer = headerEl.createDiv({ cls: 'lottie-animation oa-settings-lottie' });
         
         void this.loadLottieAnimation(animationContainer);
 
         // Title only (no subtitle here)
-        headerEl.createEl('div', { cls: 'settings-title oa-settings-title', text: 'Ollama Assistant' });
+        headerEl.createDiv({ cls: 'settings-title oa-settings-title', text: 'Ollama Assistant' });
 
         // Settings
         const firstSetting = new Setting(containerEl);
@@ -439,7 +439,7 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
                 }));
 
         // Reset to defaults button (below Advanced settings)
-        const resetButtonContainer = containerEl.createEl('div', { cls: 'reset-button-container oa-reset-container' });
+        const resetButtonContainer = containerEl.createDiv({ cls: 'reset-button-container oa-reset-container' });
 
         const resetButton = resetButtonContainer.createEl('button', { cls: 'mod-cta', text: 'Reset to defaults' });
         resetButton.addEventListener('click', () => {
