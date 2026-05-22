@@ -22,8 +22,8 @@ export class ModelIndicator {
 
     private initialize(): void {
         // Find model button (created in UIBuilder)
-        this.buttonEl = document.querySelector('.model-btn-corner');
-        this.modelInfoEl = document.getElementById('model-info');
+        this.buttonEl = activeDocument.querySelector('.model-btn-corner');
+        this.modelInfoEl = activeDocument.getElementById('model-info');
         this.updateDisplay();
     }
 

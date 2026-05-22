@@ -36,7 +36,7 @@ export class WebSearchIndicator {
     }
 
     private initialize(): void {
-        this.statusEl = document.getElementById('web-search-status');
+        this.statusEl = activeDocument.getElementById('web-search-status');
         this.updateDisplay();
     }
 

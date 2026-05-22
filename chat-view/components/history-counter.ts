@@ -31,7 +31,7 @@ export class HistoryCounter {
      * Initialize - find DOM element
      */
     private initialize(): void {
-        const historyStatEl = document.getElementById('chat-history-stat');
+        const historyStatEl = activeDocument.getElementById('chat-history-stat');
         if (historyStatEl) {
             // Find .stat-value inside
             this.counterEl = historyStatEl.querySelector('.stat-value');

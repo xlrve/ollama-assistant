@@ -33,11 +33,11 @@ export class SpeedIndicator {
      * Initialize - find DOM element and create loading icon
      */
     private initialize(): void {
-        this.speedEl = document.getElementById('speed-info');
+        this.speedEl = activeDocument.getElementById('speed-info');
 
         // Create loading icon element (hidden by default)
         if (this.speedEl && this.speedEl.parentElement) {
-            this.loadingIconEl = this.speedEl.parentElement.createEl('span', {
+            this.loadingIconEl = this.speedEl.parentElement.createSpan({
                 cls: 'speed-spinner oa-hidden'
             });
         }

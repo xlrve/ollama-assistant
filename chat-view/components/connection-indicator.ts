@@ -18,7 +18,7 @@ export class ConnectionIndicator {
     }
 
     private initialize(): void {
-        this.llmStatusEl = document.getElementById('llm-status');
+        this.llmStatusEl = activeDocument.getElementById('llm-status');
         this.updateDisplay();
     }
 

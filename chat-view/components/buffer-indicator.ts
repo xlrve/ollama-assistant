@@ -36,11 +36,11 @@ export class BufferIndicator {
     }
 
     private initialize(): void {
-        const loadStatEl = document.getElementById('chat-load-stat');
+        const loadStatEl = activeDocument.getElementById('chat-load-stat');
         if (loadStatEl) {
             this.valueEl = loadStatEl.querySelector('.stat-value');
         }
-        this.tooltipEl = document.getElementById('buffer-info');
+        this.tooltipEl = activeDocument.getElementById('buffer-info');
 
         // Create tooltip popup (once) and attach hover handlers
         this.ensureTooltipPopup();
@@ -53,14 +53,14 @@ export class BufferIndicator {
     }
 
     private ensureTooltipPopup(): void {
-        const existing = document.getElementById('buffer-tooltip');
+        const existing = activeDocument.getElementById('buffer-tooltip');
         if (existing) {
             this.tooltipPopupEl = existing;
             this.ownsTooltipPopup = false;
             return;
         }
 
-        this.tooltipPopupEl = document.body.createEl('div', {
+        this.tooltipPopupEl = activeDocument.body.createDiv({
             cls: 'buffer-tooltip oa-hidden',
             attr: { id: 'buffer-tooltip' }
         });
@@ -87,7 +87,8 @@ export class BufferIndicator {
             this.tooltipPopupEl.removeClass('oa-hidden');
 
             const rect = icon.getBoundingClientRect();
-            this.tooltipPopupEl.setCssProps({ '--oa-right': (window.innerWidth - rect.left + 5) + 'px', '--oa-left': 'auto', '--oa-top': (rect.bottom + 5) + 'px', '--oa-bottom': 'auto' });
+            const view = icon.ownerDocument.defaultView ?? activeWindow;
+            this.tooltipPopupEl.setCssProps({ '--oa-right': (view.innerWidth - rect.left + 5) + 'px', '--oa-left': 'auto', '--oa-top': (rect.bottom + 5) + 'px', '--oa-bottom': 'auto' });
         };
         this.tooltipEl.addEventListener('mouseenter', this.tooltipMouseEnterHandler);
 
