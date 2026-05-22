@@ -21,14 +21,6 @@
     font-size: calc(var(--font-text-size) * 0.95);
 }
 
-/* Keep control UI sizes stable when Obsidian interface font size changes */
-.status-bar-wrapper,
-.mode-switcher,
-.ollama-chat-input-container,
-.message-actions {
-    font-size: 15.2px;
-}
-
 /* Chat block wrapper - combines messages + tabs into single block */
 .chat-block-wrapper {
     flex: 1;
@@ -38,7 +30,7 @@
     border-radius: 0;
     overflow: hidden;
     background: transparent;
-    margin-bottom: 10px !important;
+    margin-bottom: 10px;
     min-height: 0;
     position: relative;
 }
@@ -150,26 +142,26 @@
 
 /* Ensure consistent font size in Web mode */
 .mode-web .assistant-message .message-content {
-    font-size: var(--font-smaller) !important;
+    font-size: var(--font-smaller);
 }
 
 /* Welcome message - smaller font size (needs higher specificity for Web mode) */
 .assistant-message .welcome-content,
 .mode-web .assistant-message .welcome-content {
-    font-size: 0.77em !important;
-    user-select: none !important;
-    cursor: default !important;
+    font-size: 0.77em;
+    user-select: none;
+    cursor: default;
 }
 
 .assistant-message .welcome-content * {
-    user-select: none !important;
-    cursor: default !important;
+    user-select: none;
+    cursor: default;
 }
 
 .mode-web .system-message .message-content,
 .mode-web .stop-message .message-content,
 .mode-web .error-message .message-content {
-    font-size: 0.9em !important;
+    font-size: 0.9em;
 }
 
 .assistant-message .message-content code {
@@ -230,9 +222,9 @@
 
 /* No divider for stop message and error message */
 .stop-message, .error-message {
-    border-bottom: none !important;
-    padding-bottom: 0 !important;
-    margin-bottom: 10px !important;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 10px;
 }
 .system-stop-icon {
     display: inline-block;
@@ -248,6 +240,7 @@
 
 .message-actions {
     display: flex;
+    font-size: 15.2px;
     margin-top: 8px;
     align-items: center;
     justify-content: space-between;
@@ -493,7 +486,7 @@
     padding: 12px;
     border-radius: 6px;
     overflow-x: auto;
-    margin: 4px 0 4px 0 !important;
+    margin: 4px 0 4px 0;
 }
 
 .message-content code {
@@ -662,6 +655,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    font-size: 15.2px;
     overflow: hidden;
     padding: 6px 10px 0 10px;
     background: var(--background-secondary);
@@ -1342,10 +1336,28 @@
 }
 
 /* Popup menus */
-.model-selector-menu,
-.quick-edits-menu,
-.clear-chat-menu {
+.model-selector-menu {
     position: fixed;
+    left: var(--oa-left, auto);
+    bottom: var(--oa-bottom, auto);
+    background: var(--background-secondary);
+    border: 1px solid var(--text-faint);
+    border-radius: 6px;
+    padding: 0;
+    z-index: 1000;
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+}
+
+.quick-edits-menu {
+    position: fixed;
+    right: var(--oa-right, auto);
+    bottom: var(--oa-bottom, auto);
     background: var(--background-secondary);
     border: 1px solid var(--text-faint);
     border-radius: 6px;
@@ -1354,16 +1366,6 @@
     min-width: 150px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     transform: translateY(-4px);
-}
-
-.model-selector-menu {
-    left: var(--oa-left, auto);
-    bottom: var(--oa-bottom, auto);
-    width: 180px !important;
-    min-width: 180px !important;
-    max-width: 180px !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
 }
 
 .model-selector-menu .menu-item,
@@ -1406,6 +1408,7 @@
 /* Mode switcher - below chat, tabs flow from window */
 .mode-switcher {
     display: flex;
+    font-size: 15.2px;
     gap: 3px;
     padding: 0 !important;
     background: transparent;
@@ -1630,6 +1633,7 @@ button:disabled {
 .status-bar-wrapper {
     display: flex;
     flex-direction: column;
+    font-size: 15.2px;
     gap: 0;
 }
 
@@ -1695,6 +1699,13 @@ button:disabled {
 
 /* Clear chat dropdown menu */
 .clear-chat-menu {
+    background: var(--background-secondary);
+    border: 1px solid var(--text-faint);
+    border-radius: 6px;
+    padding: 0;
+    z-index: 1000;
+    min-width: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: absolute;
     top: 25px;
     right: 9px;
@@ -2375,18 +2386,13 @@ button:disabled {
 .oa-welcome-list { padding-left: 18px; }
 
 /* Visibility for normally-hidden info icons */
-.context-info-icon.is-visible { display: inline !important; }
-.user-context-info-icon.is-visible { display: inline !important; }
+.context-info-icon.is-visible { display: inline; }
+.user-context-info-icon.is-visible { display: inline; }
 
 /* Status panels initial state (hidden, flex-wrap when shown) */
 .oa-status-panels {
     display: flex;
     flex-wrap: wrap;
     gap: 3px;
-}
-
-.quick-edits-menu {
-    right: var(--oa-right, auto);
-    bottom: var(--oa-bottom, auto);
 }
 
