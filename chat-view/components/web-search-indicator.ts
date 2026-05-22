@@ -43,7 +43,7 @@ export class WebSearchIndicator {
     private handleModelChanged(data: { model: string }): void {
         console.debug('[WebSearchIndicator] Model changed:', data.model);
         // Give time for Store to update with tool support info
-        setTimeout(() => this.updateDisplay(), 100);
+        activeWindow.setTimeout(() => this.updateDisplay(), 100);
     }
 
     private handleConnectionChanged(data: { connected: boolean }): void {

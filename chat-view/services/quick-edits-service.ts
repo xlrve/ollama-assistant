@@ -45,10 +45,11 @@ export class QuickEditsService {
 
         if (buttonEl) {
             const rect = buttonEl.getBoundingClientRect();
-            menu.setCssProps({ '--oa-right': (window.innerWidth - rect.right) + 'px', '--oa-bottom': (window.innerHeight - rect.top) + 'px' });
+            const view = bodyEl.ownerDocument.defaultView ?? activeWindow;
+            menu.setCssProps({ '--oa-right': (view.innerWidth - rect.right) + 'px', '--oa-bottom': (view.innerHeight - rect.top) + 'px' });
         }
 
-        setTimeout(() => {
+        (bodyEl.ownerDocument.defaultView ?? activeWindow).setTimeout(() => {
             const doc = bodyEl.ownerDocument;
             doc.addEventListener('click', function closeMenu(e) {
                 if (!menu.contains(e.target as Node)) {

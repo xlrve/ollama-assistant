@@ -57,10 +57,11 @@ export class ModelMenuService {
 
         if (modelButtonEl) {
             const rect = modelButtonEl.getBoundingClientRect();
-            menu.setCssProps({ '--oa-left': rect.left + 'px', '--oa-bottom': (window.innerHeight - rect.top) + 'px' });
+            const view = doc.defaultView ?? activeWindow;
+            menu.setCssProps({ '--oa-left': rect.left + 'px', '--oa-bottom': (view.innerHeight - rect.top) + 'px' });
         }
 
-        setTimeout(() => {
+        (doc.defaultView ?? activeWindow).setTimeout(() => {
             doc.addEventListener('click', function closeMenu(e) {
                 if (!menu.contains(e.target as Node)) {
                     menu.remove();

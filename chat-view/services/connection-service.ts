@@ -37,7 +37,7 @@ export class ConnectionService {
     stop(): void {
         this.running = false;
         if (this.timeoutId) {
-            window.clearTimeout(this.timeoutId);
+            activeWindow.clearTimeout(this.timeoutId);
             this.timeoutId = null;
         }
     }
@@ -45,7 +45,7 @@ export class ConnectionService {
     private scheduleNextCheck(): void {
         if (!this.running) return;
 
-        this.timeoutId = window.setTimeout(() => {
+        this.timeoutId = activeWindow.setTimeout(() => {
             void (async () => {
                 try {
                     await this.checkOnce();
