@@ -260,146 +260,146 @@
 }
 
 .message-actions .action-icon-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 33px !important;
-    height: 33px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    background: transparent !important;
-    border: 1px solid var(--text-faint) !important;
-    border-radius: var(--radius-m) !important;
-    cursor: pointer !important;
-    color: var(--text-muted) !important;
-    transition: all 0.2s ease !important;
-    flex-shrink: 0 !important;
-    overflow: hidden !important;
-    opacity: 0.9 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 33px;
+    height: 33px;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: 1px solid var(--text-faint);
+    border-radius: var(--radius-m);
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    overflow: hidden;
+    opacity: 0.9;
 }
 
 .message-actions .action-icon-btn:last-child {
-    margin-right: 0 !important;
+    margin-right: 0;
 }
 
 .message-actions .action-icon-btn:hover {
-    opacity: 1 !important;
-    color: var(--text-normal) !important;
-    border-color: var(--text-muted) !important;
+    opacity: 1;
+    color: var(--text-normal);
+    border-color: var(--text-muted);
 }
 
 .message-actions .action-icon-btn svg {
-    width: 13px !important;
-    height: 13px !important;
+    width: 13px;
+    height: 13px;
 }
 
 .message-actions .action-text-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: 33px !important;
-    padding: 0 12px !important;
-    margin: 0 !important;
-    background: transparent !important;
-    border: 1px solid var(--text-faint) !important;
-    border-radius: var(--radius-m) !important;
-    cursor: pointer !important;
-    color: var(--text-muted) !important;
-    transition: all 0.2s ease !important;
-    gap: 6px !important;
-    flex-shrink: 0 !important;
-    opacity: 0.9 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 33px;
+    padding: 0 12px;
+    margin: 0;
+    background: transparent;
+    border: 1px solid var(--text-faint);
+    border-radius: var(--radius-m);
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    gap: 6px;
+    flex-shrink: 0;
+    opacity: 0.9;
 }
 
 .message-actions .action-text-btn:hover {
-    opacity: 1 !important;
-    color: var(--text-normal) !important;
-    border-color: var(--text-muted) !important;
+    opacity: 1;
+    color: var(--text-normal);
+    border-color: var(--text-muted);
 }
 
 .message-actions .action-text-btn svg {
-    width: 13px !important;
-    height: 13px !important;
+    width: 13px;
+    height: 13px;
 }
 
 .message-actions .action-text-btn .action-btn-icon svg {
-    position: relative !important;
-    top: 1px !important;
+    position: relative;
+    top: 1px;
 }
 
 .message-actions .edit-context-btn {
-    padding: 0 !important;
-    gap: 0 !important;
+    padding: 0;
+    gap: 0;
 }
 
 .message-actions .edit-context-btn .action-btn-label {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 12px !important;
-    position: relative !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    position: relative;
 }
 
 .message-actions .edit-context-btn .action-btn-label::after {
-    content: '' !important;
-    position: absolute !important;
-    right: 0 !important;
-    top: -9px !important;
-    bottom: -9px !important;
-    width: 1px !important;
-    background-color: var(--text-faint) !important;
-    transition: background-color 0.2s ease !important;
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -9px;
+    bottom: -9px;
+    width: 1px;
+    background-color: var(--text-faint);
+    transition: background-color 0.2s ease;
 }
 
 .message-actions .edit-context-btn:hover .action-btn-label::after {
-    background-color: var(--text-muted) !important;
+    background-color: var(--text-muted);
 }
 
 .message-actions .edit-context-btn .action-btn-icon {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 33px !important;
-    flex-shrink: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 33px;
+    flex-shrink: 0;
 }
 
 .message-actions button {
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    appearance: none !important;
-    display: inline-block !important;
-    padding: 6px 12px !important;
-    margin: 0 !important;
-    background: var(--background-secondary) !important;
-    border: 1px solid var(--background-modifier-border) !important;
-    outline: none !important;
-    box-shadow: none !important;
-    color: var(--text-normal) !important;
-    cursor: pointer !important;
-    font-size: 0.78em !important;
-    font-weight: 500 !important;
-    text-align: center !important;
-    box-sizing: border-box !important;
-    font-family: inherit !important;
-    line-height: normal !important;
-    border-radius: 6px !important;
-    transition: opacity 0.2s ease !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0;
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    outline: none;
+    box-shadow: none;
+    color: var(--text-normal);
+    cursor: pointer;
+    font-size: 0.78em;
+    font-weight: 500;
+    text-align: center;
+    box-sizing: border-box;
+    font-family: inherit;
+    line-height: normal;
+    border-radius: 6px;
+    transition: opacity 0.2s ease;
 }
 
 .message-actions button:hover {
-    opacity: 0.85 !important;
+    opacity: 0.85;
 }
 
 .message-actions button:active {
-    opacity: 0.7 !important;
+    opacity: 0.7;
 }
 
 /* Apply to note button (mod-cta) */
 .message-actions button.mod-cta {
-    background: var(--interactive-accent) !important;
-    border: 1px solid var(--interactive-accent) !important;
-    color: var(--text-on-accent) !important;
-    font-weight: 600 !important;
+    background: var(--interactive-accent);
+    border: 1px solid var(--interactive-accent);
+    color: var(--text-on-accent);
+    font-weight: 600;
 }
 
 /* Model warning */
