@@ -1206,7 +1206,20 @@
 }
 
 /* Send button - custom design like tabs, no right and bottom border */
+.send-btn-corner,
+.model-btn-corner,
+.quick-edits-btn-corner {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    text-shadow: none !important;
+    background-image: none !important;
+}
+
 .send-btn-corner {
+    all: unset !important;
     position: absolute !important;
     bottom: 0 !important;
     right: 0 !important;
@@ -1267,6 +1280,7 @@
 
 /* Model selector button - left corner (with icon) */
 .model-btn-corner {
+    all: unset !important;
     position: absolute !important;
     bottom: 4px !important;
     left: 10px !important;
@@ -1296,6 +1310,7 @@
 
 /* Prompts button - next to Send button (text only) */
 .quick-edits-btn-corner {
+    all: unset !important;
     position: absolute !important;
     bottom: 4px !important;
     right: 73px !important;
