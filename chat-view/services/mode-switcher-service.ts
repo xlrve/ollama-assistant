@@ -1,10 +1,40 @@
 /**
  * ModeSwitcherService - creates and manages mode switcher.
  */
+type ChatMode = 'edit' | 'discuss' | 'web';
+
 export class ModeSwitcherService {
     private containerEl: HTMLElement | null = null;
 
-    updateIndicators(modeSwitcher: HTMLElement, processingTab: 'edit' | 'discuss' | 'web' | null, queuedModes: Set<'edit' | 'discuss' | 'web'>) {
+    private createModeTab(
+        modeSwitcherContainer: HTMLElement,
+        mode: ChatMode,
+        label: string,
+        isActive: boolean,
+        onSwitch: (mode: ChatMode) => void
+    ): HTMLElement {
+        const tab = modeSwitcherContainer.createDiv({
+            text: label,
+            cls: isActive ? 'mode-btn mode-btn-active' : 'mode-btn',
+            attr: {
+                id: `mode-${mode}-btn`,
+                role: 'tab',
+                tabindex: isActive ? '0' : '-1',
+                'aria-selected': isActive ? 'true' : 'false'
+            }
+        });
+
+        tab.addEventListener('click', () => onSwitch(mode));
+        tab.addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            event.preventDefault();
+            onSwitch(mode);
+        });
+
+        return tab;
+    }
+
+    updateIndicators(modeSwitcher: HTMLElement, processingTab: ChatMode | null, queuedModes: Set<ChatMode>) {
         const buttons = {
             edit: modeSwitcher.querySelector('#mode-edit-btn'),
             discuss: modeSwitcher.querySelector('#mode-discuss-btn'),
@@ -36,36 +66,22 @@ export class ModeSwitcherService {
         });
     }
 
-    create(modeSwitcherContainer: HTMLElement, supportsTools: boolean, onSwitch: (mode: 'edit' | 'discuss' | 'web') => void) {
+    create(modeSwitcherContainer: HTMLElement, supportsTools: boolean, onSwitch: (mode: ChatMode) => void) {
         this.containerEl = modeSwitcherContainer;
-        const editBtn = modeSwitcherContainer.createEl('button', {
-            text: 'Edit',
-            cls: 'mode-btn mode-btn-active',
-            attr: { id: 'mode-edit-btn' }
-        });
-        editBtn.addEventListener('click', () => onSwitch('edit'));
+        modeSwitcherContainer.setAttribute('role', 'tablist');
 
-        const discussBtn = modeSwitcherContainer.createEl('button', {
-            text: 'Discuss',
-            cls: 'mode-btn',
-            attr: { id: 'mode-discuss-btn' }
-        });
-        discussBtn.addEventListener('click', () => onSwitch('discuss'));
+        this.createModeTab(modeSwitcherContainer, 'edit', 'Edit', true, onSwitch);
+        this.createModeTab(modeSwitcherContainer, 'discuss', 'Discuss', false, onSwitch);
 
         if (supportsTools) {
-            const webBtn = modeSwitcherContainer.createEl('button', {
-                text: 'Web',
-                cls: 'mode-btn',
-                attr: { id: 'mode-web-btn' }
-            });
-            webBtn.addEventListener('click', () => onSwitch('web'));
+            this.createModeTab(modeSwitcherContainer, 'web', 'Web', false, onSwitch);
         }
     }
     
     /**
      * Update Web tab visibility when model changes
      */
-    update(supportsTools: boolean, onSwitch: (mode: 'edit' | 'discuss' | 'web') => void) {
+    update(supportsTools: boolean, onSwitch: (mode: ChatMode) => void) {
         const container = this.containerEl;
         if (!container) return;
 
@@ -73,12 +89,7 @@ export class ModeSwitcherService {
 
         if (supportsTools && !webBtn) {
             // Add Web button if it doesn't exist
-            const newWebBtn = container.createEl('button', {
-                text: 'Web',
-                cls: 'mode-btn',
-                attr: { id: 'mode-web-btn' }
-            });
-            newWebBtn.addEventListener('click', () => onSwitch('web'));
+            this.createModeTab(container, 'web', 'Web', false, onSwitch);
         } else if (!supportsTools && webBtn) {
             // Remove Web button if model doesn't support tools
             webBtn.remove();

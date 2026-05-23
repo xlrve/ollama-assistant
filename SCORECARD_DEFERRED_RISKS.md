@@ -165,13 +165,12 @@ Why it exists:
 What happened when removed:
 
 - The three mode tabs (`Edit`, `Discuss`, `Web`) visually broke.
-- Removing `all: unset !important` from `.mode-btn` changed tab behavior; restoring it fixed the issue.
 - The reasoning toggle also broke.
 - The change was reverted and the previously tested state was restored.
+- `all: unset !important` on `.mode-btn` was later removed safely by changing the tabs from native `button` elements to custom tab elements with `role="tab"`, `aria-selected`, and keyboard handling.
 
 Current decision:
 
-- Keep `all: unset !important` on `.mode-btn` for now.
 - Keep `!important` in these selectors for now.
 - Do not include this block in broad CSS cleanup.
 

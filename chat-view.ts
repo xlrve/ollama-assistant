@@ -663,16 +663,29 @@ export class OllamaChatView extends ItemView {
         if (editBtn && discussBtn) {
             editBtn.removeClass('mode-btn-active');
             discussBtn.removeClass('mode-btn-active');
+            editBtn.setAttribute('aria-selected', 'false');
+            discussBtn.setAttribute('aria-selected', 'false');
+            editBtn.setAttribute('tabindex', '-1');
+            discussBtn.setAttribute('tabindex', '-1');
             if (webBtn) {
                 webBtn.removeClass('mode-btn-active');
+                webBtn.setAttribute('aria-selected', 'false');
+                webBtn.setAttribute('tabindex', '-1');
             }
 
+            let activeBtn: HTMLElement | null = null;
             if (mode === 'edit') {
-                editBtn.addClass('mode-btn-active');
+                activeBtn = editBtn;
             } else if (mode === 'discuss') {
-                discussBtn.addClass('mode-btn-active');
+                activeBtn = discussBtn;
             } else if (mode === 'web' && webBtn) {
-                webBtn.addClass('mode-btn-active');
+                activeBtn = webBtn;
+            }
+
+            if (activeBtn) {
+                activeBtn.addClass('mode-btn-active');
+                activeBtn.setAttribute('aria-selected', 'true');
+                activeBtn.setAttribute('tabindex', '0');
             }
         }
 

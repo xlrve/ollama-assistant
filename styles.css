@@ -1427,10 +1427,15 @@
 }
 
 .mode-btn {
-    all: unset !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
+    min-width: 0;
+    min-height: 0;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    flex: 0 1 auto;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -1444,7 +1449,17 @@
     cursor: pointer !important;
     font-size: 0.9em !important;
     font-weight: 500 !important;
+    font-style: normal;
+    font-variant: normal;
+    letter-spacing: normal;
     text-align: center !important;
+    text-decoration: none;
+    text-transform: none;
+    text-shadow: none;
+    vertical-align: baseline;
+    user-select: none;
+    background-image: none;
+    transform: none;
     box-sizing: border-box !important;
     font-family: inherit !important;
     line-height: normal !important;
