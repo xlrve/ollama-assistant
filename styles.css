@@ -1249,12 +1249,12 @@
     right: 0 !important;
     padding: 4px 0 !important;
     width: 66px !important;
-    background: var(--background-secondary) !important;
-    border-left: 1px solid var(--text-faint) !important;
-    border-top: 1px solid var(--text-faint) !important;
-    border-right: none !important;
-    border-bottom: none !important;
-    border-radius: 6px 0 0 0 !important;
+    background: var(--background-secondary);
+    border-left: 1px solid var(--text-faint);
+    border-top: 1px solid var(--text-faint);
+    border-right: none;
+    border-bottom: none;
+    border-radius: 6px 0 0 0;
     color: var(--text-muted);
     cursor: pointer;
     font-size: 0.9em;
@@ -1291,10 +1291,10 @@
 }
 
 .ollama-chat-input-container button.send-btn-corner.stop-mode {
-    border-left: 1px solid var(--text-faint) !important;
-    border-top: 1px solid var(--text-faint) !important;
-    border-right: none !important;
-    border-bottom: none !important;
+    border-left: 1px solid var(--text-faint);
+    border-top: 1px solid var(--text-faint);
+    border-right: none;
+    border-bottom: none;
     color: var(--text-muted);
 }
 
