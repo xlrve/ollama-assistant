@@ -281,6 +281,19 @@
     border-color: var(--text-muted);
 }
 
+.message-actions .action-icon-btn:active,
+.message-actions .action-icon-btn:focus,
+.message-actions .action-icon-btn:focus-visible {
+    display: inline-flex;
+    width: 33px;
+    height: 33px;
+    padding: 0;
+    transform: none;
+    box-shadow: none;
+    outline: none;
+    background-image: none;
+}
+
 .message-actions .action-icon-btn svg {
     width: 13px;
     height: 13px;
@@ -310,6 +323,18 @@
     border-color: var(--text-muted);
 }
 
+.message-actions .action-text-btn:active,
+.message-actions .action-text-btn:focus,
+.message-actions .action-text-btn:focus-visible {
+    display: inline-flex;
+    height: 33px;
+    padding: 0 12px;
+    transform: none;
+    box-shadow: none;
+    outline: none;
+    background-image: none;
+}
+
 .message-actions .action-text-btn svg {
     width: 13px;
     height: 13px;
@@ -321,6 +346,13 @@
 }
 
 .message-actions .edit-context-btn {
+    padding: 0;
+    gap: 0;
+}
+
+.message-actions .edit-context-btn:active,
+.message-actions .edit-context-btn:focus,
+.message-actions .edit-context-btn:focus-visible {
     padding: 0;
     gap: 0;
 }
@@ -385,6 +417,18 @@
 
 .message-actions button:active {
     opacity: 0.7;
+    transform: none;
+    box-shadow: none;
+    outline: none;
+    background-image: none;
+}
+
+.message-actions button:focus,
+.message-actions button:focus-visible {
+    transform: none;
+    box-shadow: none;
+    outline: none;
+    background-image: none;
 }
 
 /* Apply to note button (mod-cta) */
@@ -1082,6 +1126,18 @@
     border-color: var(--text-error);
 }
 
+.ollama-chat-input-container .context-close:active,
+.ollama-chat-input-container .context-close:focus,
+.ollama-chat-input-container .context-close:focus-visible {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    transform: none;
+    box-shadow: none;
+    outline: none;
+    background-image: none;
+}
+
 /* Pin button - left of close button */
 .ollama-chat-input-container .context-pin {
     position: absolute;
@@ -1106,6 +1162,18 @@
 
 .ollama-chat-input-container .context-pin:hover:not(:disabled) {
     color: var(--text-muted);
+}
+
+.ollama-chat-input-container .context-pin:active,
+.ollama-chat-input-container .context-pin:focus,
+.ollama-chat-input-container .context-pin:focus-visible {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    transform: none;
+    box-shadow: none;
+    outline: none;
+    background-image: none;
 }
 
 .ollama-chat-input-container .context-pin.pinned {
