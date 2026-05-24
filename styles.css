@@ -1243,7 +1243,7 @@
     background-image: none;
 }
 
-.send-btn-corner {
+.ollama-chat-input-container button.send-btn-corner {
     position: absolute !important;
     bottom: 0 !important;
     right: 0 !important;
@@ -1255,20 +1255,20 @@
     border-right: none !important;
     border-bottom: none !important;
     border-radius: 6px 0 0 0 !important;
-    color: var(--text-muted) !important;
-    cursor: pointer !important;
-    font-size: 0.9em !important;
-    font-family: var(--font-interface) !important;
-    font-weight: 500 !important;
-    box-sizing: border-box !important;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.9em;
+    font-family: var(--font-interface);
+    font-weight: 500;
+    box-sizing: border-box;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 4px !important;
 }
 
-.send-btn-corner:hover:not(:disabled) {
-    color: var(--text-normal) !important;
+.ollama-chat-input-container button.send-btn-corner:hover:not(:disabled) {
+    color: var(--text-normal);
 }
 
 .send-btn-corner .send-btn-icon,
@@ -1290,12 +1290,12 @@
     stroke: currentColor;
 }
 
-.send-btn-corner.stop-mode {
+.ollama-chat-input-container button.send-btn-corner.stop-mode {
     border-left: 1px solid var(--text-faint) !important;
     border-top: 1px solid var(--text-faint) !important;
     border-right: none !important;
     border-bottom: none !important;
-    color: var(--text-muted) !important;
+    color: var(--text-muted);
 }
 
 .send-btn-corner.stop-mode .send-btn-icon svg {
