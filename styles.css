@@ -819,7 +819,7 @@
 }
 
 /* +Add button - absolutely positioned to not affect layout */
-.add-context-button {
+.ollama-chat-input-container button.add-context-button {
     position: absolute !important;
     top: -2px !important;
     left: 121px !important;
@@ -828,29 +828,36 @@
     height: 21px !important;
     padding: 0 6px !important;
     margin: 0 !important;
-    background: transparent !important;
+    background: transparent;
+    background-image: none;
     border: 1px solid var(--text-faint) !important;
     border-radius: 6px !important;
-    cursor: pointer !important;
-    color: var(--text-muted) !important;
+    cursor: pointer;
+    color: var(--text-muted);
     gap: 3px !important;
     flex-shrink: 0 !important;
     font-size: 11px !important;
     line-height: 1 !important;
-    box-shadow: none !important;
-    outline: none !important;
+    box-shadow: none;
+    outline: none;
     z-index: 10 !important;
     pointer-events: auto !important;
-    opacity: 0.9 !important;
-    transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
+    opacity: 0.9;
+    transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-.add-context-button:hover:not(:disabled) {
-    opacity: 1 !important;
-    color: var(--text-normal) !important;
+.ollama-chat-input-container button.add-context-button:hover:not(:disabled),
+.ollama-chat-input-container button.add-context-button:active,
+.ollama-chat-input-container button.add-context-button:focus,
+.ollama-chat-input-container button.add-context-button:focus-visible {
+    opacity: 1;
+    color: var(--text-normal);
     border-color: var(--text-muted) !important;
-    background: transparent !important;
-    box-shadow: none !important;
+    background: transparent;
+    background-image: none;
+    box-shadow: none;
+    outline: none;
+    transform: none;
 }
 
 .add-context-icon {
