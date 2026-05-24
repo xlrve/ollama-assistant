@@ -2018,11 +2018,12 @@
     z-index: 3;
 }
 
-.reasoning-toggle {
-    background: transparent !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
+.reasoning-header button.reasoning-toggle {
+    background: transparent;
+    background-image: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
     color: var(--text-muted);
     font-size: 0.85em;
     cursor: pointer;
@@ -2041,18 +2042,22 @@
     z-index: 3;
 }
 
-.reasoning-toggle:hover {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
+.reasoning-header button.reasoning-toggle:hover {
+    background: transparent;
+    background-image: none;
+    box-shadow: none;
+    border: none;
 }
 
-.reasoning-toggle:active,
-.reasoning-toggle:focus {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    outline: none !important;
+.reasoning-header button.reasoning-toggle:active,
+.reasoning-header button.reasoning-toggle:focus,
+.reasoning-header button.reasoning-toggle:focus-visible {
+    background: transparent;
+    background-image: none;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    transform: none;
 }
 
 .reasoning-toggle::before {
