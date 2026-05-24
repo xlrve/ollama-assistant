@@ -1203,9 +1203,9 @@
 .send-btn-corner,
 .model-btn-corner,
 .quick-edits-btn-corner {
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    appearance: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     min-width: 0;
     min-height: 0;
     height: auto;
