@@ -2218,7 +2218,7 @@
 .error-banner-icon svg polygon,
 .error-banner-icon svg circle,
 .error-banner-icon svg rect {
-    fill: var(--text-muted) !important;
+    fill: var(--text-muted);
 }
 
 .error-banner-content {
@@ -2403,7 +2403,7 @@
 .lottie-animation svg polygon,
 .lottie-animation svg circle,
 .lottie-animation svg rect {
-    fill: var(--text-normal, #000000) !important;
+    fill: var(--text-normal, #000000);
 }
 
 /* Hide first setting divider + top margin */
