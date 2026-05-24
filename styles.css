@@ -288,10 +288,15 @@
     width: 33px;
     height: 33px;
     padding: 0;
+    background: transparent;
     transform: none;
     box-shadow: none;
     outline: none;
     background-image: none;
+}
+
+.message-actions .action-icon-btn:active {
+    opacity: 1;
 }
 
 .message-actions .action-icon-btn svg {
@@ -329,10 +334,15 @@
     display: inline-flex;
     height: 33px;
     padding: 0 12px;
+    background: transparent;
     transform: none;
     box-shadow: none;
     outline: none;
     background-image: none;
+}
+
+.message-actions .action-text-btn:active {
+    opacity: 1;
 }
 
 .message-actions .action-text-btn svg {
@@ -416,10 +426,10 @@
 }
 
 .message-actions button:active {
-    opacity: 0.7;
     transform: none;
     box-shadow: none;
     outline: none;
+    background: var(--background-secondary);
     background-image: none;
 }
 
@@ -428,6 +438,7 @@
     transform: none;
     box-shadow: none;
     outline: none;
+    background: var(--background-secondary);
     background-image: none;
 }
 
@@ -437,6 +448,14 @@
     border: 1px solid var(--interactive-accent);
     color: var(--text-on-accent);
     font-weight: 600;
+}
+
+.message-actions button.mod-cta:active,
+.message-actions button.mod-cta:focus,
+.message-actions button.mod-cta:focus-visible {
+    background: var(--interactive-accent);
+    border-color: var(--interactive-accent);
+    color: var(--text-on-accent);
 }
 
 /* Model warning */
@@ -1138,7 +1157,6 @@
 
 .ollama-chat-input-container .context-close:hover:not(:disabled) {
     color: var(--text-error);
-    border-color: var(--text-error);
 }
 
 .ollama-chat-input-container .context-close:active,
@@ -1147,6 +1165,7 @@
     width: 20px;
     height: 20px;
     padding: 0;
+    background: var(--background-secondary);
     transform: none;
     box-shadow: none;
     outline: none;
@@ -1185,6 +1204,7 @@
     width: 20px;
     height: 20px;
     padding: 0;
+    background: transparent;
     transform: none;
     box-shadow: none;
     outline: none;
@@ -1323,6 +1343,7 @@
     box-shadow: none;
     outline: none;
     text-shadow: none;
+    background: transparent;
     background-image: none;
 }
 
@@ -1348,6 +1369,17 @@
     align-items: center;
     justify-content: center;
     gap: 4px;
+}
+
+.ollama-chat-input-container button.send-btn-corner:hover,
+.ollama-chat-input-container button.send-btn-corner:active,
+.ollama-chat-input-container button.send-btn-corner:focus,
+.ollama-chat-input-container button.send-btn-corner:focus-visible,
+.ollama-chat-input-container button.send-btn-corner.stop-mode:hover,
+.ollama-chat-input-container button.send-btn-corner.stop-mode:active,
+.ollama-chat-input-container button.send-btn-corner.stop-mode:focus,
+.ollama-chat-input-container button.send-btn-corner.stop-mode:focus-visible {
+    background: var(--background-secondary);
 }
 
 .ollama-chat-input-container button.send-btn-corner:hover:not(:disabled) {

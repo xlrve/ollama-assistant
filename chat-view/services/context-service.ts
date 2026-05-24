@@ -40,8 +40,12 @@ export class ContextService {
             cls: 'context-tooltip oa-hidden',
             attr: { id: 'context-tooltip' }
         });
+        let isHovering = false;
+        let renderId = 0;
 
         contextInfoEl.addEventListener('mouseenter', () => {
+            isHovering = true;
+            const currentRenderId = ++renderId;
             void (async () => {
                 const tabState = this.deps.getCurrentTabState();
                 if (tabState.selectedText) {
@@ -54,6 +58,11 @@ export class ContextService {
                         this.deps.getComponent()
                     );
 
+                    if (!isHovering || currentRenderId !== renderId) {
+                        contextTooltip.addClass('oa-hidden');
+                        return;
+                    }
+
                     contextTooltip.removeClass('oa-hidden');
 
                     const rect = contextInfoEl.getBoundingClientRect();
@@ -63,6 +72,8 @@ export class ContextService {
         });
 
         contextInfoEl.addEventListener('mouseleave', () => {
+            isHovering = false;
+            renderId++;
             contextTooltip.addClass('oa-hidden');
         });
 
@@ -404,8 +415,12 @@ export class ContextService {
     attachUserContextTooltip(iconEl: HTMLElement, contextContent: string): void {
         const userContextTooltip = this.ui?.userContextTooltipEl;
         if (!userContextTooltip) return;
+        let isHovering = false;
+        let renderId = 0;
 
         iconEl.addEventListener('mouseenter', () => {
+            isHovering = true;
+            const currentRenderId = ++renderId;
             void (async () => {
                 if (contextContent && contextContent.trim().length > 0) {
                     // Render markdown
@@ -417,6 +432,11 @@ export class ContextService {
                         '',
                         this.deps.getComponent()
                     );
+
+                    if (!isHovering || currentRenderId !== renderId) {
+                        userContextTooltip.addClass('oa-hidden');
+                        return;
+                    }
 
                     userContextTooltip.removeClass('oa-hidden');
 
@@ -446,6 +466,8 @@ export class ContextService {
         });
 
         iconEl.addEventListener('mouseleave', () => {
+            isHovering = false;
+            renderId++;
             userContextTooltip.addClass('oa-hidden');
         });
 
