@@ -1430,9 +1430,9 @@
     font-size: 0.756em;
     font-family: var(--font-interface);
     font-weight: 400;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 3px !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
     letter-spacing: -0.02em;
 }
 
