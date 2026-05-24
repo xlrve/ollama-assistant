@@ -1200,9 +1200,9 @@
 }
 
 /* Send button - custom design like tabs, no right and bottom border */
-.send-btn-corner,
-.model-btn-corner,
-.quick-edits-btn-corner {
+.ollama-chat-input-container button.send-btn-corner,
+.ollama-chat-input-container button.model-btn-corner,
+.ollama-chat-input-container button.quick-edits-btn-corner {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -1218,10 +1218,29 @@
     text-transform: none;
     vertical-align: baseline;
     transform: none;
-    box-shadow: none !important;
-    outline: none !important;
-    text-shadow: none !important;
-    background-image: none !important;
+    box-shadow: none;
+    outline: none;
+    text-shadow: none;
+    background-image: none;
+}
+
+.ollama-chat-input-container button.send-btn-corner:hover,
+.ollama-chat-input-container button.send-btn-corner:active,
+.ollama-chat-input-container button.send-btn-corner:focus,
+.ollama-chat-input-container button.send-btn-corner:focus-visible,
+.ollama-chat-input-container button.model-btn-corner:hover,
+.ollama-chat-input-container button.model-btn-corner:active,
+.ollama-chat-input-container button.model-btn-corner:focus,
+.ollama-chat-input-container button.model-btn-corner:focus-visible,
+.ollama-chat-input-container button.quick-edits-btn-corner:hover,
+.ollama-chat-input-container button.quick-edits-btn-corner:active,
+.ollama-chat-input-container button.quick-edits-btn-corner:focus,
+.ollama-chat-input-container button.quick-edits-btn-corner:focus-visible {
+    transform: none;
+    box-shadow: none;
+    outline: none;
+    text-shadow: none;
+    background-image: none;
 }
 
 .send-btn-corner {
