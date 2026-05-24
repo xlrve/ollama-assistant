@@ -1419,7 +1419,7 @@
     display: flex;
     font-size: 15.2px;
     gap: 3px;
-    padding: 0 !important;
+    padding: 0;
     background: transparent;
     margin-top: 0;
     margin-bottom: 0;
@@ -1427,32 +1427,32 @@
 }
 
 .mode-btn {
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    appearance: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     min-width: 0;
     min-height: 0;
     width: auto;
     height: auto;
     overflow: visible;
     flex: 0 1 auto;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 7px 18px !important;
-    margin: 0 !important;
-    background: transparent !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    color: var(--text-muted) !important;
-    cursor: pointer !important;
-    font-size: 0.9em !important;
-    font-weight: 500 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 18px;
+    margin: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
     font-style: normal;
     font-variant: normal;
     letter-spacing: normal;
-    text-align: center !important;
+    text-align: center;
     text-decoration: none;
     text-transform: none;
     text-shadow: none;
@@ -1460,17 +1460,17 @@
     user-select: none;
     background-image: none;
     transform: none;
-    box-sizing: border-box !important;
-    font-family: inherit !important;
-    line-height: normal !important;
-    border-radius: 0 !important;
-    white-space: nowrap !important;
-    position: relative !important;
+    box-sizing: border-box;
+    font-family: inherit;
+    line-height: normal;
+    border-radius: 0;
+    white-space: nowrap;
+    position: relative;
 }
 
 
 .mode-btn:hover:not(.mode-btn-active):not(:disabled) {
-    color: var(--text-normal) !important;
+    color: var(--text-normal);
 }
 
 /* Disabled buttons - keep same appearance but no pointer cursor */
@@ -1479,16 +1479,16 @@ button:disabled {
 }
 
 .mode-btn-active {
-    background: var(--background-secondary) !important;
-    color: var(--text-normal) !important;
-    font-weight: 600 !important;
-    border-left: 1px solid var(--text-faint) !important;
-    border-right: 1px solid var(--text-faint) !important;
-    border-bottom: 1px solid var(--text-faint) !important;
-    border-top: none !important;
-    border-radius: 0 0 8px 8px !important;
-    position: relative !important;
-    top: -1px !important;
+    background: var(--background-secondary);
+    color: var(--text-normal);
+    font-weight: 600;
+    border-left: 1px solid var(--text-faint);
+    border-right: 1px solid var(--text-faint);
+    border-bottom: 1px solid var(--text-faint);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    position: relative;
+    top: -1px;
 }
 
 /* Inverse border-radius for active button - left corner (top of button, left side) */
@@ -1520,7 +1520,7 @@ button:disabled {
 
 /* First button (Edit) - hide left pseudo-element */
 #mode-edit-btn.mode-btn-active {
-    padding-left: 18px !important;
+    padding-left: 18px;
 }
 
 #mode-edit-btn.mode-btn-active::before {
@@ -1529,36 +1529,36 @@ button:disabled {
 
 /* Remove left radius from wrapper when Edit button active */
 .chat-block-wrapper.mode-edit .ollama-chat-messages-wrapper {
-    border-bottom-left-radius: 0 !important;
+    border-bottom-left-radius: 0;
 }
 
 /* COMPACT MODE - applied via JavaScript ResizeObserver */
 .compact-mode .mode-switcher {
-    display: grid !important;
-    grid-template-columns: 0.875fr 1.25fr 0.875fr !important;
-    gap: 0 !important;
-    margin-right: 0 !important;
+    display: grid;
+    grid-template-columns: 0.875fr 1.25fr 0.875fr;
+    gap: 0;
+    margin-right: 0;
 }
 
 .compact-mode .mode-btn {
-    padding: 7px 0 !important;
-    min-width: 0 !important;
-    white-space: nowrap !important;
-    text-align: center !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    padding: 7px 0;
+    min-width: 0;
+    white-space: nowrap;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Override Edit button padding in compact mode to match others */
 .compact-mode #mode-edit-btn.mode-btn-active {
-    padding: 7px 0 !important;
+    padding: 7px 0;
 }
 
 /* Hide only right pseudo-element on Web button in compact mode */
 .compact-mode #mode-web-btn.mode-btn-active::after {
-    display: none !important;
+    display: none;
 }
 
 /* Tab indicator dots */
@@ -1631,12 +1631,12 @@ button:disabled {
 
 /* Remove wrapper bottom-right radius ONLY when Web button is active in compact mode */
 .compact-mode .chat-block-wrapper.mode-web .ollama-chat-messages-wrapper {
-    border-bottom-right-radius: 0 !important;
+    border-bottom-right-radius: 0;
 }
 
 /* Compact mode: Add top padding to first message */
 .compact-mode .ollama-chat-messages {
-    padding-top: 22px !important;
+    padding-top: 22px;
 }
 
 /* Compact mode: Wrap edit button to new line */
