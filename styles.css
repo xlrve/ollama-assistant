@@ -1048,74 +1048,74 @@
 }
 
 /* Close button - in top right corner inside border */
-.context-close {
-    position: absolute !important;
-    display: none !important;
-    top: 5px !important;
-    right: 5px !important;
-    width: 20px !important;
-    height: 20px !important;
-    background: var(--background-secondary) !important;
-    border: 1px solid var(--text-faint) !important;
-    border-radius: 4px !important;
-    color: var(--text-muted) !important;
-    cursor: pointer !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-    box-shadow: none !important;
+.ollama-chat-input-container .context-close {
+    position: absolute;
+    display: none;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background: var(--background-secondary);
+    border: 1px solid var(--text-faint);
+    border-radius: 4px;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+    box-sizing: border-box;
+    box-shadow: none;
 }
 
-.context-close svg {
-    width: 14px !important;
-    height: 14px !important;
-    stroke-width: 2 !important;
+.ollama-chat-input-container .context-close svg {
+    width: 14px;
+    height: 14px;
+    stroke-width: 2;
 }
 
-.context-close-visible {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+.ollama-chat-input-container .context-close.context-close-visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.context-close:hover:not(:disabled) {
-    color: var(--text-error) !important;
-    border-color: var(--text-error) !important;
+.ollama-chat-input-container .context-close:hover:not(:disabled) {
+    color: var(--text-error);
+    border-color: var(--text-error);
 }
 
 /* Pin button - left of close button */
-.context-pin {
-    position: absolute !important;
-    top: 5px !important;
-    right: 30px !important;
-    width: 20px !important;
-    height: 20px !important;
-    background: transparent !important;
-    border: none !important;
-    border-radius: 4px !important;
-    color: var(--text-muted) !important;
-    cursor: pointer !important;
-    line-height: 1 !important;
-    box-sizing: border-box !important;
-    box-shadow: none !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 !important;
-    flex-shrink: 0 !important;
+.ollama-chat-input-container .context-pin {
+    position: absolute;
+    top: 5px;
+    right: 30px;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1;
+    box-sizing: border-box;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
 }
 
-.context-pin:hover:not(:disabled) {
-    color: var(--text-muted) !important;
+.ollama-chat-input-container .context-pin:hover:not(:disabled) {
+    color: var(--text-muted);
 }
 
-.context-pin.pinned {
-    background: var(--background-secondary) !important;
-    border: 1px solid var(--text-faint) !important;
-    color: var(--text-muted) !important;
+.ollama-chat-input-container .context-pin.pinned {
+    background: var(--background-secondary);
+    border: 1px solid var(--text-faint);
+    color: var(--text-muted);
 }
 
-.context-pin.pinned:hover:not(:disabled) {
-    color: var(--text-muted) !important;
+.ollama-chat-input-container .context-pin.pinned:hover:not(:disabled) {
+    color: var(--text-muted);
 }
 
 /* Buffer tooltip */
@@ -1154,19 +1154,19 @@
 }
 
 /* Textarea - NO border, NO background, NO focus background, 3 lines with scrollbar */
-.ollama-chat-input {
+.ollama-chat-input-container .ollama-chat-input {
     width: calc(100% + 20px);
     margin-left: -10px;
     margin-right: -10px;
     padding-left: 10px;
     padding-right: 10px;
-    background: transparent !important;
-    border: none !important;
-    border-radius: 0 !important;
-    outline: none !important;
-    box-shadow: none !important;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     resize: none;
     font-family: var(--font-interface);
     color: var(--text-normal);
@@ -1181,22 +1181,22 @@
     line-height: 1.5;
 }
 
-.ollama-chat-input:disabled {
-    color: var(--text-normal) !important;
-    opacity: 1 !important;
-    -webkit-text-fill-color: var(--text-normal) !important;
+.ollama-chat-input-container .ollama-chat-input:disabled {
+    color: var(--text-normal);
+    opacity: 1;
+    -webkit-text-fill-color: var(--text-normal);
 }
 
-.ollama-chat-input:focus {
-    outline: none !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+.ollama-chat-input-container .ollama-chat-input:focus {
+    outline: none;
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
-.ollama-chat-input:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
+.ollama-chat-input-container .ollama-chat-input:focus-visible {
+    outline: none;
+    box-shadow: none;
 }
 
 /* Send button - custom design like tabs, no right and bottom border */
@@ -2119,13 +2119,13 @@ button:disabled {
     text-decoration: underline;
 }
 
-.error-banner-help .external-link::after {
-    content: none !important;
-    display: none !important;
+.ollama-error-banner .error-banner-help a.external-link::after {
+    content: none;
+    display: none;
 }
 
-.error-banner-help .external-link svg {
-    display: none !important;
+.ollama-error-banner .error-banner-help a.external-link svg {
+    display: none;
 }
 
 /* Tooltip for install instructions */
