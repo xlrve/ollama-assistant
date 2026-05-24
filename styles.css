@@ -823,8 +823,8 @@
     position: absolute !important;
     top: -2px !important;
     left: 121px !important;
-    align-items: center !important;
-    justify-content: center !important;
+    align-items: center;
+    justify-content: center;
     height: 21px !important;
     padding: 0 6px !important;
     margin: 0 !important;
@@ -834,14 +834,14 @@
     border-radius: 6px !important;
     cursor: pointer;
     color: var(--text-muted);
-    gap: 3px !important;
-    flex-shrink: 0 !important;
-    font-size: 11px !important;
-    line-height: 1 !important;
+    gap: 3px;
+    flex-shrink: 0;
+    font-size: 11px;
+    line-height: 1;
     box-shadow: none;
     outline: none;
-    z-index: 10 !important;
-    pointer-events: auto !important;
+    z-index: 10;
+    pointer-events: auto;
     opacity: 0.9;
     transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
