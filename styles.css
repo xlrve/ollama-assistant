@@ -2031,7 +2031,7 @@
     align-items: center;
     gap: 6px;
     padding: 0 !important;
-    margin: 0 !important;
+    margin: 0;
     font-family: inherit;
     flex-direction: row;
     text-align: left;
