@@ -10,7 +10,7 @@ Rule: if removing a warning changes layout, behavior, streaming, animations, or 
 - possible safer replacement;
 - required manual test.
 
-## `all: unset` on corner input buttons
+## `!important` on corner input buttons
 
 Current selectors:
 
@@ -20,7 +20,7 @@ Current selectors:
 
 Scorecard warning:
 
-- `Unexpected property "all"`
+- `Avoid !important`
 
 Why it exists:
 
@@ -30,18 +30,21 @@ Why it exists:
 
 What happened when removed:
 
-- Shadows appeared on `Model`, `Prompts`, and `Send`.
-- After adding a partial reset, shadows disappeared but button placement changed.
-- Restoring `all: unset !important` only for these three controls restored the expected layout.
+- `all: unset` was removed successfully by replacing it with an explicit reset.
+- A later attempt to remove broad `!important` rules from `Model`, `Prompts`, `Send`, and stop-mode caused the corner buttons to jump when pressed.
+- Adding only `:active`/`:focus` anti-jump rules did not fix the press jump.
+- Restoring the `!important` rules for the corner button block restored stable press behavior.
 
 Current decision:
 
-- Keep `all: unset !important` for these three selectors for now.
-- Do not remove them as part of broad CSS cleanup.
+- Keep `!important` for these corner button selectors for now.
+- Do not include this block in broad CSS cleanup.
 
 Possible future fix:
 
-- Replace each `all: unset` with a complete explicit reset that preserves exact layout:
+- Inspect computed styles while pressing the buttons and identify the exact Obsidian active-state rule that causes the jump.
+- Or replace the native `button` elements with accessible custom controls, preserving keyboard behavior and ARIA labels.
+- If keeping native buttons, build a full explicit reset that preserves exact layout and active-state behavior:
   - `appearance`;
   - `display`;
   - `position`;
@@ -63,11 +66,13 @@ Possible future fix:
   - `transform`;
   - `text-shadow`;
   - `vertical-align`.
+- Also include active/focus/hover states in the reset.
 
 Required manual test:
 
 - Open the chat input area in Edit mode.
 - Check exact placement of `Model`, `Prompts`, and `Send`.
+- Press and hold `Model`, `Prompts`, `Send`, and stop-mode; none should jump.
 - Switch to Discuss mode and Web mode.
 - Check `Send` and stop-mode state during streaming.
 - Check light and dark themes.
@@ -75,7 +80,7 @@ Required manual test:
 
 Acceptable outcome:
 
-- If a full reset cannot preserve exact layout, keep the three `all: unset` warnings.
+- If a full reset cannot preserve exact layout and press behavior, keep the current `!important` rules.
 
 ## `fetch()` for streaming Ollama responses
 
