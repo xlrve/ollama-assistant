@@ -100,11 +100,10 @@ export class ReasoningRenderer {
         const headerEl = document.createElement('div');
         headerEl.className = 'reasoning-header';
 
-        const toggleBtn = document.createElement('span');
+        const toggleBtn = document.createElement('button');
         toggleBtn.className = 'reasoning-toggle';
         toggleBtn.textContent = 'Show reasoning';
-        toggleBtn.setAttribute('role', 'button');
-        toggleBtn.tabIndex = 0;
+        toggleBtn.type = 'button';
 
         const contentEl = document.createElement('div');
         contentEl.className = 'reasoning-content';
@@ -127,14 +126,7 @@ export class ReasoningRenderer {
             event.stopPropagation();
             toggle();
         };
-        const handleKeyboardToggle = (event: KeyboardEvent) => {
-            if (event.key !== 'Enter' && event.key !== ' ') return;
-            event.preventDefault();
-            event.stopPropagation();
-            toggle();
-        };
         blockEl.addEventListener('pointerdown', handleToggle, true);
-        toggleBtn.addEventListener('keydown', handleKeyboardToggle);
 
         headerEl.appendChild(toggleBtn);
         blockEl.appendChild(headerEl);

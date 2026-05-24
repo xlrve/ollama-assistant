@@ -4,7 +4,6 @@ export function extractTextFromReasoningHtml(html: string): string {
     const cleaned = html
         .replace(/<div[^>]*class\s*=\s*["'][^"']*\breasoning-header\b[^"']*["'][^>]*>[\s\S]*?<\/div>/gi, '')
         .replace(/<button[^>]*class\s*=\s*["'][^"']*\breasoning-toggle\b[^"']*["'][^>]*>[\s\S]*?<\/button>/gi, '')
-        .replace(/<span[^>]*class\s*=\s*["'][^"']*\breasoning-toggle\b[^"']*["'][^>]*>[\s\S]*?<\/span>/gi, '')
         .replace(/<span[^>]*class\s*=\s*["'][^"']*\bcursor-blink\b[^"']*["'][^>]*>[\s\S]*?<\/span>/gi, '');
 
     const withLineBreaks = cleaned.replace(/<br\s*\/?>/gi, '\n');

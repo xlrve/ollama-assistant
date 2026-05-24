@@ -1872,18 +1872,18 @@ button:disabled {
 }
 
 .reasoning-toggle {
-    background: transparent;
-    border: none;
-    outline: none;
-    box-shadow: none;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
     color: var(--text-muted);
     font-size: 0.85em;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 0;
-    margin: 0;
+    padding: 0 !important;
+    margin: 0 !important;
     font-family: inherit;
     flex-direction: row;
     text-align: left;
@@ -1895,17 +1895,17 @@ button:disabled {
 }
 
 .reasoning-toggle:hover {
-    background: transparent;
-    box-shadow: none;
-    border: none;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
 }
 
 .reasoning-toggle:active,
 .reasoning-toggle:focus {
-    background: transparent;
-    box-shadow: none;
-    border: none;
-    outline: none;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
 }
 
 .reasoning-toggle::before {
