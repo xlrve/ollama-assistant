@@ -827,7 +827,7 @@
     justify-content: center;
     height: 21px !important;
     padding: 0 6px !important;
-    margin: 0 !important;
+    margin: 0;
     background: transparent;
     background-image: none;
     border: 1px solid var(--text-faint);
