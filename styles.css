@@ -846,13 +846,21 @@
     transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-.ollama-chat-input-container button.add-context-button:hover:not(:disabled),
-.ollama-chat-input-container button.add-context-button:active,
-.ollama-chat-input-container button.add-context-button:focus,
-.ollama-chat-input-container button.add-context-button:focus-visible {
+.ollama-chat-input-container button.add-context-button:hover:not(:disabled) {
     opacity: 1;
     color: var(--text-normal);
     border-color: var(--text-muted) !important;
+    background: transparent;
+    background-image: none;
+    box-shadow: none;
+}
+
+.ollama-chat-input-container button.add-context-button:active,
+.ollama-chat-input-container button.add-context-button:focus,
+.ollama-chat-input-container button.add-context-button:focus-visible {
+    opacity: 0.9;
+    color: var(--text-muted);
+    border-color: var(--text-faint);
     background: transparent;
     background-image: none;
     box-shadow: none;
@@ -860,19 +868,19 @@
     transform: none;
 }
 
-.add-context-icon {
-    font-size: 11px !important;
-    font-weight: 600 !important;
-    line-height: 1 !important;
-    display: inline-block !important;
+.ollama-chat-input-container .add-context-button .add-context-icon {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    display: inline-block;
 }
 
-.add-context-text {
-    font-size: 11px !important;
-    line-height: 1 !important;
-    display: inline-block !important;
-    position: relative !important;
-    top: 1px !important;
+.ollama-chat-input-container .add-context-button .add-context-text {
+    font-size: 11px;
+    line-height: 1;
+    display: inline-block;
+    position: relative;
+    top: 1px;
 }
 
 /* Add context dropdown menu - same style as model-selector-menu */
