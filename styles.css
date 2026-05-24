@@ -1418,26 +1418,32 @@
 }
 
 /* Model selector button - left corner (with icon) */
-.model-btn-corner {
+.ollama-chat-input-container button.model-btn-corner {
     position: absolute !important;
     bottom: 4px !important;
     left: 10px !important;
     padding: 0 !important;
-    background: transparent !important;
-    border: none !important;
-    color: var(--text-muted) !important;
-    cursor: pointer !important;
-    font-size: 0.756em !important;
-    font-family: var(--font-interface) !important;
-    font-weight: 400 !important;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.756em;
+    font-family: var(--font-interface);
+    font-weight: 400;
     display: inline-flex !important;
     align-items: center !important;
     gap: 3px !important;
-    letter-spacing: -0.02em !important;
+    letter-spacing: -0.02em;
 }
 
-.model-btn-corner:hover:not(:disabled) {
-    color: var(--text-normal) !important;
+.ollama-chat-input-container button.model-btn-corner:hover:not(:disabled) {
+    color: var(--text-normal);
+}
+
+.ollama-chat-input-container button.model-btn-corner:active,
+.ollama-chat-input-container button.model-btn-corner:focus,
+.ollama-chat-input-container button.model-btn-corner:focus-visible {
+    color: var(--text-muted);
 }
 
 .model-btn-corner .btn-icon {
@@ -1447,20 +1453,20 @@
 }
 
 /* Prompts button - next to Send button (text only) */
-.quick-edits-btn-corner {
+.ollama-chat-input-container button.quick-edits-btn-corner {
     position: absolute !important;
     bottom: 4px !important;
     right: 73px !important;
     padding: 0 !important;
-    background: transparent !important;
-    border: none !important;
-    color: var(--text-muted) !important;
-    cursor: pointer !important;
-    font-size: 0.756em !important;
-    font-family: var(--font-interface) !important;
-    font-weight: 400 !important;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.756em;
+    font-family: var(--font-interface);
+    font-weight: 400;
     display: none !important;
-    letter-spacing: -0.02em !important;
+    letter-spacing: -0.02em;
 }
 
 /* Show Prompts button only in edit mode */
@@ -1474,8 +1480,14 @@
     display: none !important;
 }
 
-.quick-edits-btn-corner:hover:not(:disabled) {
-    color: var(--text-normal) !important;
+.ollama-chat-input-container button.quick-edits-btn-corner:hover:not(:disabled) {
+    color: var(--text-normal);
+}
+
+.ollama-chat-input-container button.quick-edits-btn-corner:active,
+.ollama-chat-input-container button.quick-edits-btn-corner:focus,
+.ollama-chat-input-container button.quick-edits-btn-corner:focus-visible {
+    color: var(--text-muted);
 }
 
 /* Popup menus */
