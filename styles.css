@@ -825,7 +825,7 @@
     left: 121px !important;
     align-items: center;
     justify-content: center;
-    height: 21px !important;
+    height: 21px;
     padding: 0 6px !important;
     margin: 0;
     background: transparent;
@@ -843,7 +843,7 @@
     z-index: 10;
     pointer-events: auto;
     opacity: 0.9;
-    transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    transition: none;
 }
 
 .ollama-chat-input-container button.add-context-button:hover:not(:disabled) {
