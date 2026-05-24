@@ -3,7 +3,7 @@
  * Helper for creating and updating Turn during generation
  */
 
-import type { Turn, TabState } from '../types';
+import type { Turn } from '../types';
 
 /**
  * Creates a new Turn when sending a user message
@@ -119,42 +119,6 @@ export function addResultToTurn(
 }
 
 /**
- * Updates assistant message status
- */
-export function updateAssistantStatus(turn: Turn, status: 'queued' | 'streaming' | 'final'): void {
-    if (turn.assistant) {
-        turn.assistant.status = status;
-    }
-}
-
-/**
- * Updates assistant message content
- */
-export function updateAssistantContent(turn: Turn, content: string): void {
-    if (turn.assistant) {
-        turn.assistant.content = content;
-    }
-}
-
-/**
- * Updates result message status
- */
-export function updateResultStatus(turn: Turn, status: 'queued' | 'streaming' | 'final'): void {
-    if (turn.result) {
-        turn.result.status = status;
-    }
-}
-
-/**
- * Updates result message content
- */
-export function updateResultContent(turn: Turn, content: string): void {
-    if (turn.result) {
-        turn.result.content = content;
-    }
-}
-
-/**
  * Adds system message to Turn (for Web mode - live statuses)
  */
 export function addSystemMessageToTurn(turn: Turn, systemId: string, content: string): void {
@@ -197,21 +161,3 @@ export function addErrorToTurn(turn: Turn, errorId: string, content: string): vo
     });
 }
 
-/**
- * Finds Turn by ID in tabState
- */
-export function findTurnById(tabState: TabState, turnId: string): Turn | undefined {
-    return tabState.turns.find(t => t.id === turnId);
-}
-
-/**
- * Finds or creates Turn
- */
-export function findOrCreateTurn(tabState: TabState, turnId: string, userContent: string): Turn {
-    let turn = findTurnById(tabState, turnId);
-    if (!turn) {
-        turn = createTurn(turnId, userContent);
-        tabState.turns.push(turn);
-    }
-    return turn;
-}
