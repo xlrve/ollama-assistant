@@ -1454,9 +1454,9 @@
 
 /* Prompts button - next to Send button (text only) */
 .ollama-chat-input-container button.quick-edits-btn-corner {
-    position: absolute !important;
-    bottom: 4px !important;
-    right: 73px !important;
+    position: absolute;
+    bottom: 4px;
+    right: 73px;
     padding: 0 !important;
     background: transparent;
     border: none;
