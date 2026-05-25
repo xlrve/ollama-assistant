@@ -1353,7 +1353,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    padding: 4px 0 !important;
+    padding: 4px 0;
     width: 66px;
     background: var(--background-secondary);
     border-left: 1px solid var(--text-faint);
@@ -1382,6 +1382,7 @@
 .ollama-chat-input-container button.send-btn-corner.stop-mode:focus,
 .ollama-chat-input-container button.send-btn-corner.stop-mode:focus-visible {
     background: var(--background-secondary);
+    padding: 4px 0;
 }
 
 .ollama-chat-input-container button.send-btn-corner:hover:not(:disabled) {
@@ -1396,9 +1397,9 @@
 }
 
 /* Nudge Send content (icon+text) left by 1px */
-.send-btn-corner:not(.stop-mode) {
-    padding-left: 0 !important;
-    padding-right: 2px !important;
+.send-btn-corner:not(.stop-mode) .send-btn-icon,
+.send-btn-corner:not(.stop-mode) .send-btn-text {
+    transform: translateX(-1px);
 }
 
 .send-btn-icon svg {
