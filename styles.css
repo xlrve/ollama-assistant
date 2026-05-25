@@ -2030,7 +2030,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 0 !important;
+    padding: 0;
     margin: 0;
     font-family: inherit;
     flex-direction: row;
@@ -2047,6 +2047,7 @@
     background-image: none;
     box-shadow: none;
     border: none;
+    padding: 0;
 }
 
 .reasoning-header button.reasoning-toggle:active,
@@ -2057,6 +2058,7 @@
     box-shadow: none;
     border: none;
     outline: none;
+    padding: 0;
     transform: none;
 }
 
