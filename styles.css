@@ -1465,19 +1465,19 @@
     font-size: 0.756em;
     font-family: var(--font-interface);
     font-weight: 400;
-    display: none !important;
+    display: none;
     letter-spacing: -0.02em;
 }
 
 /* Show Prompts button only in edit mode */
 .ollama-chat-input-container.mode-edit .quick-edits-btn-corner {
-    display: block !important;
+    display: block;
 }
 
 /* Hide Prompts button in discuss and web modes */
 .ollama-chat-input-container.mode-discuss .quick-edits-btn-corner,
 .ollama-chat-input-container.mode-web .quick-edits-btn-corner {
-    display: none !important;
+    display: none;
 }
 
 .ollama-chat-input-container button.quick-edits-btn-corner:hover:not(:disabled) {
