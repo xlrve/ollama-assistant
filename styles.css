@@ -845,7 +845,7 @@
     align-items: center;
     justify-content: center;
     height: 21px;
-    padding: 0 6px !important;
+    padding: 0 6px;
     margin: 0;
     background: transparent;
     background-image: none;
@@ -872,6 +872,7 @@
     background: transparent;
     background-image: none;
     box-shadow: none;
+    padding: 0 6px;
 }
 
 .ollama-chat-input-container button.add-context-button:active,
@@ -884,6 +885,7 @@
     background-image: none;
     box-shadow: none;
     outline: none;
+    padding: 0 6px;
     transform: none;
 }
 
