@@ -839,9 +839,9 @@
 
 /* +Add button - absolutely positioned to not affect layout */
 .ollama-chat-input-container button.add-context-button {
-    position: absolute !important;
-    top: -2px !important;
-    left: 121px !important;
+    position: absolute;
+    top: -2px;
+    left: 121px;
     align-items: center;
     justify-content: center;
     height: 21px;
