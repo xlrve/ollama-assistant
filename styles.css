@@ -1352,7 +1352,7 @@
     bottom: 0;
     right: 0;
     padding: 4px 0 !important;
-    width: 66px !important;
+    width: 66px;
     background: var(--background-secondary);
     border-left: 1px solid var(--text-faint);
     border-top: 1px solid var(--text-faint);
