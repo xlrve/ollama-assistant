@@ -2415,7 +2415,11 @@
 /* ============ Utility classes (inline style replacements) ============ */
 
 /* Universal hidden */
-.oa-hidden { display: none !important; }
+body .oa-hidden,
+body .oa-hidden.oa-hidden,
+body .oa-hidden.oa-hidden.oa-hidden {
+    display: none;
+}
 
 /* Settings page */
 .oa-settings-header {
