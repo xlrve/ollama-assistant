@@ -658,13 +658,13 @@
 }
 
 /* Remove spacing between list items in welcome messages */
-.welcome-content li {
+.message-content.welcome-content li {
     margin: 0;
     line-height: 1.5;
 }
 
 /* No extra margin on list - BR handles spacing */
-.welcome-content ul {
+.message-content.welcome-content ul {
     margin: 0;
 }
 
