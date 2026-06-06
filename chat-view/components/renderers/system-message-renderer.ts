@@ -39,7 +39,7 @@ export class SystemMessageRenderer {
         isError: boolean,
         messageId?: string
     ): HTMLElement {
-        const el = document.createElement('div');
+        const el = activeDocument.createElement('div');
         const baseClass = 'chat-message assistant-message system-message';
         const extraClass = isStopMessage ? ' stop-message' : isError ? ' error-message' : '';
         el.className = `${baseClass}${extraClass}`;
@@ -52,18 +52,18 @@ export class SystemMessageRenderer {
             el.classList.add('oa-hidden');
         }
 
-        const contentEl = document.createElement('div');
+        const contentEl = activeDocument.createElement('div');
         contentEl.className = 'message-content';
 
         if (isStopMessage) {
-            const icon = document.createElement('span');
+            const icon = activeDocument.createElement('span');
             icon.className = 'system-stop-icon';
             icon.textContent = '■';
             contentEl.appendChild(icon);
-            contentEl.appendChild(document.createTextNode(' '));
+            contentEl.appendChild(activeDocument.createTextNode(' '));
         }
 
-        contentEl.appendChild(document.createTextNode(content));
+        contentEl.appendChild(activeDocument.createTextNode(content));
 
         if (mode === 'web' && !isStopMessage && !isError) {
             const webStatusClass = this.inferWebStatusClass(content);

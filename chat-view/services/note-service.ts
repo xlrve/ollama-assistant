@@ -62,8 +62,8 @@ export class NoteService {
         console.debug('[NoteService] Initializing, subscribing to events...');
         
         // Subscribe to events
-        this.eventBus.on('edit:apply', this.handleApplyEdit.bind(this));
-        this.eventBus.on('edit:applyWithHistory', this.handleApplyEditWithHistory.bind(this));
+        this.eventBus.on('edit:apply', (data) => this.handleApplyEdit(data));
+        this.eventBus.on('edit:applyWithHistory', (data) => this.handleApplyEditWithHistory(data));
         
         console.debug('[NoteService] Subscribed to edit:apply and edit:applyWithHistory');
     }
@@ -282,7 +282,8 @@ export class NoteService {
             start,
             length,
             this.getEditPositionMap(),
-            this.findBestOccurrence.bind(this)
+            (haystack, needle, preferredIndex, excludeSpoilers, blockedRanges) =>
+                this.findBestOccurrence(haystack, needle, preferredIndex, excludeSpoilers, blockedRanges)
         );
     }
 
@@ -345,9 +346,9 @@ export class NoteService {
         return getProtectedRangesFn(
             fullText,
             chain,
-            this.resolvePosition.bind(this),
-            this.findAllRanges.bind(this),
-            this.mergeRanges.bind(this),
+            (editNumber) => this.resolvePosition(editNumber),
+            (haystack, needle) => this.findAllRanges(haystack, needle),
+            (ranges) => this.mergeRanges(ranges),
             extraSnippets
         );
     }
@@ -486,9 +487,10 @@ export class NoteService {
             currentPosition,
             this.getEditChain(editNumber),
             this.getEditPositionMap(),
-            this.getRootOriginalFromChain.bind(this),
-            this.extractTrailingHistoryOriginal.bind(this),
-            this.findBestOccurrence.bind(this)
+            (chainEditNumber) => this.getRootOriginalFromChain(chainEditNumber),
+            (content) => this.extractTrailingHistoryOriginal(content),
+            (haystack, needle, preferredIndex, excludeSpoilers, blockedRanges) =>
+                this.findBestOccurrence(haystack, needle, preferredIndex, excludeSpoilers, blockedRanges)
         );
     }
 
@@ -506,9 +508,10 @@ export class NoteService {
             position,
             primaryEdits,
             this.getEditPositionMap(),
-            this.collectAnchorSnippets.bind(this),
-            this.arePositionsFromSameSource.bind(this),
-            this.findBestOccurrence.bind(this)
+            (chainEditNumber, editPosition) => this.collectAnchorSnippets(chainEditNumber, editPosition),
+            (a, b) => this.arePositionsFromSameSource(a, b),
+            (haystack, needle, preferredIndex, excludeSpoilers, blockedRanges) =>
+                this.findBestOccurrence(haystack, needle, preferredIndex, excludeSpoilers, blockedRanges)
         );
     }
 

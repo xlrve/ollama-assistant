@@ -155,7 +155,7 @@ export class MessageRenderer {
         if (!container) return null;
         let turnEl = this.getTurnContainer(mode, turnId);
         if (!turnEl) {
-            turnEl = document.createElement('div');
+            turnEl = container.ownerDocument.createElement('div');
             turnEl.className = 'turn-container';
             turnEl.setAttribute('data-turn-id', turnId);
             turnEl.setAttribute('data-mode', mode);
@@ -367,7 +367,7 @@ export class MessageRenderer {
     private registerEventHandlers(eventBus: EventBus): void {
         const findById = (id?: string): HTMLElement | null => {
             if (!id) return null;
-            return document.querySelector(`[data-msg-id="${id}"]`);
+            return this.ensureContainer()?.querySelector(`[data-msg-id="${id}"]`) ?? null;
         };
 
         eventBus.on('render:addUserMessage', (data) => {
@@ -725,7 +725,7 @@ export class MessageRenderer {
         });
 
         eventBus.on('render:clearStreaming', (data) => {
-            const container = document.getElementById('ollama-chat-messages');
+            const container = this.ensureContainer();
             if (!container) return;
             container.querySelectorAll(`.streaming-message[data-mode="${data.mode}"]`).forEach(el => {
                 const contentEl = el.querySelector('.message-content');

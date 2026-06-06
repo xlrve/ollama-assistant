@@ -68,6 +68,30 @@ interface ToolCapability {
     format: ToolFormat;
 }
 
+type UnknownRecord = Record<string, unknown>;
+
+function asRecord(value: unknown): UnknownRecord | null {
+    return value && typeof value === 'object' ? value as UnknownRecord : null;
+}
+
+function getString(record: UnknownRecord, key: string): string | undefined {
+    const value = record[key];
+    return typeof value === 'string' ? value : undefined;
+}
+
+function getNumber(record: UnknownRecord, key: string): number | undefined {
+    const value = record[key];
+    return typeof value === 'number' ? value : undefined;
+}
+
+function getRecord(record: UnknownRecord, key: string): UnknownRecord | undefined {
+    return asRecord(record[key]) ?? undefined;
+}
+
+function getModelInfoValue(modelInfo: UnknownRecord | undefined, key: string): unknown {
+    return modelInfo ? modelInfo[key] : undefined;
+}
+
 export class OllamaClient {
     private settings: OllamaSettings;
     private modelSupportsTools: boolean = false;
@@ -121,21 +145,27 @@ export class OllamaClient {
                 return false;
             }
 
-            const data = response.json;
+            const responseJson: unknown = response.json;
+            const data = asRecord(responseJson);
+            if (!data) {
+                this.toolsSupportCache.set(this.settings.model, { supported: false, format: 'none' });
+                return false;
+            }
 
             // Check capabilities array for 'tools'
-            const hasToolsCapability = data.capabilities &&
-                           Array.isArray(data.capabilities) &&
-                           data.capabilities.includes('tools');
+            const capabilities = data.capabilities;
+            const hasToolsCapability = Array.isArray(capabilities) &&
+                capabilities.some((capability) => capability === 'tools');
 
             // Detect format from template
             let format: ToolFormat = 'none';
             if (hasToolsCapability) {
-                if (!data.template) {
+                const templateValue = getString(data, 'template');
+                if (!templateValue) {
                     // No template (cloud models) - assume native
                     format = 'native';
                 } else {
-                    const template = data.template.toLowerCase();
+                    const template = templateValue.toLowerCase();
                     // Check for incompatible formats
                     if (template.includes('[tool_calls]')) {
                         // Mistral format - unsupported
@@ -199,8 +229,14 @@ export class OllamaClient {
                 throw new Error(`Ollama API error: ${response.status}`);
             }
 
-            const data: OllamaResponse = response.json;
-            return data.message.content;
+            const responseJson: unknown = response.json;
+            const data = asRecord(responseJson);
+            const message = data ? getRecord(data, 'message') : undefined;
+            const content = message ? getString(message, 'content') : undefined;
+            if (content === undefined) {
+                throw new Error('Ollama API returned an invalid response');
+            }
+            return content;
         } catch (error) {
             console.error('Error calling Ollama API:', error);
             throw error;
@@ -255,9 +291,11 @@ export class OllamaClient {
                     if (errorBody) {
                         try {
                             // Try to parse as JSON first
-                            const errorJson = JSON.parse(errorBody);
-                            if (errorJson.error) {
-                                errorMessage = errorJson.error;
+                            const parsedBody: unknown = JSON.parse(errorBody);
+                            const errorJson = asRecord(parsedBody);
+                            const parsedError = errorJson ? getString(errorJson, 'error') : undefined;
+                            if (parsedError) {
+                                errorMessage = parsedError;
                             }
                         } catch {
                             // If not JSON, use raw text
@@ -302,46 +340,60 @@ export class OllamaClient {
                 for (const line of lines) {
                     if (line.trim()) {
                         try {
-                            const json = JSON.parse(line);
-                            const hasToolCall = json.message?.tool_calls && json.message.tool_calls.length > 0;
+                            const parsedLine: unknown = JSON.parse(line);
+                            const json = asRecord(parsedLine);
+                            if (!json) continue;
+
+                            const message = getRecord(json, 'message');
+                            const toolCalls = message?.tool_calls;
+                            const hasToolCall = Array.isArray(toolCalls) && toolCalls.length > 0;
 
                             // Handle tool calls FIRST (priority over content)
                             if (hasToolCall) {
-                                const toolCall = json.message.tool_calls[0];
-                                onChunk({
-                                    type: 'tool_call',
-                                    text: '',
-                                    tool: {
-                                        name: toolCall.function.name,
-                                        arguments: toolCall.function.arguments
-                                    }
-                                });
+                                const toolCall = asRecord(toolCalls[0]);
+                                const fn = toolCall ? getRecord(toolCall, 'function') : undefined;
+                                const name = fn ? getString(fn, 'name') : undefined;
+                                if (name) {
+                                    onChunk({
+                                        type: 'tool_call',
+                                        text: '',
+                                        tool: {
+                                            name,
+                                            arguments: fn?.arguments
+                                        }
+                                    });
+                                }
                             }
 
                             // Send thinking if present (even with tool_call)
-                            if (json.message?.thinking) {
-                                onChunk({ type: 'thinking', text: json.message.thinking });
+                            const thinking = message ? getString(message, 'thinking') : undefined;
+                            if (thinking) {
+                                onChunk({ type: 'thinking', text: thinking });
                             }
 
                             // Send content ONLY if NO tool_call in this chunk
-                            if (!hasToolCall && json.message?.content) {
-                                onChunk({ type: 'content', text: json.message.content });
+                            const content = message ? getString(message, 'content') : undefined;
+                            if (!hasToolCall && content) {
+                                onChunk({ type: 'content', text: content });
                             }
                             
                             // If this is the final response, send metrics
-                            if (json.done) {
+                            if (json.done === true) {
                                 // Send metrics if we have token counts (even without duration for cloud models)
-                                if (json.eval_count || json.prompt_eval_count) {
-                                    const speed = (json.eval_count && json.eval_duration)
-                                        ? (json.eval_count / json.eval_duration) * 1000000000 // nanoseconds to seconds
+                                const evalCount = getNumber(json, 'eval_count') ?? 0;
+                                const promptEvalCount = getNumber(json, 'prompt_eval_count') ?? 0;
+                                const evalDuration = getNumber(json, 'eval_duration') ?? 0;
+                                if (evalCount || promptEvalCount) {
+                                    const speed = (evalCount && evalDuration)
+                                        ? (evalCount / evalDuration) * 1000000000 // nanoseconds to seconds
                                         : 0; // Cloud models don't return duration
                                     onChunk({
                                         type: 'metrics',
                                         text: '',
                                         metrics: {
-                                            eval_count: json.eval_count || 0,
-                                            eval_duration: json.eval_duration || 0,
-                                            prompt_eval_count: json.prompt_eval_count || 0,
+                                            eval_count: evalCount,
+                                            eval_duration: evalDuration,
+                                            prompt_eval_count: promptEvalCount,
                                             speed: speed
                                         }
                                     });
@@ -372,10 +424,11 @@ export class OllamaClient {
                 throw new Error(`Ollama API error: ${response.status}`);
             }
 
-            const data: unknown = response.json;
-            if (!data || typeof data !== 'object' || !('models' in data)) return [];
+            const responseJson: unknown = response.json;
+            const data = asRecord(responseJson);
+            if (!data) return [];
 
-            const models = (data as { models?: unknown }).models;
+            const models = data.models;
             if (!Array.isArray(models)) return [];
 
             return models
@@ -413,11 +466,14 @@ export class OllamaClient {
             });
             if (response.status !== 200) return null;
 
-            const data = response.json;
+            const responseJson: unknown = response.json;
+            const data = asRecord(responseJson);
 
             // Get first model stats (currently running model)
-            if (data.models && data.models.length > 0) {
-                const modelStats = data.models[0];
+            const models = data?.models;
+            if (Array.isArray(models) && models.length > 0) {
+                const modelStats = asRecord(models[0]);
+                if (!modelStats) return null;
 
                 // Also get context window from model info
                 let contextWindow = 4096; // default
@@ -429,12 +485,18 @@ export class OllamaClient {
                         body: JSON.stringify({ name: this.settings.model })
                     });
                     if (showResp.status === 200) {
-                        const showData = showResp.json;
-                        if (showData.model_info) {
-                            const ctxParam = showData.model_info['llama.context_length'] ||
-                                           showData.model_info['mistral.context_length'] ||
-                                           showData.model_info['context_length'];
-                            if (ctxParam) contextWindow = parseInt(ctxParam);
+                        const showJson: unknown = showResp.json;
+                        const showData = asRecord(showJson);
+                        const modelInfo = showData ? getRecord(showData, 'model_info') : undefined;
+                        if (modelInfo) {
+                            const ctxParam = getModelInfoValue(modelInfo, 'llama.context_length') ||
+                                getModelInfoValue(modelInfo, 'mistral.context_length') ||
+                                getModelInfoValue(modelInfo, 'context_length');
+                            if (typeof ctxParam === 'number') {
+                                contextWindow = ctxParam;
+                            } else if (typeof ctxParam === 'string') {
+                                contextWindow = parseInt(ctxParam, 10);
+                            }
                         }
                     }
                 } catch {
@@ -442,10 +504,10 @@ export class OllamaClient {
                 }
 
                 return {
-                    loaded_model: modelStats.name,
+                    loaded_model: getString(modelStats, 'name'),
                     loaded: true,
-                    size_vram: modelStats.size_vram,
-                    vram_size: modelStats.size_vram,
+                    size_vram: getNumber(modelStats, 'size_vram'),
+                    vram_size: getNumber(modelStats, 'size_vram'),
                     context_window: contextWindow
                 };
             }

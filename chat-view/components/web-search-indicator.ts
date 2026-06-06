@@ -17,9 +17,9 @@ export class WebSearchIndicator {
         private eventBus: EventBus,
         private store: Store
     ) {
-        this.eventBus.on('model:changed', this.handleModelChanged.bind(this));
-        this.eventBus.on('connection:changed', this.handleConnectionChanged.bind(this));
-        this.eventBus.on('app:ready', this.initialize.bind(this));
+        this.eventBus.on('model:changed', (data) => this.handleModelChanged(data));
+        this.eventBus.on('connection:changed', (data) => this.handleConnectionChanged(data));
+        this.eventBus.on('app:ready', () => this.initialize());
 
         // Subscribe to Store - update only when relevant values change
         this.unsubscribeStore = this.store.subscribe(() => {
@@ -43,7 +43,7 @@ export class WebSearchIndicator {
     private handleModelChanged(data: { model: string }): void {
         console.debug('[WebSearchIndicator] Model changed:', data.model);
         // Give time for Store to update with tool support info
-        activeWindow.setTimeout(() => this.updateDisplay(), 100);
+        window.setTimeout(() => this.updateDisplay(), 100);
     }
 
     private handleConnectionChanged(data: { connected: boolean }): void {

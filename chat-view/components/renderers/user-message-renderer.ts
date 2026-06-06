@@ -34,7 +34,7 @@ export class UserMessageRenderer {
         contextContent?: string,
         contextLabelOverride?: string
     ): HTMLElement {
-        const messageEl = document.createElement('div');
+        const messageEl = activeDocument.createElement('div');
         messageEl.className = 'chat-message user-message';
         messageEl.setAttribute('data-mode', mode);
         messageEl.setAttribute('data-msg-id', msgId);
@@ -78,7 +78,7 @@ export class UserMessageRenderer {
         contextContent?: string,
         contextLabelOverride?: string
     ): HTMLElement {
-        const messageEl = document.createElement('div');
+        const messageEl = activeDocument.createElement('div');
         messageEl.className = 'chat-message user-message';
         messageEl.setAttribute('data-mode', mode);
 
@@ -176,14 +176,14 @@ export class UserMessageRenderer {
         contextLabelOverride?: string
     ): HTMLElement {
         const container = this.deps.ensureContainer();
-        if (!container) return document.createElement('div');
+        if (!container) return activeDocument.createElement('div');
 
         const targetMode = mode || 'edit';
 
         const welcomeMessages = container.querySelectorAll(`.welcome-message[data-mode="${targetMode}"]`);
         welcomeMessages.forEach((msg) => msg.remove());
 
-        const messageEl = document.createElement('div');
+        const messageEl = activeDocument.createElement('div');
         messageEl.className = 'chat-message user-message';
         messageEl.setAttribute('data-mode', targetMode);
 

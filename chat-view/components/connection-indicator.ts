@@ -13,8 +13,8 @@ export class ConnectionIndicator {
         private eventBus: EventBus,
         private store: Store
     ) {
-        this.eventBus.on('connection:changed', this.handleConnectionChanged.bind(this));
-        this.eventBus.on('app:ready', this.initialize.bind(this));
+        this.eventBus.on('connection:changed', (data) => this.handleConnectionChanged(data));
+        this.eventBus.on('app:ready', () => this.initialize());
     }
 
     private initialize(): void {

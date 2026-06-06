@@ -85,7 +85,8 @@ export class ReasoningRenderer {
             undefined;
         const resolvedReasoningId = reasoningId || (resolvedTurnId ? `${resolvedTurnId}-reasoning` : undefined);
 
-        const blockEl = document.createElement('div');
+        const doc = container.ownerDocument;
+        const blockEl = doc.createElement('div');
         blockEl.className = 'reasoning-block collapsed';
         blockEl.setAttribute('data-mode', mode);
         blockEl.setAttribute('data-collapsed', '1');
@@ -97,15 +98,15 @@ export class ReasoningRenderer {
             blockEl._msgId = resolvedReasoningId;
         }
 
-        const headerEl = document.createElement('div');
+        const headerEl = doc.createElement('div');
         headerEl.className = 'reasoning-header';
 
-        const toggleBtn = document.createElement('button');
+        const toggleBtn = doc.createElement('button');
         toggleBtn.className = 'reasoning-toggle';
         toggleBtn.textContent = 'Show reasoning';
         toggleBtn.type = 'button';
 
-        const contentEl = document.createElement('div');
+        const contentEl = doc.createElement('div');
         contentEl.className = 'reasoning-content';
 
         const toggle = () => {
@@ -191,12 +192,12 @@ export class ReasoningRenderer {
         let cursorEl = contentEl.querySelector('.cursor-blink');
         if (!textEl) {
             contentEl.empty();
-            textEl = document.createElement('span');
+            textEl = contentEl.ownerDocument.createElement('span');
             textEl.className = 'reasoning-text';
             contentEl.appendChild(textEl);
         }
         if (!cursorEl) {
-            cursorEl = document.createElement('span');
+            cursorEl = contentEl.ownerDocument.createElement('span');
             cursorEl.className = 'cursor-blink';
             cursorEl.textContent = this.deps.streamingCursor;
             contentEl.appendChild(cursorEl);

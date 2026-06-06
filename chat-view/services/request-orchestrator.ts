@@ -31,7 +31,11 @@ export class RequestOrchestrator {
         this.streamingHandler = new StreamingHandler(eventBus ?? context.eventBus);
         this.webSearchHandler = new WebSearchHandler(context, this.streamingHandler);
         this.editDiscussHandler = new EditDiscussHandler(context, this.streamingHandler);
-        this.requestService = new RequestService(context, this.processMessage.bind(this));
+        this.requestService = new RequestService(
+            context,
+            (message, textarea, mode, fromQueue, userMessageEl, savedContext) =>
+                this.processMessage(message, textarea, mode, fromQueue, userMessageEl, savedContext)
+        );
     }
 
     private parseSourceEditFromLabel(label?: string): number | undefined {

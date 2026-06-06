@@ -189,7 +189,7 @@ export class AssistantMessageRenderer {
 
         this.deps.removeStreamingMessages(mode);
 
-        const messageEl = document.createElement('div');
+        const messageEl = container.ownerDocument.createElement('div');
         messageEl.className = isResult
             ? 'chat-message assistant-message result-message streaming-message'
             : 'chat-message assistant-message streaming-message';

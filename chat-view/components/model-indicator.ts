@@ -16,8 +16,8 @@ export class ModelIndicator {
         private eventBus: EventBus,
         private store: Store
     ) {
-        this.eventBus.on('model:changed', this.handleModelChanged.bind(this));
-        this.eventBus.on('app:ready', this.initialize.bind(this));
+        this.eventBus.on('model:changed', (data) => this.handleModelChanged(data));
+        this.eventBus.on('app:ready', () => this.initialize());
     }
 
     private initialize(): void {

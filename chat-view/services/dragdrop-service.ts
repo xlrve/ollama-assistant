@@ -17,6 +17,12 @@ interface DragDropServiceDeps {
 export class DragDropService {
     private dragStartHandler: ((e: DragEvent) => void) | null = null;
     private dragEndHandler: (() => void) | null = null;
+    private eventDocument: Document | null = null;
+    private inputDragOverHandler = (event: DragEvent): void => this.handleDragOver(event);
+    private inputDragLeaveHandler = (event: DragEvent): void => this.handleDragLeave(event);
+    private inputDropHandler = (event: DragEvent): void => this.handleDrop(event);
+    private textareaDropHandler = (event: DragEvent): void => this.handleTextareaDrop(event);
+    private textareaDragOverHandler = (event: DragEvent): void => this.handleTextareaDragOver(event);
 
     constructor(private deps: DragDropServiceDeps) {}
 
@@ -24,6 +30,7 @@ export class DragDropService {
         const inputContainerEl = this.deps.getInputContainerEl();
         const textareaEl = this.deps.getTextareaEl();
         if (!inputContainerEl || !textareaEl) return;
+        this.eventDocument = inputContainerEl.ownerDocument;
 
         // Global dragstart - show pulsing border when user starts dragging text anywhere
         this.dragStartHandler = (e: DragEvent) => {
@@ -46,21 +53,21 @@ export class DragDropService {
         };
 
         // Attach global listeners
-        document.addEventListener('dragstart', this.dragStartHandler);
-        document.addEventListener('dragend', this.dragEndHandler);
+        this.eventDocument.addEventListener('dragstart', this.dragStartHandler);
+        this.eventDocument.addEventListener('dragend', this.dragEndHandler);
 
         // Input container dragover
-        inputContainerEl.addEventListener('dragover', this.handleDragOver.bind(this));
+        inputContainerEl.addEventListener('dragover', this.inputDragOverHandler);
 
         // Input container dragleave
-        inputContainerEl.addEventListener('dragleave', this.handleDragLeave.bind(this));
+        inputContainerEl.addEventListener('dragleave', this.inputDragLeaveHandler);
 
         // Input container drop
-        inputContainerEl.addEventListener('drop', this.handleDrop.bind(this));
+        inputContainerEl.addEventListener('drop', this.inputDropHandler);
 
         // Block drag&drop into textarea in web mode
-        textareaEl.addEventListener('drop', this.handleTextareaDrop.bind(this));
-        textareaEl.addEventListener('dragover', this.handleTextareaDragOver.bind(this));
+        textareaEl.addEventListener('drop', this.textareaDropHandler);
+        textareaEl.addEventListener('dragover', this.textareaDragOverHandler);
     }
 
     private handleDragOver(e: DragEvent): void {
@@ -146,14 +153,15 @@ export class DragDropService {
 
     cleanup(): void {
         // Remove global listeners
-        if (this.dragStartHandler) {
-            document.removeEventListener('dragstart', this.dragStartHandler);
+        if (this.dragStartHandler && this.eventDocument) {
+            this.eventDocument.removeEventListener('dragstart', this.dragStartHandler);
             this.dragStartHandler = null;
         }
-        if (this.dragEndHandler) {
-            document.removeEventListener('dragend', this.dragEndHandler);
+        if (this.dragEndHandler && this.eventDocument) {
+            this.eventDocument.removeEventListener('dragend', this.dragEndHandler);
             this.dragEndHandler = null;
         }
+        this.eventDocument = null;
 
         // Remove classes
         const inputContainerEl = this.deps.getInputContainerEl();

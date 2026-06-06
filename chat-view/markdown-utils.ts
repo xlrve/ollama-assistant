@@ -10,7 +10,7 @@ export class MarkdownUtils {
 
         // Code blocks FIRST (```lang\ncode\n```) - preserve their content
         const codeBlocks: string[] = [];
-        html = html.replace(/```(\w*)\r?\n?([\s\S]*?)\r?\n?```/g, (match, lang, code) => {
+        html = html.replace(/```(\w*)\r?\n?([\s\S]*?)\r?\n?```/g, (_match: string, lang: string, code: string): string => {
             const index = codeBlocks.length;
             // Trim leading/trailing whitespace from code
             const trimmedCode = code.trim();
@@ -20,7 +20,7 @@ export class MarkdownUtils {
 
         // Inline code (`code`) - preserve content
         const inlineCodes: string[] = [];
-        html = html.replace(/`([^`]+)`/g, (match, code) => {
+        html = html.replace(/`([^`]+)`/g, (_match: string, code: string): string => {
             const index = inlineCodes.length;
             inlineCodes.push(`<code>${MarkdownUtils.escapeHtml(code)}</code>`);
             return `<!--INLINECODE${index}-->`;
@@ -28,7 +28,7 @@ export class MarkdownUtils {
 
         // Preserve <details> blocks (spoilers) - extract before newline conversion
         const detailsBlocks: string[] = [];
-        html = html.replace(/<details>([\s\S]*?)<\/details>/gi, (match, inner) => {
+        html = html.replace(/<details>([\s\S]*?)<\/details>/gi, (_match: string, inner: string): string => {
             const index = detailsBlocks.length;
             const summaryMatch = inner.match(/<summary>([\s\S]*?)<\/summary>/i);
             const summaryHtml = summaryMatch ? `<summary>${summaryMatch[1].trim()}</summary>` : '';
@@ -51,7 +51,9 @@ export class MarkdownUtils {
         html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
 
         // Tables - convert markdown tables to HTML (BEFORE line breaks!)
-        html = html.replace(/(\|[^\n]+\|\r?\n)((?:\|[-:| ]+\|\r?\n))((?:\|[^\n]+\|\r?\n?)*)/gm, (match, header, separator, rows) => {
+        html = html.replace(
+            /(\|[^\n]+\|\r?\n)((?:\|[-:| ]+\|\r?\n))((?:\|[^\n]+\|\r?\n?)*)/gm,
+            (_match: string, header: string, _separator: string, rows: string): string => {
             let tableHtml = '<table class="markdown-table"><thead><tr>';
 
             // Parse header
@@ -96,8 +98,8 @@ export class MarkdownUtils {
         html = html.replace(/^\s*(-{3,}|\*{3,}|_{3,})\s*$/gm, '<hr>');
 
         // Process lists as blocks - unordered lists (with task list support)
-        html = html.replace(/((?:^[-*]\s+.+$\n?)+)/gm, (match) => {
-            const items = match.trim().split('\n').map(line => {
+        html = html.replace(/((?:^[-*]\s+.+$\n?)+)/gm, (match: string): string => {
+            const items = match.trim().split('\n').map((line: string): string => {
                 const content = line.replace(/^[-*]\s+/, '');
 
                 // Check for task list items (- [ ] or - [x])
@@ -114,8 +116,8 @@ export class MarkdownUtils {
         });
 
         // Ordered lists
-        html = html.replace(/((?:^\d+\.\s+.+$\n?)+)/gm, (match) => {
-            const items = match.trim().split('\n').map(line => {
+        html = html.replace(/((?:^\d+\.\s+.+$\n?)+)/gm, (match: string): string => {
+            const items = match.trim().split('\n').map((line: string): string => {
                 const content = line.replace(/^\d+\.\s+/, '');
                 return `<li>${MarkdownUtils.processInlineMarkdown(content)}</li>`;
             }).join('');

@@ -101,7 +101,7 @@ export class TurnRenderer {
         if (!container) return null;
 
         // Create container for turn
-        const turnContainer = existingEl || document.createElement('div');
+        const turnContainer = existingEl || activeDocument.createElement('div');
         turnContainer.className = 'turn-container';
         turnContainer.setAttribute('data-turn-id', turn.id);
         turnContainer.setAttribute('data-mode', mode);
@@ -199,17 +199,17 @@ export class TurnRenderer {
     ): HTMLElement | null {
         if (!reasoning) return null;
 
-        const blockEl = document.createElement('div');
+        const blockEl = activeDocument.createElement('div');
         blockEl.className = reasoning.collapsed ? 'reasoning-block collapsed' : 'reasoning-block';
         blockEl.setAttribute('data-mode', mode);
         blockEl.setAttribute('data-turn-id', turnId);
         blockEl.setAttribute('data-msg-id', reasoning.id);
         blockEl.setAttribute('data-collapsed', reasoning.collapsed ? '1' : '0');
 
-        const headerEl = document.createElement('div');
+        const headerEl = activeDocument.createElement('div');
         headerEl.className = 'reasoning-header';
 
-        const toggleBtn = document.createElement('button');
+        const toggleBtn = activeDocument.createElement('button');
         toggleBtn.className = 'reasoning-toggle';
         toggleBtn.textContent = reasoning.collapsed ? 'Show reasoning' : 'Hide reasoning';
         toggleBtn.type = 'button';
@@ -236,7 +236,7 @@ export class TurnRenderer {
         };
         blockEl.addEventListener('pointerdown', handleToggle, true);
 
-        const contentEl = document.createElement('div');
+        const contentEl = activeDocument.createElement('div');
         contentEl.className = 'reasoning-content';
         const escaped = reasoning.content
             .replace(/&/g, '&amp;')
@@ -265,7 +265,7 @@ export class TurnRenderer {
         const container = this.deps.getContainer(mode);
         if (!container) return null;
 
-        const messageEl = document.createElement('div');
+        const messageEl = activeDocument.createElement('div');
         messageEl.className = 'chat-message assistant-message';
         messageEl.setAttribute('data-mode', mode);
         messageEl.setAttribute('data-turn-id', turn.id);
@@ -273,7 +273,7 @@ export class TurnRenderer {
 
         // Restored messages render as final (no streaming cursor).
 
-        const contentEl = document.createElement('div');
+        const contentEl = activeDocument.createElement('div');
         contentEl.className = 'message-content';
         safeSetHtml(contentEl, this.deps.renderMarkdown(assistant.content));
         messageEl.appendChild(contentEl);
@@ -282,13 +282,13 @@ export class TurnRenderer {
         // This means the model didn't follow the expected format
         // BUT: don't show warning if generation was stopped by user (stopMessage exists)
         if (mode === 'edit' && !turn.result && !assistant.content.includes('<EDIT>') && !turn.stopMessage) {
-            const warningContainer = document.createElement('div');
+            const warningContainer = activeDocument.createElement('div');
             warningContainer.className = 'model-warning';
-            const iconEl = document.createElement('span');
+            const iconEl = activeDocument.createElement('span');
             iconEl.className = 'warning-icon';
             iconEl.textContent = '⚠';
             warningContainer.appendChild(iconEl);
-            const textEl = document.createElement('span');
+            const textEl = activeDocument.createElement('span');
             textEl.className = 'warning-text';
             textEl.textContent = 'The model failed to process your request. The selected model may be too weak for this mode, or try rephrasing your request.';
             warningContainer.appendChild(textEl);
@@ -309,7 +309,7 @@ export class TurnRenderer {
         const container = this.deps.getContainer(mode);
         if (!container) return null;
 
-        const messageEl = document.createElement('div');
+        const messageEl = activeDocument.createElement('div');
         messageEl.className = 'chat-message assistant-message result-message';
         messageEl.setAttribute('data-mode', mode);
         messageEl.setAttribute('data-turn-id', turn.id);
@@ -320,7 +320,7 @@ export class TurnRenderer {
 
         // Restored messages render as final (no streaming cursor).
 
-        const contentEl = document.createElement('div');
+        const contentEl = activeDocument.createElement('div');
         contentEl.className = 'message-content';
         safeSetHtml(contentEl, this.deps.renderMarkdown(result.content));
         messageEl.appendChild(contentEl);

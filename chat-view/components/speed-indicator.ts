@@ -18,15 +18,15 @@ export class SpeedIndicator {
 
     constructor(private eventBus: EventBus) {
         // Subscribe to events
-        this.eventBus.on('generation:start', this.handleStart.bind(this));
-        this.eventBus.on('generation:chunk', this.handleChunk.bind(this));
-        this.eventBus.on('tokens:counted', this.handleTokensCounted.bind(this));
-        this.eventBus.on('generation:completed', this.handleCompleted.bind(this));
-        this.eventBus.on('generation:stopped', this.handleStopped.bind(this));
-        this.eventBus.on('app:ready', this.initialize.bind(this));
+        this.eventBus.on('generation:start', () => this.handleStart());
+        this.eventBus.on('generation:chunk', (data) => this.handleChunk(data));
+        this.eventBus.on('tokens:counted', (data) => this.handleTokensCounted(data));
+        this.eventBus.on('generation:completed', () => this.handleCompleted());
+        this.eventBus.on('generation:stopped', () => this.handleStopped());
+        this.eventBus.on('app:ready', () => this.initialize());
 
         // Reset speed when model changes
-        this.eventBus.on('model:changed', this.handleModelChanged.bind(this));
+        this.eventBus.on('model:changed', () => this.handleModelChanged());
     }
 
     /**

@@ -52,8 +52,8 @@ export class ErrorBanner {
         private deps: ErrorBannerDeps
     ) {
         // Subscribe to events
-        this.eventBus.on('connection:changed', this.handleConnectionChanged.bind(this));
-        this.eventBus.on('app:ready', this.initialize.bind(this));
+        this.eventBus.on('connection:changed', (data) => this.handleConnectionChanged(data));
+        this.eventBus.on('app:ready', () => this.initialize());
     }
 
     /**
@@ -158,7 +158,7 @@ export class ErrorBanner {
         const chatBlock = this.deps.getChatBlockWrapperEl();
         if (!chatBlock) {
             // Fallback: create temporary banner
-            const banner = document.createElement('div');
+            const banner = activeDocument.createElement('div');
             banner.className = 'ollama-error-banner';
             return banner;
         }

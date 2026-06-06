@@ -9,9 +9,14 @@ export class LocalStorageSettings {
 
     constructor(private app: App) {}
 
+    private loadString(key: string): string | null {
+        const value: unknown = this.app.loadLocalStorage(this.prefix + key);
+        return typeof value === 'string' ? value : null;
+    }
+
     // Model
     getModel(): string | null {
-        return this.app.loadLocalStorage(this.prefix + 'model');
+        return this.loadString('model');
     }
 
     setModel(value: string): void {
@@ -20,7 +25,7 @@ export class LocalStorageSettings {
 
     // Base URL
     getBaseUrl(): string | null {
-        return this.app.loadLocalStorage(this.prefix + 'baseUrl');
+        return this.loadString('baseUrl');
     }
 
     setBaseUrl(value: string): void {
@@ -29,7 +34,7 @@ export class LocalStorageSettings {
 
     // Temperature
     getTemperature(): number | null {
-        const value = this.app.loadLocalStorage(this.prefix + 'temperature');
+        const value = this.loadString('temperature');
         return value !== null ? parseFloat(value) : null;
     }
 
@@ -39,7 +44,7 @@ export class LocalStorageSettings {
 
     // Default context size
     getDefaultContextSize(): number | null {
-        const value = this.app.loadLocalStorage(this.prefix + 'defaultContextSize');
+        const value = this.loadString('defaultContextSize');
         return value !== null ? parseInt(value, 10) : null;
     }
 
@@ -49,7 +54,7 @@ export class LocalStorageSettings {
 
     // Max history messages
     getMaxHistoryMessages(): number | null {
-        const value = this.app.loadLocalStorage(this.prefix + 'maxHistoryMessages');
+        const value = this.loadString('maxHistoryMessages');
         return value !== null ? parseInt(value, 10) : null;
     }
 
@@ -59,7 +64,7 @@ export class LocalStorageSettings {
 
     // Force enable web mode
     getForceEnableWebMode(): boolean | null {
-        const value = this.app.loadLocalStorage(this.prefix + 'forceEnableWebMode');
+        const value = this.loadString('forceEnableWebMode');
         return value !== null ? value === 'true' : null;
     }
 

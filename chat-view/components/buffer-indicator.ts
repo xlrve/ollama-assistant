@@ -9,6 +9,23 @@ import { Actions } from '../core/actions';
 import type OllamaAssistantPlugin from '../../main';
 import { requestUrl } from 'obsidian';
 
+type UnknownRecord = Record<string, unknown>;
+
+function asRecord(value: unknown): UnknownRecord | null {
+    return value && typeof value === 'object' ? value as UnknownRecord : null;
+}
+
+function getRecord(record: UnknownRecord, key: string): UnknownRecord | undefined {
+    return asRecord(record[key]) ?? undefined;
+}
+
+function getNumberValue(value: unknown): number | null {
+    if (typeof value === 'number') return value;
+    if (typeof value !== 'string') return null;
+    const parsed = parseInt(value, 10);
+    return Number.isNaN(parsed) ? null : parsed;
+}
+
 export class BufferIndicator {
     private valueEl: HTMLElement | null = null;
     private tooltipEl: HTMLElement | null = null;
@@ -24,15 +41,15 @@ export class BufferIndicator {
         private eventBus: EventBus,
         private store: Store
     ) {
-        this.eventBus.on('tokens:counted', this.handleTokensCounted.bind(this));
-        this.eventBus.on('mode:switched', this.handleModeSwitch.bind(this));
-        this.eventBus.on('history:clear', this.handleClear.bind(this));
-        this.eventBus.on('model:changed', this.handleModelChanged.bind(this));
-        this.eventBus.on('generation:start', this.handleGenerationStart.bind(this));
-        this.eventBus.on('generation:completed', this.handleGenerationCompleted.bind(this));
-        this.eventBus.on('generation:stopped', this.handleGenerationStopped.bind(this));
-        this.eventBus.on('context:sizeChanged', this.handleContextSizeChanged.bind(this));
-        this.eventBus.on('app:ready', this.initialize.bind(this));
+        this.eventBus.on('tokens:counted', (data) => this.handleTokensCounted(data));
+        this.eventBus.on('mode:switched', (data) => this.handleModeSwitch(data));
+        this.eventBus.on('history:clear', (data) => this.handleClear(data));
+        this.eventBus.on('model:changed', () => this.handleModelChanged());
+        this.eventBus.on('generation:start', (data) => this.handleGenerationStart(data));
+        this.eventBus.on('generation:completed', () => this.handleGenerationCompleted());
+        this.eventBus.on('generation:stopped', () => this.handleGenerationStopped());
+        this.eventBus.on('context:sizeChanged', (data) => this.handleContextSizeChanged(data));
+        this.eventBus.on('app:ready', () => this.initialize());
     }
 
     private initialize(): void {
@@ -328,23 +345,28 @@ export class BufferIndicator {
 
             if (response.status !== 200) return null;
 
-            const data = response.json;
+            const responseJson: unknown = response.json;
+            const data = asRecord(responseJson);
+            if (!data) return null;
 
             // Check if this is a cloud model
             const modelLower = this.plugin.settings.model.toLowerCase();
             const isCloudModel = modelLower.includes('claude') || modelLower.includes('gpt');
 
             let contextLength: number | null = null;
+            const modelInfo = getRecord(data, 'model_info');
 
             if (isCloudModel) {
                 // For cloud models take maximum context from model
-                const architecture = data?.model_info?.['general.architecture'];
-                contextLength = architecture ? data?.model_info?.[`${architecture}.context_length`] : null;
+                const architecture = modelInfo?.['general.architecture'];
+                contextLength = typeof architecture === 'string'
+                    ? getNumberValue(modelInfo?.[`${architecture}.context_length`])
+                    : null;
 
                 if (!contextLength) {
-                    contextLength = data?.model_info?.['llama.context_length'] ||
-                                   data?.model_info?.['context_length'] ||
-                                   data?.context_length;
+                    contextLength = getNumberValue(modelInfo?.['llama.context_length']) ||
+                        getNumberValue(modelInfo?.['context_length']) ||
+                        getNumberValue(data.context_length);
                 }
             } else {
                 // For local models use value from plugin settings

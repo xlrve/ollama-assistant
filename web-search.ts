@@ -148,11 +148,12 @@ export class WebSearchClient {
             
         } catch (error) {
             console.error(`❌ Failed to read ${url}:`, error);
+            const message = error instanceof Error ? error.message : String(error);
             return {
                 url,
                 title: 'Error',
                 text: '',
-                error: error.message
+                error: message
             };
         }
     }

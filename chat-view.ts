@@ -131,6 +131,10 @@ export class OllamaChatView extends ItemView {
         return `msg-${Date.now()}-${this.messageIdCounter++}`;
     }
 
+    private get viewDocument(): Document {
+        return this.containerEl.ownerDocument;
+    }
+
     constructor(leaf: WorkspaceLeaf, plugin: OllamaAssistantPlugin) {
         super(leaf);
         this.plugin = plugin;
@@ -360,7 +364,7 @@ export class OllamaChatView extends ItemView {
             contextService: this.contextService,
             eventBus: this.eventBus,
             store: this.store,
-            getBodyEl: () => document.body,
+            getBodyEl: () => this.viewDocument.body,
             getCurrentTab: () => this.currentTab,
             getCurrentTabState: () => this.getCurrentTabState(),
             clearTextToEdit: () => this.clearTextToEdit(),
@@ -418,8 +422,8 @@ export class OllamaChatView extends ItemView {
             getContextPinButtonEl: () => this.contextPinButtonEl,
             getContextCloseButtonEl: () => this.contextCloseButtonEl,
             getInputContainerEl: () => this.inputContainerEl,
-            getBodyEl: () => document.body,
-            getHeadEl: () => document.head
+            getBodyEl: () => this.viewDocument.body,
+            getHeadEl: () => this.viewDocument.head
         });
         console.debug('[OllamaAssistant] Event-Driven architecture ready!');
 
@@ -448,7 +452,7 @@ export class OllamaChatView extends ItemView {
     // Clear streaming throttle timer and pending update (prevents cursor from being added back after finalize)
     private clearStreamingThrottle(): void {
         if (this.streamingThrottleTimer) {
-            clearTimeout(this.streamingThrottleTimer);
+            window.clearTimeout(this.streamingThrottleTimer);
             this.streamingThrottleTimer = null;
         }
         this.pendingStreamingUpdate = null;
@@ -631,7 +635,7 @@ export class OllamaChatView extends ItemView {
         }
 
         // Save scroll position for current tab before switching
-        const messagesContainer = document.getElementById('ollama-chat-messages');
+        const messagesContainer = this.viewDocument.getElementById('ollama-chat-messages');
         if (messagesContainer) {
             this.getCurrentTabState().scrollPosition = messagesContainer.scrollTop;
         }
@@ -656,9 +660,9 @@ export class OllamaChatView extends ItemView {
             // No need to adjust height - fixed max-height with scrollbar
         }
 
-        const editBtn = document.getElementById('mode-edit-btn');
-        const discussBtn = document.getElementById('mode-discuss-btn');
-        const webBtn = document.getElementById('mode-web-btn');
+        const editBtn = this.viewDocument.getElementById('mode-edit-btn');
+        const discussBtn = this.viewDocument.getElementById('mode-discuss-btn');
+        const webBtn = this.viewDocument.getElementById('mode-web-btn');
 
         if (editBtn && discussBtn) {
             editBtn.removeClass('mode-btn-active');
@@ -751,7 +755,7 @@ export class OllamaChatView extends ItemView {
     }
 
     filterMessagesByMode(skipScroll: boolean = false) {
-        const messagesContainer = document.getElementById('ollama-chat-messages');
+        const messagesContainer = this.viewDocument.getElementById('ollama-chat-messages');
         if (!messagesContainer) return;
 
         const allMessages = messagesContainer.querySelectorAll('.chat-message');
@@ -918,9 +922,9 @@ export class OllamaChatView extends ItemView {
             return;
         }
 
-        const messagesContainer = document.getElementById('ollama-chat-messages');
+        const messagesContainer = this.viewDocument.getElementById('ollama-chat-messages');
         if (messagesContainer) {
-            setTimeout(() => {
+            window.setTimeout(() => {
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }, 10);
         }
@@ -955,10 +959,10 @@ export class OllamaChatView extends ItemView {
 
     // === UI ports (DOM helpers) ===
     // These methods intentionally keep DOM access inside ChatView (composition root),
-    // so services/handlers can stay event-driven and avoid calling document.* directly.
+    // so services/handlers can stay event-driven and avoid reaching into global DOM directly.
 
     getChatMessagesContainer(): HTMLElement | null {
-        return document.getElementById('ollama-chat-messages');
+        return this.viewDocument.getElementById('ollama-chat-messages');
     }
 
     findChatMessageElementById(messageId: string): HTMLElement | null {
@@ -1103,12 +1107,12 @@ export class OllamaChatView extends ItemView {
     }
 
     async toggleModelMenu() {
-        const existingMenu = document.querySelector<HTMLElement>('.model-selector-menu');
+        const existingMenu = this.viewDocument.querySelector<HTMLElement>('.model-selector-menu');
         await this.modelMenuService.toggleModelMenu(existingMenu);
     }
 
     toggleQuickEditsMenu() {
-        this.quickEditsService.toggleQuickEditsMenu(this.quickEditsButtonEl, this.textareaEl, document.body);
+        this.quickEditsService.toggleQuickEditsMenu(this.quickEditsButtonEl, this.textareaEl, this.viewDocument.body);
     }
 
     // Load saved chat history from settings
@@ -1123,7 +1127,7 @@ export class OllamaChatView extends ItemView {
 
             // For web tab, check if it exists (model supports tools)
             if (savedTab === 'web') {
-                const webBtn = document.getElementById('mode-web-btn');
+                const webBtn = this.viewDocument.getElementById('mode-web-btn');
                 if (!webBtn) {
                     console.debug('[OllamaHelper] Web tab not available, falling back to edit');
                     tabToRestore = 'edit';
@@ -1221,7 +1225,7 @@ export class OllamaChatView extends ItemView {
         this.errorBanner?.cleanup();
 
         // Remove add context menu from DOM
-        const addContextMenu = document.getElementById('add-context-menu');
+        const addContextMenu = this.viewDocument.getElementById('add-context-menu');
         if (addContextMenu) {
             addContextMenu.remove();
         }

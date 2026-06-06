@@ -46,6 +46,10 @@ interface SyncedSettings {
 // Combined settings interface (for compatibility with existing code)
 interface OllamaAssistantSettings extends DeviceSettings, SyncedSettings {}
 
+function asSettingsObject(value: unknown): Partial<SyncedSettings> {
+    return value && typeof value === 'object' ? value as Partial<SyncedSettings> : {};
+}
+
 // Defaults for device-specific settings
 const DEFAULT_DEVICE_SETTINGS: DeviceSettings = {
     baseUrl: 'http://localhost:11434',
@@ -191,8 +195,8 @@ export default class OllamaAssistantPlugin extends Plugin {
 
     async loadSettings() {
         // Load synced settings from data.json
-        const savedData = await this.loadData();
-        const syncedSettings: SyncedSettings = Object.assign({}, DEFAULT_SYNCED_SETTINGS, savedData);
+        const savedData: unknown = await this.loadData();
+        const syncedSettings: SyncedSettings = Object.assign({}, DEFAULT_SYNCED_SETTINGS, asSettingsObject(savedData));
 
         // Load device-specific settings from localStorage
         const deviceSettings: DeviceSettings = {
@@ -262,6 +266,10 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
     }
 
     display(): void {
+        this.render();
+    }
+
+    private render(): void {
         const { containerEl } = this;
 
         containerEl.empty();
@@ -317,7 +325,7 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
             .setTooltip('Reload available models')
             .onClick(() => {
                 // Refresh the entire settings display to reload dropdown
-                this.display();
+                this.render();
                 new Notice('Models list refreshed');
             }));
 
@@ -463,7 +471,7 @@ class OllamaAssistantSettingTab extends PluginSettingTab {
                     model: defaultModel
                 };
                 await this.plugin.saveSettings();
-                this.display(); // Refresh settings UI
+                this.render(); // Refresh settings UI
                 new Notice('Settings reset to defaults');
             })();
         });

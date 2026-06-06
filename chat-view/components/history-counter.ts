@@ -17,9 +17,9 @@ export class HistoryCounter {
         private store: Store
     ) {
         // Subscribe to events
-        this.eventBus.on('mode:switched', this.updateCounter.bind(this));
-        this.eventBus.on('history:clear', this.updateCounter.bind(this));
-        this.eventBus.on('app:ready', this.initialize.bind(this));
+        this.eventBus.on('mode:switched', () => this.updateCounter());
+        this.eventBus.on('history:clear', () => this.updateCounter());
+        this.eventBus.on('app:ready', () => this.initialize());
 
         // Subscribe to Store changes (Bridge syncs history every 100ms)
         this.unsubscribeStore = this.store.subscribe(() => {
