@@ -76,4 +76,4 @@ Thanks to the [Ollama](https://ollama.com) team and the [Obsidian](https://obsid
 
 ---
 
-[Ko-fi](https://ko-fi.com/youlin) | [Report a bug or suggest a feature](https://github.com/xlrve/ollama-assistant/issues/new/choose)
+[Report a bug or suggest a feature](https://github.com/xlrve/ollama-assistant/issues/new/choose)
