@@ -1,6 +1,6 @@
 {
   "name": "obsidian-ollama-assistant",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Obsidian plugin that connects local AI via Ollama for text editing, note discussion, and web search.",
   "main": "main.js",
   "scripts": {
