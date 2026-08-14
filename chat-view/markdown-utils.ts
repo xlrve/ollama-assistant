@@ -44,11 +44,16 @@ export class MarkdownUtils {
             return `<!--DETAILS${index}-->`;
         });
 
-        // Images BEFORE links (![alt](url))
-        html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width: 100%; height: auto;">');
+        // Images BEFORE links (![alt](url)) - alt/src are escaped to prevent attribute injection
+        html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match: string, alt: string, src: string): string => {
+            return `<img src="${MarkdownUtils.escapeHtml(src)}" alt="${MarkdownUtils.escapeHtml(alt)}" class="markdown-image">`;
+        });
 
-        // Links ([text](url))
-        html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+        // Links ([text](url)) - href is escaped and restricted to safe schemes (blocks javascript: URLs)
+        html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_match: string, text: string, href: string): string => {
+            const safeHref = /^(https?|obsidian):\/\//i.test(href) ? href : '#';
+            return `<a href="${MarkdownUtils.escapeHtml(safeHref)}" target="_blank">${text}</a>`;
+        });
 
         // Tables - convert markdown tables to HTML (BEFORE line breaks!)
         html = html.replace(

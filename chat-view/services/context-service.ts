@@ -24,8 +24,35 @@ export type ContextServiceUIRefs = {
  */
 export class ContextService {
     private ui: ContextServiceUIRefs | null = null;
+    // Last focused markdown view. Needed because clicking the +Add menu moves
+    // focus to the chat view, so getActiveViewOfType() returns null at that point.
+    private lastActiveMarkdownView: MarkdownView | null = null;
 
-    constructor(private deps: ContextServiceDeps) {}
+    constructor(private deps: ContextServiceDeps) {
+        this.lastActiveMarkdownView = this.deps.app.workspace.getActiveViewOfType(MarkdownView);
+        this.deps.getComponent().registerEvent(
+            this.deps.app.workspace.on('active-leaf-change', (leaf) => {
+                if (leaf?.view instanceof MarkdownView) {
+                    this.lastActiveMarkdownView = leaf.view;
+                }
+            })
+        );
+    }
+
+    /**
+     * Returns the markdown view the user is working with: the currently active one,
+     * or the last focused one when focus is on the chat view (e.g. +Add menu clicks).
+     */
+    private getTargetMarkdownView(): MarkdownView | null {
+        const active = this.deps.app.workspace.getActiveViewOfType(MarkdownView);
+        if (active) return active;
+
+        const last = this.lastActiveMarkdownView;
+        if (last && last.leaf?.view === last && last.containerEl.isConnected) {
+            return last;
+        }
+        return null;
+    }
 
     setUIRefs(refs: ContextServiceUIRefs): void {
         this.ui = refs;
@@ -487,17 +514,17 @@ export class ContextService {
             return;
         }
 
-        const leaves = this.deps.app.workspace.getLeavesOfType('markdown');
-        for (const leaf of leaves) {
-            const view = leaf.view;
-            if (!(view instanceof MarkdownView) || !view.editor) continue;
+        const view = this.getTargetMarkdownView();
+        if (!view || !view.editor) {
+            new Notice('No text selected in the note');
+            return;
+        }
 
-            const selection = view.editor.getSelection();
-            if (selection && selection.trim()) {
-                this.setSelectedText(selection, false);
-                new Notice(`Context added to ${mode} tab`);
-                return;
-            }
+        const selection = view.editor.getSelection();
+        if (selection && selection.trim()) {
+            this.setSelectedText(selection, false);
+            new Notice(`Context added to ${mode} tab`);
+            return;
         }
         new Notice('No text selected in the note');
     }
@@ -509,16 +536,16 @@ export class ContextService {
             return;
         }
 
-        const leaves = this.deps.app.workspace.getLeavesOfType('markdown');
-        for (const leaf of leaves) {
-            const view = leaf.view;
-            if (!(view instanceof MarkdownView) || !view.editor) continue;
+        const view = this.getTargetMarkdownView();
+        if (!view || !view.editor) {
+            new Notice('No note found');
+            return;
+        }
 
-            const entireNote = view.editor.getValue();
-            if (entireNote && entireNote.trim()) {
-                this.setSelectedText(entireNote, true);
-                return;
-            }
+        const entireNote = view.editor.getValue();
+        if (entireNote && entireNote.trim()) {
+            this.setSelectedText(entireNote, true);
+            return;
         }
         new Notice('No note found');
     }

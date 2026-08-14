@@ -506,6 +506,11 @@
 }
 
 /* Markdown rendering styles */
+.message-content img.markdown-image {
+    max-width: 100%;
+    height: auto;
+}
+
 .message-content table.markdown-table {
     border-collapse: collapse;
     width: 100%;

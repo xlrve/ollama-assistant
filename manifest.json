@@ -1,7 +1,7 @@
 {
 	"id": "ollama-assistant",
 	"name": "Ollama Assistant",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"minAppVersion": "1.10.0",
 	"description": "Connect local AI via Ollama for convenient text editing, note discussion, and web search for accurate information.",
 	"author": "xlrve",
