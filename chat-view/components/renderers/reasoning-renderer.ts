@@ -85,7 +85,6 @@ export class ReasoningRenderer {
             undefined;
         const resolvedReasoningId = reasoningId || (resolvedTurnId ? `${resolvedTurnId}-reasoning` : undefined);
 
-        const doc = container.ownerDocument;
         const blockEl = createDiv();
         blockEl.className = 'reasoning-block collapsed';
         blockEl.setAttribute('data-mode', mode);

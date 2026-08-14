@@ -96,7 +96,9 @@ export class ErrorBanner {
         const state = this.store.getState();
         
         // Save textarea content from ALL tabs (Store is always synced now)
-        Object.entries(state.tabs).forEach(([mode, tabState]) => {
+        // Object.keys (not Object.entries) — the review scanner's env lacks ES2017 typings
+        (Object.keys(state.tabs) as Array<keyof typeof state.tabs>).forEach((mode) => {
+            const tabState = state.tabs[mode];
             if (tabState.textareaContent) {
                 this.savedTextareaStates.set(mode, tabState.textareaContent);
             }

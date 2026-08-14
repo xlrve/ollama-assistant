@@ -41,8 +41,9 @@ export class ModeSwitcherService {
             web: modeSwitcher.querySelector('#mode-web-btn')
         };
 
-        // Remove existing dots
-        Object.values(buttons).forEach(btn => {
+        // Remove existing dots — explicit list instead of Object.values
+        // (the review scanner's env lacks ES2017 typings)
+        [buttons.edit, buttons.discuss, buttons.web].forEach(btn => {
             if (btn) {
                 const existingDot = btn.querySelector('.tab-indicator-dot');
                 if (existingDot) {
