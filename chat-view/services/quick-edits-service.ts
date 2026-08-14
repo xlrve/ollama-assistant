@@ -15,7 +15,7 @@ export class QuickEditsService {
             return;
         }
 
-        const menu = bodyEl.createEl('div', { cls: 'quick-edits-menu' });
+        const menu = bodyEl.createDiv({ cls: 'quick-edits-menu' });
         this.menuEl = menu;
 
         const quickEdits = [
@@ -29,7 +29,7 @@ export class QuickEditsService {
         ];
 
         quickEdits.forEach(edit => {
-            const item = menu.createEl('div', {
+            const item = menu.createDiv({
                 cls: 'menu-item',
                 text: edit
             });

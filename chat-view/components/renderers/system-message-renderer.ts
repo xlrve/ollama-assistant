@@ -39,7 +39,7 @@ export class SystemMessageRenderer {
         isError: boolean,
         messageId?: string
     ): HTMLElement {
-        const el = activeDocument.createElement('div');
+        const el = createDiv();
         const baseClass = 'chat-message assistant-message system-message';
         const extraClass = isStopMessage ? ' stop-message' : isError ? ' error-message' : '';
         el.className = `${baseClass}${extraClass}`;
@@ -52,11 +52,11 @@ export class SystemMessageRenderer {
             el.classList.add('oa-hidden');
         }
 
-        const contentEl = activeDocument.createElement('div');
+        const contentEl = createDiv();
         contentEl.className = 'message-content';
 
         if (isStopMessage) {
-            const icon = activeDocument.createElement('span');
+            const icon = createSpan();
             icon.className = 'system-stop-icon';
             icon.textContent = '■';
             contentEl.appendChild(icon);

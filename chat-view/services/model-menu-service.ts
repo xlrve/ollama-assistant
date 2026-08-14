@@ -23,7 +23,7 @@ export class ModelMenuService {
         const bodyEl = doc?.body;
         if (!doc || !bodyEl) return;
 
-        const menu = bodyEl.createEl('div', { cls: 'model-selector-menu' });
+        const menu = bodyEl.createDiv({ cls: 'model-selector-menu' });
 
         let models: string[] = [];
         try {
@@ -35,7 +35,7 @@ export class ModelMenuService {
         const currentModel = this.deps.plugin.settings.model;
 
         models.forEach((model: string) => {
-            const item = menu.createEl('div', {
+            const item = menu.createDiv({
                 cls: 'menu-item' + (model === currentModel ? ' selected' : ''),
                 text: model
             });

@@ -47,7 +47,7 @@ interface SyncedSettings {
 interface OllamaAssistantSettings extends DeviceSettings, SyncedSettings {}
 
 function asSettingsObject(value: unknown): Partial<SyncedSettings> {
-    return value && typeof value === 'object' ? value as Partial<SyncedSettings> : {};
+    return value && typeof value === 'object' ? value : {};
 }
 
 // Defaults for device-specific settings

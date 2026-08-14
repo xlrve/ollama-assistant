@@ -1,4 +1,4 @@
-﻿import type { EventBus } from '../core/event-bus';
+import type { EventBus } from '../core/event-bus';
 import { MarkdownUtils } from '../markdown-utils';
 import type { TabState } from '../types';
 import type { EditPosition } from '../state/types';
@@ -155,7 +155,7 @@ export class MessageRenderer {
         if (!container) return null;
         let turnEl = this.getTurnContainer(mode, turnId);
         if (!turnEl) {
-            turnEl = container.ownerDocument.createElement('div');
+            turnEl = createDiv();
             turnEl.className = 'turn-container';
             turnEl.setAttribute('data-turn-id', turnId);
             turnEl.setAttribute('data-mode', mode);
@@ -278,9 +278,9 @@ export class MessageRenderer {
         const hasMessages = container.querySelector(`.chat-message[data-mode="${mode}"]:not(.welcome-message)`);
         if (hasMessages) return;
         this.removeWelcomeMessages(mode);
-        const msg = container.createEl('div', { cls: 'chat-message assistant-message welcome-message' });
+        const msg = container.createDiv({ cls: 'chat-message assistant-message welcome-message' });
         msg.setAttribute('data-mode', mode);
-        const contentEl = msg.createEl('div', { cls: 'message-content welcome-content' });
+        const contentEl = msg.createDiv({ cls: 'message-content welcome-content' });
         const titleP = contentEl.createEl('p', { cls: 'oa-welcome-title' });
         titleP.createEl('strong', { text: title });
         const bodyP = contentEl.createEl('p', { cls: 'oa-welcome-body' });

@@ -63,7 +63,7 @@ export class ContextService {
     setupContextTooltip(contextInfoEl: HTMLElement): void {
         const doc = contextInfoEl.ownerDocument;
         const bodyEl = doc.body;
-        const contextTooltip = bodyEl.createEl('div', {
+        const contextTooltip = bodyEl.createDiv({
             cls: 'context-tooltip oa-hidden',
             attr: { id: 'context-tooltip' }
         });

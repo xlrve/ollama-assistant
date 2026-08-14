@@ -521,15 +521,15 @@ export class OllamaChatView extends ItemView {
         }
 
         // Chat block wrapper - combines messages window and tabs
-        const chatBlock = container.createEl('div', { cls: 'chat-block-wrapper mode-edit' });
+        const chatBlock = container.createDiv({ cls: 'chat-block-wrapper mode-edit' });
         this.chatBlockWrapperEl = chatBlock;
 
         // Chat messages container wrapper
-        const chatMessagesWrapper = chatBlock.createEl('div', { cls: 'ollama-chat-messages-wrapper mode-edit' });
+        const chatMessagesWrapper = chatBlock.createDiv({ cls: 'ollama-chat-messages-wrapper mode-edit' });
         this.chatMessagesWrapperEl = chatMessagesWrapper;
 
         // Chat messages area
-        const chatMessages = chatMessagesWrapper.createEl('div', { cls: 'ollama-chat-messages' });
+        const chatMessages = chatMessagesWrapper.createDiv({ cls: 'ollama-chat-messages' });
         chatMessages.id = 'ollama-chat-messages';
 
         // Add welcome messages for each mode
@@ -538,30 +538,30 @@ export class OllamaChatView extends ItemView {
         this.filterMessagesByMode(true);
 
         // Stats panel in bottom-right corner (History + Load)
-        const statsPanel = chatMessagesWrapper.createEl('span', { cls: 'chat-stats-panel' });
+        const statsPanel = chatMessagesWrapper.createSpan({ cls: 'chat-stats-panel' });
         
-        const historyStatEl = statsPanel.createEl('span', { cls: 'stat-item' });
+        const historyStatEl = statsPanel.createSpan({ cls: 'stat-item' });
         historyStatEl.id = 'chat-history-stat';
-        historyStatEl.createEl('span', { cls: 'stat-label', text: 'History:' });
-        historyStatEl.createEl('span', { cls: 'stat-value', text: '0' });
+        historyStatEl.createSpan({ cls: 'stat-label', text: 'History:' });
+        historyStatEl.createSpan({ cls: 'stat-value', text: '0' });
         
-        statsPanel.createEl('span', { cls: 'stat-divider' });
+        statsPanel.createSpan({ cls: 'stat-divider' });
         
-        const loadStatEl = statsPanel.createEl('span', { cls: 'stat-item' });
+        const loadStatEl = statsPanel.createSpan({ cls: 'stat-item' });
         loadStatEl.id = 'chat-load-stat';
-        loadStatEl.createEl('span', { cls: 'stat-label', text: 'Buffer:' });
+        loadStatEl.createSpan({ cls: 'stat-label', text: 'Buffer:' });
         const bufferInitialText = 'Idle';
-        loadStatEl.createEl('span', { cls: 'stat-value', text: bufferInitialText });
+        loadStatEl.createSpan({ cls: 'stat-value', text: bufferInitialText });
 
         // Info icon for buffer tooltip (hidden by default, shown when there's data)
-        loadStatEl.createEl('span', {
+        loadStatEl.createSpan({
             cls: 'buffer-info-icon oa-hidden',
             text: 'ⓘ',
             attr: { id: 'buffer-info' }
         });
 
         // Mode switcher (BELOW chat window - folder tabs at bottom)
-        const modeSwitcher = chatBlock.createEl('div', { cls: 'mode-switcher' });
+        const modeSwitcher = chatBlock.createDiv({ cls: 'mode-switcher' });
         this.modeSwitcherEl = modeSwitcher;
         this.modeSwitcherService.create(modeSwitcher, supportsTools, (mode) => this.switchMode(mode));
 

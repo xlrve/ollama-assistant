@@ -53,14 +53,14 @@ export class ModeSwitcherService {
 
         // Add pulsing dot to processing tab
         if (processingTab && buttons[processingTab]) {
-            const dot = buttons[processingTab].createEl('span', { cls: 'tab-indicator-dot pulsing' });
+            const dot = buttons[processingTab].createSpan({ cls: 'tab-indicator-dot pulsing' });
             buttons[processingTab].prepend(dot);
         }
 
         // Add static dots to queued tabs
         queuedModes.forEach(mode => {
             if (mode !== processingTab && buttons[mode]) {
-                const dot = buttons[mode].createEl('span', { cls: 'tab-indicator-dot static' });
+                const dot = buttons[mode].createSpan({ cls: 'tab-indicator-dot static' });
                 buttons[mode].prepend(dot);
             }
         });

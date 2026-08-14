@@ -42,30 +42,30 @@ export class InputAreaService {
     constructor(private deps: InputAreaDeps) {}
 
     createInputArea(container: HTMLElement, supportsTools: boolean): HTMLElement {
-        const inputContainer = container.createEl('div', { cls: 'ollama-chat-input-container mode-edit' });
+        const inputContainer = container.createDiv({ cls: 'ollama-chat-input-container mode-edit' });
         inputContainer.id = 'ollama-input-container';
 
         // Tooltip for user message context - needed for custom tooltips
         const bodyEl = this.deps.getBodyEl();
         let userContextTooltipEl = bodyEl.querySelector<HTMLElement>('#user-context-tooltip');
         if (!userContextTooltipEl) {
-            userContextTooltipEl = bodyEl.createEl('div', {
+            userContextTooltipEl = bodyEl.createDiv({
                 cls: 'context-tooltip user-context-tooltip oa-hidden',
                 attr: { id: 'user-context-tooltip' }
             });
         }
 
-        const topSection = inputContainer.createEl('div', { cls: 'input-top-section' });
+        const topSection = inputContainer.createDiv({ cls: 'input-top-section' });
 
-        const contextLine = topSection.createEl('div', { cls: 'context-line' });
-        contextLine.createEl('span', { cls: 'context-label', text: 'Context: ' });
-        const contextValue = contextLine.createEl('span', {
+        const contextLine = topSection.createDiv({ cls: 'context-line' });
+        contextLine.createSpan({ cls: 'context-label', text: 'Context: ' });
+        const contextValue = contextLine.createSpan({
             cls: 'context-value',
             text: 'No context',
             attr: { id: 'context-value' }
         });
 
-        const contextInfo = contextLine.createEl('span', {
+        const contextInfo = contextLine.createSpan({
             cls: 'context-info-icon',
             text: 'ⓘ',
             attr: { id: 'context-info' }
@@ -81,18 +81,18 @@ export class InputAreaService {
 
         let addContextMenu = bodyEl.querySelector<HTMLElement>('#add-context-menu');
         if (!addContextMenu) {
-            addContextMenu = bodyEl.createEl('div', {
+            addContextMenu = bodyEl.createDiv({
                 cls: 'add-context-menu',
                 attr: { id: 'add-context-menu' }
             });
         }
         addContextMenu.addClass('oa-hidden');
 
-        const addSelectedTextBtn = addContextMenu.createEl('div', {
+        const addSelectedTextBtn = addContextMenu.createDiv({
             cls: 'menu-item',
             text: 'Add selected text'
         });
-        const addEntireNoteBtn = addContextMenu.createEl('div', {
+        const addEntireNoteBtn = addContextMenu.createDiv({
             cls: 'menu-item',
             text: 'Add entire note'
         });
@@ -120,9 +120,9 @@ export class InputAreaService {
             this.deps.clearTextToEdit();
         });
 
-        const divider = inputContainer.createEl('div', { cls: 'input-divider' });
+        const divider = inputContainer.createDiv({ cls: 'input-divider' });
 
-        const bottomSection = inputContainer.createEl('div', { cls: 'input-bottom-section' });
+        const bottomSection = inputContainer.createDiv({ cls: 'input-bottom-section' });
 
         const textarea = bottomSection.createEl('textarea', {
             cls: 'ollama-chat-input',

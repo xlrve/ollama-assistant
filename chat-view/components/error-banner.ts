@@ -158,13 +158,13 @@ export class ErrorBanner {
         const chatBlock = this.deps.getChatBlockWrapperEl();
         if (!chatBlock) {
             // Fallback: create temporary banner
-            const banner = activeDocument.createElement('div');
+            const banner = createDiv();
             banner.className = 'ollama-error-banner';
             return banner;
         }
 
         // Create error banner as overlay inside chat block wrapper
-        const banner = (chatBlock).createEl('div', { cls: 'ollama-error-banner' });
+        const banner = (chatBlock).createDiv({ cls: 'ollama-error-banner' });
 
         // Check if container is in compact mode and apply to banner
         const container = this.deps.getChatContainerEl();
@@ -173,20 +173,20 @@ export class ErrorBanner {
         }
 
         // Llama icon wrapper with Lottie animation
-        const iconWrapper = banner.createEl('div', { cls: 'error-banner-icon' });
+        const iconWrapper = banner.createDiv({ cls: 'error-banner-icon' });
         void this.loadLottieAnimation(iconWrapper);
 
         // Content wrapper
-        const contentWrapper = banner.createEl('div', { cls: 'error-banner-content' });
+        const contentWrapper = banner.createDiv({ cls: 'error-banner-content' });
 
         // Title
-        contentWrapper.createEl('div', {
+        contentWrapper.createDiv({
             cls: 'error-banner-title',
             text: 'Ollama is not running'
         });
 
         // Subtitle with clickable Refresh
-        const subtitle = contentWrapper.createEl('div', { cls: 'error-banner-subtitle' });
+        const subtitle = contentWrapper.createDiv({ cls: 'error-banner-subtitle' });
         subtitle.appendText('Please start Ollama, then click ');
         const refreshLink = subtitle.createEl('a', { cls: 'refresh-link', text: 'refresh', attr: { href: '#' } });
         refreshLink.addEventListener('click', (e) => {
@@ -196,10 +196,10 @@ export class ErrorBanner {
         });
 
         // Divider
-        contentWrapper.createEl('div', { cls: 'error-banner-divider' });
+        contentWrapper.createDiv({ cls: 'error-banner-divider' });
 
         // Help text with links
-        const helpText = contentWrapper.createEl('div', { cls: 'error-banner-help' });
+        const helpText = contentWrapper.createDiv({ cls: 'error-banner-help' });
         helpText.appendText("Don't have Ollama yet? ");
         helpText.createEl('a', { text: 'Download', attr: { href: 'https://ollama.com/download', target: '_blank', rel: 'noopener' } });
         helpText.appendText(' and set it up, ');
@@ -215,7 +215,7 @@ export class ErrorBanner {
         let tooltip: HTMLElement | null = null;
 
         installLink.addEventListener('mouseenter', (e) => {
-            tooltip = this.deps.getBodyEl().createEl('div', { cls: 'ollama-install-tooltip' });
+            tooltip = this.deps.getBodyEl().createDiv({ cls: 'ollama-install-tooltip' });
             tooltip.appendText('To install a model, run the command from the model webpage in your terminal.');
             tooltip.createEl('br');
             tooltip.appendText('For example:');

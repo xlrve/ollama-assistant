@@ -34,7 +34,7 @@ export class UserMessageRenderer {
         contextContent?: string,
         contextLabelOverride?: string
     ): HTMLElement {
-        const messageEl = activeDocument.createElement('div');
+        const messageEl = createDiv();
         messageEl.className = 'chat-message user-message';
         messageEl.setAttribute('data-mode', mode);
         messageEl.setAttribute('data-msg-id', msgId);
@@ -45,12 +45,12 @@ export class UserMessageRenderer {
 
         const contextText = this.resolveContextLabelText(mode, contextContent, contextLabelOverride);
 
-        const contextLabel = messageEl.createEl('div', { cls: 'user-message-context' }) as HTMLElement;
+        const contextLabel = messageEl.createDiv({ cls: 'user-message-context' }) as HTMLElement;
         contextLabel.createSpan({ cls: 'context-arrow', text: '\u25B6' });
         contextLabel.createSpan({ cls: 'context-label', text: 'Ctx:' });
         contextLabel.createSpan({ text: ` ${contextText}` });
 
-        const contextInfo = contextLabel.createSpan({ cls: 'user-context-info-icon', text: '\u24D8' }) as HTMLElement;
+        const contextInfo = contextLabel.createSpan({ cls: 'user-context-info-icon', text: '\u24D8' });
         const hasContext =
             (contextContent && contextContent.trim().length > 0) ||
             (mode !== 'web' && contextText && contextText.trim().toLowerCase() !== 'no context');
@@ -64,7 +64,7 @@ export class UserMessageRenderer {
             contextInfo.removeClass('is-visible');
         }
 
-        messageEl.createEl('div', { cls: 'message-content', text: content });
+        messageEl.createDiv({ cls: 'message-content', text: content });
         return messageEl;
     }
 
@@ -78,7 +78,7 @@ export class UserMessageRenderer {
         contextContent?: string,
         contextLabelOverride?: string
     ): HTMLElement {
-        const messageEl = activeDocument.createElement('div');
+        const messageEl = createDiv();
         messageEl.className = 'chat-message user-message';
         messageEl.setAttribute('data-mode', mode);
 
@@ -88,12 +88,12 @@ export class UserMessageRenderer {
 
         const contextText = this.resolveContextLabelText(mode, contextContent, contextLabelOverride);
 
-        const contextLabel = messageEl.createEl('div', { cls: 'user-message-context' }) as HTMLElement;
+        const contextLabel = messageEl.createDiv({ cls: 'user-message-context' }) as HTMLElement;
         contextLabel.createSpan({ cls: 'context-arrow', text: '\u25B6' });
         contextLabel.createSpan({ cls: 'context-label', text: 'Ctx:' });
         contextLabel.createSpan({ text: ` ${contextText}` });
 
-        const contextInfo = contextLabel.createSpan({ cls: 'user-context-info-icon', text: '\u24D8' }) as HTMLElement;
+        const contextInfo = contextLabel.createSpan({ cls: 'user-context-info-icon', text: '\u24D8' });
         const hasContext =
             (contextContent && contextContent.trim().length > 0) ||
             (mode !== 'web' && contextText && contextText.trim().toLowerCase() !== 'no context');
@@ -107,9 +107,9 @@ export class UserMessageRenderer {
             contextInfo.removeClass('is-visible');
         }
 
-        const contentWrapper = messageEl.createEl('div', { cls: 'user-message-content-wrapper' }) as HTMLElement;
-        contentWrapper.createEl('div', { cls: 'message-content', text: content });
-        const queuedStatus = contentWrapper.createEl('div', { cls: 'queued-status' }) as HTMLElement;
+        const contentWrapper = messageEl.createDiv({ cls: 'user-message-content-wrapper' }) as HTMLElement;
+        contentWrapper.createDiv({ cls: 'message-content', text: content });
+        const queuedStatus = contentWrapper.createDiv({ cls: 'queued-status' }) as HTMLElement;
         queuedStatus.createSpan({ cls: 'spinner' });
         queuedStatus.createSpan({ cls: 'queued-text', text: 'Queued' });
 
@@ -130,7 +130,7 @@ export class UserMessageRenderer {
         const targetMode = mode || 'edit';
         this.deps.removeWelcomeMessages(targetMode);
 
-        const messageEl = container.createEl('div', { cls: 'chat-message user-message' }) as HTMLElement;
+        const messageEl = container.createDiv({ cls: 'chat-message user-message' }) as HTMLElement;
         messageEl.setAttribute('data-mode', targetMode);
 
         if (!this.deps.isCurrentTab(targetMode)) {
@@ -142,12 +142,12 @@ export class UserMessageRenderer {
 
         const contextText = this.resolveContextLabelText(targetMode, contextContent, contextLabelOverride);
 
-        const contextLabel = messageEl.createEl('div', { cls: 'user-message-context' }) as HTMLElement;
+        const contextLabel = messageEl.createDiv({ cls: 'user-message-context' }) as HTMLElement;
         contextLabel.createSpan({ cls: 'context-arrow', text: '\u25B6' });
         contextLabel.createSpan({ cls: 'context-label', text: 'Ctx:' });
         contextLabel.createSpan({ text: ` ${contextText}` });
 
-        const contextInfo = contextLabel.createSpan({ cls: 'user-context-info-icon', text: '\u24D8' }) as HTMLElement;
+        const contextInfo = contextLabel.createSpan({ cls: 'user-context-info-icon', text: '\u24D8' });
         const hasContext =
             (contextContent && contextContent.trim().length > 0) ||
             (targetMode !== 'web' && contextText && contextText.trim().toLowerCase() !== 'no context');
@@ -161,7 +161,7 @@ export class UserMessageRenderer {
             contextInfo.removeClass('is-visible');
         }
 
-        messageEl.createEl('div', { cls: 'message-content', text: content });
+        messageEl.createDiv({ cls: 'message-content', text: content });
         this.deps.scrollToBottomIfNear();
 
         return messageEl;
@@ -176,14 +176,14 @@ export class UserMessageRenderer {
         contextLabelOverride?: string
     ): HTMLElement {
         const container = this.deps.ensureContainer();
-        if (!container) return activeDocument.createElement('div');
+        if (!container) return createDiv();
 
         const targetMode = mode || 'edit';
 
         const welcomeMessages = container.querySelectorAll(`.welcome-message[data-mode="${targetMode}"]`);
         welcomeMessages.forEach((msg) => msg.remove());
 
-        const messageEl = activeDocument.createElement('div');
+        const messageEl = createDiv();
         messageEl.className = 'chat-message user-message';
         messageEl.setAttribute('data-mode', targetMode);
 
@@ -193,12 +193,12 @@ export class UserMessageRenderer {
 
         const contextText = this.resolveContextLabelText(targetMode, contextContent, contextLabelOverride);
 
-        const contextLabel = messageEl.createEl('div', { cls: 'user-message-context' }) as HTMLElement;
+        const contextLabel = messageEl.createDiv({ cls: 'user-message-context' }) as HTMLElement;
         contextLabel.createSpan({ cls: 'context-arrow', text: '\u25B6' });
         contextLabel.createSpan({ cls: 'context-label', text: 'Ctx:' });
         contextLabel.createSpan({ text: ` ${contextText}` });
 
-        const contextInfo = contextLabel.createSpan({ cls: 'user-context-info-icon', text: '\u24D8' }) as HTMLElement;
+        const contextInfo = contextLabel.createSpan({ cls: 'user-context-info-icon', text: '\u24D8' });
         const hasContext =
             (contextContent && contextContent.trim().length > 0) ||
             (targetMode !== 'web' && contextText && contextText.trim().toLowerCase() !== 'no context');
@@ -212,9 +212,9 @@ export class UserMessageRenderer {
             contextInfo.removeClass('is-visible');
         }
 
-        const contentWrapper = messageEl.createEl('div', { cls: 'user-message-content-wrapper' }) as HTMLElement;
-        contentWrapper.createEl('div', { cls: 'message-content', text: content });
-        const queuedStatus = contentWrapper.createEl('div', { cls: 'queued-status' }) as HTMLElement;
+        const contentWrapper = messageEl.createDiv({ cls: 'user-message-content-wrapper' }) as HTMLElement;
+        contentWrapper.createDiv({ cls: 'message-content', text: content });
+        const queuedStatus = contentWrapper.createDiv({ cls: 'queued-status' }) as HTMLElement;
         queuedStatus.createSpan({ cls: 'spinner' });
         queuedStatus.createSpan({ cls: 'queued-text', text: 'Queued' });
 

@@ -205,7 +205,7 @@ export class EventBus {
         if (!this.handlers.has(event)) {
             this.handlers.set(event, new Set());
         }
-        this.handlers.get(event)!.add(handler as EventHandler<unknown>);
+        this.handlers.get(event)!.add(handler);
 
         if (this.debugMode) {
             console.debug(`[EventBus] Subscribed to "${event}"`);
@@ -218,7 +218,7 @@ export class EventBus {
     off<K extends keyof EventMap>(event: K, handler: EventHandler<EventMap[K]>): void {
         const handlers = this.handlers.get(event);
         if (handlers) {
-            handlers.delete(handler as EventHandler<unknown>);
+            handlers.delete(handler);
             if (this.debugMode) {
                 console.debug(`[EventBus] Unsubscribed from "${event}"`);
             }

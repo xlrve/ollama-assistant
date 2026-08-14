@@ -58,14 +58,14 @@ export class AssistantMessageRenderer {
 
         this.restoreEditState(editNumber, positionData);
 
-        const btnContainer = messageEl.createEl('div', { cls: 'message-actions' }) as HTMLElement;
-        const buttonsGroup = btnContainer.createEl('div', { cls: 'action-buttons-group' }) as HTMLElement;
+        const btnContainer = messageEl.createDiv({ cls: 'message-actions' }) as HTMLElement;
+        const buttonsGroup = btnContainer.createDiv({ cls: 'action-buttons-group' }) as HTMLElement;
 
         const applyBtn = buttonsGroup.createEl('button', {
             cls: 'action-text-btn',
             attr: { 'aria-label': 'Apply to note' }
         });
-        const applyIcon = applyBtn.createSpan({ cls: 'action-btn-icon' }) as HTMLElement;
+        const applyIcon = applyBtn.createSpan({ cls: 'action-btn-icon' });
         setIcon(applyIcon, 'check');
         applyBtn.createSpan({ text: 'Apply', cls: 'action-btn-label' });
         applyBtn.addEventListener('click', () => {
@@ -81,13 +81,13 @@ export class AssistantMessageRenderer {
             eventBus.emit('edit:applyWithHistory', { content: resultForActions, editNumber });
         });
 
-        const editGroup = btnContainer.createEl('div', { cls: 'action-buttons-group' }) as HTMLElement;
+        const editGroup = btnContainer.createDiv({ cls: 'action-buttons-group' }) as HTMLElement;
         const editContextBtn = editGroup.createEl('button', {
             cls: 'action-text-btn edit-context-btn',
             attr: { 'aria-label': 'Add to context' }
         });
         editContextBtn.createSpan({ text: `Edit ${editNumber}`, cls: 'action-btn-label' });
-        const editIcon = editContextBtn.createSpan({ cls: 'action-btn-icon' }) as HTMLElement;
+        const editIcon = editContextBtn.createSpan({ cls: 'action-btn-icon' });
         setIcon(editIcon, 'arrow-down');
         editContextBtn.addEventListener('click', () => {
             eventBus.emit('edit:addToContext', { content: resultForActions, editNumber });
@@ -189,7 +189,7 @@ export class AssistantMessageRenderer {
 
         this.deps.removeStreamingMessages(mode);
 
-        const messageEl = container.ownerDocument.createElement('div');
+        const messageEl = createDiv();
         messageEl.className = isResult
             ? 'chat-message assistant-message result-message streaming-message'
             : 'chat-message assistant-message streaming-message';
@@ -199,9 +199,9 @@ export class AssistantMessageRenderer {
         messageEl.setAttribute('data-msg-id', msgId);
         messageEl._msgId = msgId;
 
-        const contentEl = messageEl.createEl('div', { cls: 'message-content' }) as HTMLElement;
+        const contentEl = messageEl.createDiv({ cls: 'message-content' }) as HTMLElement;
         contentEl.empty();
-        contentEl.createEl('span', { cls: 'cursor-blink', text: this.deps.streamingCursor });
+        contentEl.createSpan({ cls: 'cursor-blink', text: this.deps.streamingCursor });
 
         if (afterElement && afterElement.parentNode) {
             afterElement.insertAdjacentElement('afterend', messageEl);
@@ -228,7 +228,7 @@ export class AssistantMessageRenderer {
 
         if (!content) {
             contentEl.empty();
-            contentEl.createEl('span', { cls: 'cursor-blink', text: this.deps.streamingCursor });
+            contentEl.createSpan({ cls: 'cursor-blink', text: this.deps.streamingCursor });
             return;
         }
 
@@ -296,7 +296,7 @@ export class AssistantMessageRenderer {
             break;
         }
 
-        target.createEl('span', { cls: 'cursor-blink', text: this.deps.streamingCursor });
+        target.createSpan({ cls: 'cursor-blink', text: this.deps.streamingCursor });
     }
 
     finalizeExplanationMessage(el: HTMLElement | null, content: string): void {
@@ -334,10 +334,10 @@ export class AssistantMessageRenderer {
         }
 
         if (mode === 'edit' && !content.includes('<EDIT>')) {
-            const warningContainer = el.createEl('div', { cls: 'model-warning' }) as HTMLElement;
-            const iconEl = warningContainer.createEl('span', { cls: 'warning-icon' }) as HTMLElement;
+            const warningContainer = el.createDiv({ cls: 'model-warning' }) as HTMLElement;
+            const iconEl = warningContainer.createSpan({ cls: 'warning-icon' });
             iconEl.textContent = '⚠';
-            warningContainer.createEl('span', {
+            warningContainer.createSpan({
                 text: 'The model failed to process your request. The selected model may be too weak for this mode, or try rephrasing your request.',
                 cls: 'warning-text'
             });
